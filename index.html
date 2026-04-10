@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Biometrics House</title>
+
+  <!-- Montserrat -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet" />
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/hero.css" />
+  <link rel="stylesheet" href="css/sections.css" />
+  <link rel="stylesheet" href="css/brand.css" />
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #031C40; font-family: 'Montserrat', sans-serif; }
+
+    /* Sekcie zamknuté kým netklikneš */
+    .locked-section {
+      display: none !important;
+    }
+    .locked-section-house {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =============================================
+       HERO — Scroll Zoom Transition
+       ============================================= -->
+  <div class="hero-scroll">
+    <div class="hero-sticky">
+
+      <!-- Vrstva 1: Logo BH -->
+      <div class="hero-logo-layer">
+        <img src="images/logo5d3.png" alt="Biometrics House" id="heroLogo" />
+      </div>
+
+      <!-- Vrstva 2: Interiér -->
+      <div class="hero-interior-layer" id="heroInterior">
+        <img src="images/interior.jpg" alt="Biometrics House Interior" id="heroInteriorImg" />
+      </div>
+      <div class="hero-interior-overlay"></div>
+
+      <!-- Vrstva 3: Glass karty -->
+      <div class="hero-cards" id="heroCards">
+
+        <!-- Biometrics Events -->
+        <div class="hero-card hero-card--events">
+          <span class="hero-card__label">Prenájom priestorov</span>
+          <span class="hero-card__title1">BIOMETRICS</span>
+          <span class="hero-card__title2">EVENTS</span>
+          <p class="hero-card__desc">Firemné eventy, konferencie a networking v najbiometrickejšej budove Bratislavy.</p>
+          <button class="hero-card__btn">PRIESTORY →</button>
+        </div>
+
+        <!-- Biometrics House -->
+        <div class="hero-card hero-card--house">
+          <span class="hero-card__label">Technológie & Workspace</span>
+          <span class="hero-card__title1">BIOMETRICS</span>
+          <span class="hero-card__title2">HOUSE</span>
+          <p class="hero-card__desc">Inovatívne riešenia, biometrický prístup a smart workspace pre moderné firmy.</p>
+          <button class="hero-card__btn">ZISTIŤ VIAC →</button>
+        </div>
+
+      </div>
+
+      <!-- Scroll hint -->
+      <div class="hero-scroll-hint" id="scrollHint">
+        <span>scroll</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 5v14M5 12l7 7 7-7"/>
+        </svg>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- =============================================
+       EVENTS INTRO — nrMvZ
+       ============================================= -->
+  <section class="events-intro locked-section">
+    <span class="events-intro__label">Biometrics Events</span>
+    <h1 class="events-intro__title">Priestory pre<br>nezabudnuteľné udalosti.</h1>
+    <p class="events-intro__desc">Unikátne event priestory v najbiometrickejšiej budove Bratislavy. Biometrický prístup, smart AV technológie a profesionálny servis pod jednou strechou.</p>
+  </section>
+
+  <!-- =============================================
+       VENUES — u4QDk
+       ============================================= -->
+  <section class="venues locked-section">
+    <span class="venues__label">PRIESTORY</span>
+    <h2 class="venues__title">Vyberte si priestor</h2>
+
+    <div class="venues__grid">
+
+      <div class="venue-card">
+        <div class="venue-card__icon"><i data-lucide="users"></i></div>
+        <h3 class="venue-card__name">Nexus Gallery</h3>
+        <span class="venue-card__badge">300 ľudí</span>
+        <p class="venue-card__desc">Hlavná hala s pódiom, AV systémom a profesionálnym osvetlením.</p>
+        <div class="venue-card__globe">
+          <div class="globe__sphere">
+            <svg viewBox="0 0 56 56" width="56" height="56" fill="none">
+              <ellipse cx="28" cy="28" rx="27" ry="27" stroke="#4590FF" stroke-width="2" fill="none"/>
+              <ellipse cx="28" cy="28" rx="24" ry="8" stroke="#4590FFCC" stroke-width="1" fill="none" transform="translate(0, -8)"/>
+              <ellipse cx="28" cy="28" rx="10" ry="26" stroke="#4590FFCC" stroke-width="1" fill="none"/>
+            </svg>
+          </div>
+          <span class="globe__label">360° NÁHĽAD</span>
+        </div>
+        <button class="venue-card__btn">REZERVOVAŤ →</button>
+      </div>
+
+      <div class="venue-card">
+        <div class="venue-card__icon"><i data-lucide="mic"></i></div>
+        <h3 class="venue-card__name">Observatory</h3>
+        <span class="venue-card__badge">60 ľudí</span>
+        <p class="venue-card__desc">Konferenčná miestnosť s interaktívnymi displejmi a AV systémom.</p>
+        <div class="venue-card__globe">
+          <div class="globe__sphere">
+            <svg viewBox="0 0 56 56" width="56" height="56" fill="none">
+              <ellipse cx="28" cy="28" rx="27" ry="27" stroke="#4590FF" stroke-width="2" fill="none"/>
+              <ellipse cx="28" cy="28" rx="24" ry="8" stroke="#4590FFCC" stroke-width="1" fill="none" transform="translate(0, -8)"/>
+              <ellipse cx="28" cy="28" rx="10" ry="26" stroke="#4590FFCC" stroke-width="1" fill="none"/>
+            </svg>
+          </div>
+          <span class="globe__label">360° NÁHĽAD</span>
+        </div>
+        <button class="venue-card__btn">REZERVOVAŤ →</button>
+      </div>
+
+      <div class="venue-card">
+        <div class="venue-card__icon"><i data-lucide="monitor"></i></div>
+        <h3 class="venue-card__name">Training Room</h3>
+        <span class="venue-card__badge">30 ľudí</span>
+        <p class="venue-card__desc">Flexibilný priestor pre workshopy, školenia a brainstorming.</p>
+        <div class="venue-card__globe">
+          <div class="globe__sphere">
+            <svg viewBox="0 0 56 56" width="56" height="56" fill="none">
+              <ellipse cx="28" cy="28" rx="27" ry="27" stroke="#4590FF" stroke-width="2" fill="none"/>
+              <ellipse cx="28" cy="28" rx="24" ry="8" stroke="#4590FFCC" stroke-width="1" fill="none" transform="translate(0, -8)"/>
+              <ellipse cx="28" cy="28" rx="10" ry="26" stroke="#4590FFCC" stroke-width="1" fill="none"/>
+            </svg>
+          </div>
+          <span class="globe__label">360° NÁHĽAD</span>
+        </div>
+        <button class="venue-card__btn">REZERVOVAŤ →</button>
+      </div>
+
+      <div class="venue-card">
+        <div class="venue-card__icon"><i data-lucide="utensils"></i></div>
+        <h3 class="venue-card__name">Bistro Bite</h3>
+        <span class="venue-card__badge">40 ľudí</span>
+        <p class="venue-card__desc">Kaviareň a kuchyňa pre kulinárske workshopy a food eventy.</p>
+        <div class="venue-card__globe">
+          <div class="globe__sphere">
+            <svg viewBox="0 0 56 56" width="56" height="56" fill="none">
+              <ellipse cx="28" cy="28" rx="27" ry="27" stroke="#4590FF" stroke-width="2" fill="none"/>
+              <ellipse cx="28" cy="28" rx="24" ry="8" stroke="#4590FFCC" stroke-width="1" fill="none" transform="translate(0, -8)"/>
+              <ellipse cx="28" cy="28" rx="10" ry="26" stroke="#4590FFCC" stroke-width="1" fill="none"/>
+            </svg>
+          </div>
+          <span class="globe__label">360° NÁHĽAD</span>
+        </div>
+        <button class="venue-card__btn">REZERVOVAŤ →</button>
+      </div>
+
+      <div class="venue-card">
+        <div class="venue-card__icon"><i data-lucide="sun"></i></div>
+        <h3 class="venue-card__name">Boardroom</h3>
+        <span class="venue-card__badge">12 ľudí</span>
+        <p class="venue-card__desc">Komorná zasadačka s terasou pre board meetingy a VIP stretnutia.</p>
+        <div class="venue-card__globe">
+          <div class="globe__sphere">
+            <svg viewBox="0 0 56 56" width="56" height="56" fill="none">
+              <ellipse cx="28" cy="28" rx="27" ry="27" stroke="#4590FF" stroke-width="2" fill="none"/>
+              <ellipse cx="28" cy="28" rx="24" ry="8" stroke="#4590FFCC" stroke-width="1" fill="none" transform="translate(0, -8)"/>
+              <ellipse cx="28" cy="28" rx="10" ry="26" stroke="#4590FFCC" stroke-width="1" fill="none"/>
+            </svg>
+          </div>
+          <span class="globe__label">360° NÁHĽAD</span>
+        </div>
+        <button class="venue-card__btn">REZERVOVAŤ →</button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =============================================
+       BH VISION — RBHSy (Pencil)
+       ============================================= -->
+  <section class="bh-vision locked-section-house" style="
+    width:100%;
+    min-height:500px;
+    background:#1b00e2;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:120px 60px;
+    box-sizing:border-box;
+    font-family:'Montserrat',sans-serif;
+  ">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:32px;max-width:800px;text-align:center;">
+      <span style="font-size:11px;font-weight:700;letter-spacing:4px;color:#fff;text-transform:uppercase;">02 — VISION</span>
+      <h2 style="font-size:48px;font-weight:900;color:#fff;line-height:1.2;margin:0;">Where technology meets architecture. Where security meets elegance.</h2>
+      <p style="font-size:18px;color:rgba(255,255,255,0.6);line-height:1.8;max-width:600px;margin:0;">Biometrics House je prvá budova na svete kde biometrické technológie nie sú doplnkom, ale základom celého ekosystému. Od prístupu cez odtlačok prsta po AI monitoring kvality vzduchu.</p>
+    </div>
+  </section>
+
+  <!-- =============================================
+       BH PILLARS — ycY8s (Pencil)
+       ============================================= -->
+  <section class="bh-pillars locked-section-house" style="
+    width:100%;
+    background:#031c40;
+    padding:120px 60px;
+    box-sizing:border-box;
+    font-family:'Montserrat',sans-serif;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:48px;
+  ">
+    <span style="font-size:11px;font-weight:700;letter-spacing:4px;color:#4590ff;text-transform:uppercase;">03 — WHAT WE OFFER</span>
+    <h2 style="font-size:48px;font-weight:900;color:#fff;text-align:center;margin:0;">Built on Four Pillars</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:1320px;width:100%;">
+
+      <div style="background:rgba(27,0,226,0.15);border:1px solid rgba(69,144,255,0.15);border-radius:12px;padding:48px;display:flex;flex-direction:column;gap:16px;">
+        <span style="font-size:14px;font-weight:700;letter-spacing:4px;color:#4590ff;">01/04</span>
+        <i data-lucide="fingerprint" style="width:36px;height:36px;color:#0057ff;"></i>
+        <h3 style="font-size:24px;font-weight:700;color:#fff;margin:0;">Biometric Access</h3>
+        <p style="font-size:15px;color:rgba(255,255,255,0.6);line-height:1.7;margin:0;">Vstup do budovy cez odtlačok prsta, rozpoznávanie tváre a iris scan. Žiadne karty, žiadne kľúče — len vy.</p>
+      </div>
+
+      <div style="background:rgba(27,0,226,0.15);border:1px solid rgba(69,144,255,0.15);border-radius:12px;padding:48px;display:flex;flex-direction:column;gap:16px;">
+        <span style="font-size:14px;font-weight:700;letter-spacing:4px;color:#4590ff;">02/04</span>
+        <i data-lucide="brain" style="width:36px;height:36px;color:#0057ff;"></i>
+        <h3 style="font-size:24px;font-weight:700;color:#fff;margin:0;">AI Infrastructure</h3>
+        <p style="font-size:15px;color:rgba(255,255,255,0.6);line-height:1.7;margin:0;">847 smart senzorov monitoruje každý aspekt budovy v reálnom čase. Prediktívna údržba znižuje náklady o 34%.</p>
+      </div>
+
+      <div style="background:rgba(27,0,226,0.15);border:1px solid rgba(69,144,255,0.15);border-radius:12px;padding:48px;display:flex;flex-direction:column;gap:16px;">
+        <span style="font-size:14px;font-weight:700;letter-spacing:4px;color:#4590ff;">03/04</span>
+        <i data-lucide="leaf" style="width:36px;height:36px;color:#0057ff;"></i>
+        <h3 style="font-size:24px;font-weight:700;color:#fff;margin:0;">Sustainability</h3>
+        <p style="font-size:15px;color:rgba(255,255,255,0.6);line-height:1.7;margin:0;">Solárne panely, rekuperácia, smart grid. Budova produkuje 40% energie ktorú spotrebuje. Certifikácia BREEAM Excellent.</p>
+      </div>
+
+      <div style="background:rgba(27,0,226,0.15);border:1px solid rgba(69,144,255,0.15);border-radius:12px;padding:48px;display:flex;flex-direction:column;gap:16px;">
+        <span style="font-size:14px;font-weight:700;letter-spacing:4px;color:#4590ff;">04/04</span>
+        <i data-lucide="building-2" style="width:36px;height:36px;color:#0057ff;"></i>
+        <h3 style="font-size:24px;font-weight:700;color:#fff;margin:0;">Premium Workspace</h3>
+        <p style="font-size:15px;color:rgba(255,255,255,0.6);line-height:1.7;margin:0;">12,000 m² flexibilného pracovného priestoru. Konferenčné miestnosti, event hala, rooftop terasa s výhľadom na Bratislavu.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =============================================
+       BH AUDIENCE — FxhXf (Pencil)
+       ============================================= -->
+  <section class="bh-audience locked-section-house" style="
+    width:100%;
+    background:#031c40;
+    padding:120px 60px;
+    box-sizing:border-box;
+    font-family:'Montserrat',sans-serif;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:48px;
+  ">
+    <span style="font-size:11px;font-weight:700;letter-spacing:4px;color:#4590ff;text-transform:uppercase;">07 — FOR YOU</span>
+    <h2 style="font-size:48px;font-weight:900;color:#fff;text-align:center;margin:0;">Built For Visionaries</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;max-width:1200px;width:100%;">
+
+      <div style="background:rgba(27,0,226,0.15);border:1px solid rgba(69,144,255,0.15);border-radius:12px;padding:48px;display:flex;flex-direction:column;gap:12px;">
+        <i data-lucide="briefcase" style="width:32px;height:32px;color:#0057ff;"></i>
+        <span style="font-size:12px;font-weight:700;letter-spacing:3px;color:#4590ff;">FOR TENANTS</span>
+        <h3 style="font-size:28px;font-weight:700;color:#fff;margin:0;">Your Smartest Office</h3>
+        <p style="font-size:15px;color:rgba(255,255,255,0.6);line-height:1.7;margin:0;">Pracovný priestor kde technológia pracuje pre vás. Biometrický prístup, smart zasadačky, personalizované prostredie.</p>
+        <span style="font-size:12px;font-weight:700;letter-spacing:2px;color:#fff;margin-top:8px;cursor:pointer;">LEARN MORE →</span>
+      </div>
+
+      <div style="background:rgba(27,0,226,0.15);border:1px solid rgba(69,144,255,0.15);border-radius:12px;padding:48px;display:flex;flex-direction:column;gap:12px;">
+        <i data-lucide="calendar" style="width:32px;height:32px;color:#0057ff;"></i>
+        <span style="font-size:12px;font-weight:700;letter-spacing:3px;color:#4590ff;">FOR EVENT ORGANIZERS</span>
+        <h3 style="font-size:28px;font-weight:700;color:#fff;margin:0;">Unforgettable Venues</h3>
+        <p style="font-size:15px;color:rgba(255,255,255,0.6);line-height:1.7;margin:0;">3 event priestory s kapacitou do 200 ľudí. Profesionálne AV vybavenie, catering, networking zóny.</p>
+        <span style="font-size:12px;font-weight:700;letter-spacing:2px;color:#fff;margin-top:8px;cursor:pointer;">LEARN MORE →</span>
+      </div>
+
+      <div style="background:rgba(27,0,226,0.15);border:1px solid rgba(69,144,255,0.15);border-radius:12px;padding:48px;display:flex;flex-direction:column;gap:12px;">
+        <i data-lucide="trending-up" style="width:32px;height:32px;color:#0057ff;"></i>
+        <span style="font-size:12px;font-weight:700;letter-spacing:3px;color:#4590ff;">FOR INVESTORS</span>
+        <h3 style="font-size:28px;font-weight:700;color:#fff;margin:0;">Future-Proof Asset</h3>
+        <p style="font-size:15px;color:rgba(255,255,255,0.6);line-height:1.7;margin:0;">Prvá biometrická budova v CEE regióne. Certifikácia BREEAM, nízke prevádzkové náklady, vysoká obsadenosť.</p>
+        <span style="font-size:12px;font-weight:700;letter-spacing:2px;color:#fff;margin-top:8px;cursor:pointer;">LEARN MORE →</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =============================================
+       BH CTA BANNER — GuIpX (Pencil)
+       ============================================= -->
+  <section class="bh-cta locked-section-house" style="
+    width:100%;
+    min-height:400px;
+    background:#ffffff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:100px 60px;
+    box-sizing:border-box;
+    font-family:'Montserrat',sans-serif;
+  ">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center;">
+      <h2 style="font-size:52px;font-weight:900;color:#031c40;letter-spacing:2px;line-height:1.1;max-width:800px;margin:0;">READY TO EXPERIENCE THE FUTURE?</h2>
+      <p style="font-size:16px;color:rgba(3,28,64,0.6);margin:0;">Naplánujte si prehliadku najbiometrickejšej budovy na svete.</p>
+      <button class="btn btn-primary btn-lg" style="margin-top:16px;padding:18px 48px;border-radius:4px;letter-spacing:2px;">BOOK A TOUR</button>
+    </div>
+  </section>
+
+  <!-- =============================================
+       FOOTER — PR4Gk (Pencil)
+       ============================================= -->
+  <footer class="bh-footer locked-section-house" style="
+    width:100%;
+    background:#031c40;
+    padding:80px;
+    box-sizing:border-box;
+    font-family:'Montserrat',sans-serif;
+    display:flex;
+    flex-direction:column;
+    gap:48px;
+  ">
+    <!-- Footer Top -->
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+      <!-- Logo -->
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <span style="font-size:14px;font-weight:700;letter-spacing:3px;color:#fff;">BIOMETRICS HOUSE</span>
+        <span style="font-size:13px;color:rgba(255,255,255,0.35);">Arprod 12, Bratislava</span>
+      </div>
+      <!-- Links -->
+      <div style="display:flex;gap:80px;">
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <span style="font-size:11px;font-weight:700;letter-spacing:3px;color:rgba(255,255,255,0.5);">NAVIGATION</span>
+          <a style="font-size:14px;color:rgba(255,255,255,0.6);text-decoration:none;">About</a>
+          <a style="font-size:14px;color:rgba(255,255,255,0.6);text-decoration:none;">Technology</a>
+          <a style="font-size:14px;color:rgba(255,255,255,0.6);text-decoration:none;">Sustainability</a>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <span style="font-size:11px;font-weight:700;letter-spacing:3px;color:rgba(255,255,255,0.5);">SERVICES</span>
+          <a style="font-size:14px;color:rgba(255,255,255,0.6);text-decoration:none;">Events</a>
+          <a style="font-size:14px;color:rgba(255,255,255,0.6);text-decoration:none;">Workspace</a>
+          <a style="font-size:14px;color:rgba(255,255,255,0.6);text-decoration:none;">Tours</a>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <span style="font-size:11px;font-weight:700;letter-spacing:3px;color:rgba(255,255,255,0.5);">CONTACT</span>
+          <a style="font-size:14px;color:rgba(255,255,255,0.6);text-decoration:none;">info@biometricshouse.com</a>
+          <a style="font-size:14px;color:rgba(255,255,255,0.6);text-decoration:none;">+421 2 XXX XXX</a>
+          <a style="font-size:14px;color:rgba(255,255,255,0.6);text-decoration:none;">Arprod 12, Bratislava</a>
+        </div>
+      </div>
+    </div>
+    <!-- Footer Bottom -->
+    <div style="display:flex;justify-content:space-between;align-items:center;padding-top:24px;border-top:1px solid rgba(69,144,255,0.15);">
+      <span style="font-size:12px;color:rgba(255,255,255,0.35);">© 2026 Biometrics House. Powered by Innovatrics. All rights reserved.</span>
+      <div style="display:flex;gap:16px;">
+        <i data-lucide="linkedin" style="width:20px;height:20px;color:rgba(255,255,255,0.35);"></i>
+        <i data-lucide="instagram" style="width:20px;height:20px;color:rgba(255,255,255,0.35);"></i>
+        <i data-lucide="twitter" style="width:20px;height:20px;color:rgba(255,255,255,0.35);"></i>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Init Lucide icons
+    lucide.createIcons();
+
+    // --- Scroll Zoom Hero ---
+    const heroScroll   = document.querySelector('.hero-scroll');
+    const heroLogo     = document.getElementById('heroLogo');
+    const heroInterior = document.getElementById('heroInterior');
+    const heroInteriorImg = document.getElementById('heroInteriorImg');
+    const heroCards    = document.getElementById('heroCards');
+    const scrollHint   = document.getElementById('scrollHint');
+
+    function lerp(a, b, t) { return a + (b - a) * t; }
+    function clamp(v, min, max) { return Math.min(Math.max(v, min), max); }
+    function easeInOut(t) { return t < 0.5 ? 2*t*t : -1+(4-2*t)*t; }
+
+    function onScroll() {
+      const scrollY    = window.scrollY;
+      const totalScroll = heroScroll.offsetHeight - window.innerHeight;
+      const raw = clamp(scrollY / totalScroll, 0, 1);
+
+      // --- FÁZA 1: zoom logo (0 → 0.5) ---
+      const p1 = clamp(raw / 0.5, 0, 1);
+      const p1e = easeInOut(p1);
+
+      const logoScale   = lerp(1, 2.2, p1e);
+      const logoOpacity = lerp(1, 0, p1e);
+
+      heroLogo.style.transform = `scale(${logoScale})`;
+      heroLogo.style.opacity   = logoOpacity;
+
+      // --- FÁZA 2: interiér fade in (0.35 → 0.7) ---
+      const p2 = clamp((raw - 0.35) / 0.35, 0, 1);
+      const p2e = easeInOut(p2);
+
+      const interiorOpacity = lerp(0, 1, p2e);
+      const interiorScale   = lerp(1.15, 1, p2e);
+
+      heroInterior.style.opacity = interiorOpacity;
+      heroInteriorImg.style.transform = `scale(${interiorScale})`;
+
+      // --- BLUR: začína až po ~3 otočeniach kolečka po tom čo sa interiér objaví ---
+      // Interiér viditeľný od 0.70, blur štartuje od 0.78
+      const pBlur = clamp((raw - 0.78) / 0.22, 0, 1);
+      const blurVal = lerp(0, 6, easeInOut(pBlur));
+      heroInteriorImg.style.filter = `blur(${blurVal.toFixed(2)}px)`;
+
+      // --- FÁZA 3: karty slide up (0.65 → 1.0) ---
+      const p3 = clamp((raw - 0.65) / 0.35, 0, 1);
+      const p3e = easeInOut(p3);
+
+      const cardsOpacity   = lerp(0, 1, p3e);
+      const cardsTranslate = lerp(50, 0, p3e);
+
+      heroCards.style.opacity   = cardsOpacity;
+      heroCards.style.transform = `translateY(${cardsTranslate}px)`;
+
+      // Scroll hint fade out
+      scrollHint.style.opacity = lerp(1, 0, clamp(raw / 0.15, 0, 1));
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll(); // init
+
+    // ── Spoločný stav pre obe karty ──
+    const btnPriestory = document.querySelector('.hero-card--events .hero-card__btn');
+    const btnHouse     = document.querySelector('.hero-card--house .hero-card__btn');
+    let activeSection  = null;   // 'events' | 'house' | null
+    let wasOutsideHero = false;
+
+    // ── PRIESTORY — expand Events karta doľava ──
+    btnPriestory.addEventListener('click', () => {
+      if (activeSection) return;
+      activeSection = 'events';
+      wasOutsideHero = false;
+
+      heroCards.classList.add('events-expanded');
+      document.querySelectorAll('.locked-section').forEach(el => el.classList.remove('locked-section'));
+
+      setTimeout(() => {
+        const target = document.querySelector('.events-intro');
+        const top = target.getBoundingClientRect().top + window.scrollY;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }, 680);
+    });
+
+    // ── ZISTIŤ VIAC — expand House karta doprava ──
+    btnHouse.addEventListener('click', () => {
+      if (activeSection) return;
+      activeSection = 'house';
+      wasOutsideHero = false;
+
+      heroCards.classList.add('house-expanded');
+      document.querySelectorAll('.locked-section-house').forEach(el => el.classList.remove('locked-section-house'));
+
+      setTimeout(() => {
+        const target = document.querySelector('.bh-vision');
+        const top = target.getBoundingClientRect().top + window.scrollY;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }, 680);
+    });
+
+    // ── REVERZ: reset keď sa user vráti späť do hero ──
+    window.addEventListener('scroll', () => {
+      if (!activeSection) return;
+
+      const heroBottom = heroScroll.getBoundingClientRect().bottom;
+      const inHero = heroBottom > window.innerHeight * 0.5;
+
+      if (!inHero && !wasOutsideHero) {
+        wasOutsideHero = true;
+      }
+
+      if (inHero && wasOutsideHero) {
+        wasOutsideHero = false;
+
+        if (activeSection === 'events') {
+          heroCards.classList.remove('events-expanded');
+          document.querySelector('.events-intro').classList.add('locked-section');
+          document.querySelector('.venues').classList.add('locked-section');
+        }
+
+        if (activeSection === 'house') {
+          heroCards.classList.remove('house-expanded');
+          document.querySelectorAll('.bh-vision, .bh-pillars, .bh-audience, .bh-cta, .bh-footer').forEach(el => {
+            el.classList.add('locked-section-house');
+          });
+        }
+
+        activeSection = null;
+
+        // Zastav scroll na glass kartách (raw = 1.0 = koniec hero-scroll)
+        const cardsPosition = heroScroll.offsetHeight - window.innerHeight;
+        window.scrollTo({ top: cardsPosition, behavior: 'smooth' });
+      }
+    }, { passive: true });
+
+    // ── Cursor glow tracking na glass kartách + venue kartách ──
+    document.querySelectorAll('.hero-card, .venue-card').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        card.style.setProperty('--glow-x', x + '%');
+        card.style.setProperty('--glow-y', y + '%');
+        card.style.setProperty('--glow-opacity', '1');
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.setProperty('--glow-opacity', '0');
+      });
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,43 @@
+/* ============================================
+   BIOMETRICS HOUSE — Design Tokens
+   Zdroj: biometricsWEBv2.pen (MCP sync)
+   Posledná aktualizácia: 2026-04-10
+   ============================================ */
+
+:root {
+
+  /* --- COLORS (presne z Pencil premenných) --- */
+  --primary-blue:   #1b00e2;
+  --azure-blue:     #0057ff;
+  --accent-blue:    #0057ff;
+  --sky-blue:       #4590ff;
+  --dark-blue:      #031c40;
+  --accent:         #22D3EE;
+  --clear-yellow:   #FFFF00;
+  --yellow:         #FFFF00;
+  --ice-grey:       #f2f3f2;
+
+  /* --- BACKGROUNDS --- */
+  --bg:             #0A0F1C;
+  --surface:        #1E293B;
+  --surface-dark:   #0F172A;
+  --divider:        #0F172A;
+
+  /* --- TEXT --- */
+  --text-primary:   #FFFFFF;
+  --text-secondary: #FFFFFF99;   /* 60% opacity */
+  --text-muted:     #FFFFFF59;   /* 35% opacity */
+
+  /* --- TYPOGRAPHY --- */
+  --font:           'Montserrat', sans-serif;
+  --weight-black:   900;
+  --weight-bold:    700;
+  --weight-regular: 400;
+
+  /* --- SPACING --- */
+  --padding-section: 64px 60px;
+  --padding-section-mobile: 40px 24px;
+
+  /* --- TRANSITIONS --- */
+  --transition: 0.3s ease;
+}

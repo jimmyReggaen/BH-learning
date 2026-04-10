@@ -1,0 +1,281 @@
+/* ============================================
+   BIOMETRICS EVENTS — Sections
+   Zdroj: rezervacnySystemFULL.pen (MCP sync)
+   ============================================ */
+
+/* ---- EVENTS INTRO (nrMvZ) ---- */
+.events-intro {
+  width: 100%;
+  min-height: 500px;
+  background:
+    radial-gradient(ellipse 150% 120% at 10% 20%, rgba(27,0,226,0.9) 0%, transparent 60%),
+    radial-gradient(ellipse 100% 90% at 90% 10%, rgba(0,87,255,0.55) 0%, transparent 55%),
+    radial-gradient(ellipse 90% 70% at 45% 95%, rgba(69,144,255,0.25) 0%, transparent 55%),
+    #031C40;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 120px 60px;
+  box-sizing: border-box;
+  gap: 24px;
+  text-align: center;
+  font-family: var(--font);
+}
+
+.events-intro__label {
+  font-size: 17px;
+  font-weight: var(--weight-bold);
+  letter-spacing: 4px;
+  color: var(--text-primary);
+  text-transform: uppercase;
+}
+
+.events-intro__title {
+  font-size: 48px;
+  font-weight: var(--weight-bold);
+  color: var(--text-primary);
+  letter-spacing: -2px;
+  line-height: 1.2;
+  max-width: 800px;
+  margin: 0;
+}
+
+.events-intro__desc {
+  font-size: 18px;
+  font-weight: var(--weight-regular);
+  color: var(--text-primary);
+  letter-spacing: -1px;
+  line-height: 1.8;
+  max-width: 600px;
+  margin: 0;
+}
+
+/* ---- VENUES SECTION (u4QDk) ---- */
+.venues {
+  width: 100%;
+  background:
+    radial-gradient(ellipse 100% 80% at 85% 5%, rgba(0,87,255,0.5) 0%, transparent 55%),
+    radial-gradient(ellipse 90% 70% at 45% 90%, rgba(69,144,255,0.3) 0%, transparent 55%),
+    #031C40;
+  padding: 120px 60px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 48px;
+  font-family: var(--font);
+}
+
+.venues__label {
+  font-size: 11px;
+  font-weight: var(--weight-bold);
+  letter-spacing: 4px;
+  color: var(--text-primary);
+  text-transform: uppercase;
+}
+
+.venues__title {
+  font-size: 48px;
+  font-weight: var(--weight-bold);
+  color: var(--text-primary);
+  text-align: center;
+  margin: 0;
+}
+
+/* Venues grid */
+.venues__grid {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  align-items: stretch;
+  width: 100%;
+  max-width: 1320px;
+}
+
+/* Jednotlivá karta (glass morphism) — podľa Pencil ALT B */
+.venue-card {
+  position: relative;
+  flex: 1;
+  min-width: 180px;
+  min-height: 498px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 12px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 4px 32px rgba(255,255,255,0.04);
+  padding: 48px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+  overflow: hidden;
+  --glow-x: 50%;
+  --glow-y: 50%;
+  --glow-opacity: 0;
+}
+
+/* Cursor glow efekt — rovnaký charakter ako hero glass karty */
+.venue-card::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: radial-gradient(
+    600px circle at var(--glow-x) var(--glow-y),
+    rgba(0, 87, 255, 0.35) 0%,
+    rgba(69, 144, 255, 0.15) 35%,
+    rgba(27, 0, 226, 0.06) 55%,
+    transparent 75%
+  );
+  opacity: var(--glow-opacity);
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.venue-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.venue-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,87,255,0.2);
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.28);
+}
+
+.venue-card__icon {
+  color: #0057ff;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.venue-card__icon svg {
+  width: 36px;
+  height: 36px;
+  stroke: #0057ff;
+  stroke-width: 1.5;
+  fill: none;
+}
+
+.venue-card__name {
+  font-size: 24px;
+  font-weight: var(--weight-bold);
+  color: var(--text-primary);
+  text-align: center;
+  margin: 0;
+}
+
+.venue-card__badge {
+  background: rgba(255,255,255,0.1);
+  border-radius: 50px;
+  padding: 6px 16px;
+  font-size: 12px;
+  font-weight: var(--weight-bold);
+  letter-spacing: 2px;
+  color: var(--text-primary);
+}
+
+.venue-card__desc {
+  font-size: 15px;
+  font-weight: var(--weight-regular);
+  color: rgba(255,255,255,0.6);
+  text-align: center;
+  line-height: 1.7;
+  margin: 0;
+  flex: 1;
+}
+
+/* 360° Globe — sp4 z Pencil */
+.venue-card__globe {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.globe__sphere {
+  width: 56px;
+  height: 56px;
+  position: relative;
+  filter: drop-shadow(0 0 12px rgba(69, 144, 255, 0.53)) drop-shadow(0 0 4px rgba(69, 144, 255, 0.35));
+}
+
+.globe__sphere svg {
+  width: 56px;
+  height: 56px;
+}
+
+/* Radial glow pozadie za glóbusom */
+.globe__sphere::before {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(69, 144, 255, 0.33) 0%,
+    rgba(0, 87, 255, 0.1) 60%,
+    transparent 100%
+  );
+  z-index: -1;
+}
+
+.globe__label {
+  font-size: 10px;
+  font-weight: var(--weight-bold);
+  letter-spacing: 2px;
+  color: #4590FF;
+  text-transform: uppercase;
+}
+
+.venue-card__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #1B00E2 0%, #0057FF 100%);
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: var(--weight-bold);
+  color: var(--text-primary);
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  letter-spacing: 2px;
+  transition: opacity 0.2s ease;
+}
+
+.venue-card__btn:hover {
+  opacity: 0.85;
+}
+
+/* ---- RESPONSIVE ---- */
+@media (max-width: 1200px) {
+  .venues__grid { gap: 16px; }
+  .venue-card { padding: 32px; min-height: auto; }
+}
+
+@media (max-width: 900px) {
+  .events-intro { padding: 80px 24px; }
+  .events-intro__title { font-size: 36px; }
+  .venues { padding: 80px 24px; }
+  .venues__title { font-size: 36px; }
+  .venues__grid { flex-wrap: wrap; gap: 16px; }
+  .venue-card { flex: 1 1 calc(33.333% - 16px); min-width: 200px; padding: 28px; }
+  .venue-card__name { font-size: 18px; }
+}
+
+@media (max-width: 600px) {
+  .venues__grid { flex-wrap: wrap; }
+  .venue-card { flex: 1 1 100%; min-width: 0; max-width: 100%; }
+}

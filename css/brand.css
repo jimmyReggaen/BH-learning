@@ -1,0 +1,228 @@
+/* ============================================
+   BIOMETRICS HOUSE — Brand Components
+   Zdroj: bh-gradients-2026 + bh-buttons-showcase
+   Sync: 2026-04-10
+   ============================================ */
+
+/* ── GRADIENT BACKGROUNDS ── */
+
+/* 01 Aurora Mesh */
+.bg-deep-ocean {
+  background:
+    radial-gradient(ellipse 140% 120% at 15% 15%, rgba(27,0,226,0.8) 0%, transparent 55%),
+    radial-gradient(ellipse 100% 100% at 85% 85%, rgba(69,144,255,0.3) 0%, transparent 55%),
+    #031C40;
+}
+.bg-midnight-pulse {
+  background:
+    radial-gradient(ellipse 130% 110% at 20% 20%, rgba(0,87,255,0.9) 0%, transparent 50%),
+    radial-gradient(ellipse 80% 80% at 80% 80%, rgba(27,0,226,0.6) 0%, transparent 50%),
+    #031C40;
+}
+.bg-nordic-blue {
+  background:
+    radial-gradient(ellipse 120% 100% at 10% 30%, rgba(27,0,226,0.4) 0%, transparent 55%),
+    radial-gradient(ellipse 90% 90% at 90% 70%, rgba(69,144,255,0.25) 0%, transparent 55%),
+    #031C40;
+}
+.bg-sapphire-glow {
+  background:
+    radial-gradient(ellipse 100% 100% at 50% 50%, rgba(27,0,226,0.5) 0%, transparent 50%),
+    radial-gradient(ellipse 80% 80% at 80% 20%, rgba(0,87,255,0.3) 0%, transparent 50%),
+    radial-gradient(ellipse 70% 70% at 20% 80%, rgba(69,144,255,0.3) 0%, transparent 50%),
+    #031C40;
+}
+
+/* 02 Soft Flow (animated) */
+@keyframes softFlow {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.bg-ocean-breeze {
+  background: linear-gradient(135deg, #031C40, #1B00E2, #4590FF);
+  background-size: 300% 300%;
+  animation: softFlow 10s ease infinite;
+}
+.bg-twilight {
+  background: linear-gradient(135deg, #031C40, #1B00E2, #0057FF);
+  background-size: 300% 300%;
+  animation: softFlow 12s ease infinite;
+}
+.bg-steel-wave {
+  background: linear-gradient(135deg, #031C40, #0057FF, #1B00E2);
+  background-size: 300% 300%;
+  animation: softFlow 14s ease infinite;
+}
+
+/* 04 Radial Glow (animated) */
+@keyframes glowPulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.7; }
+}
+@keyframes glowShift {
+  0%, 100% { background-position: 0% 0%; }
+  50%      { background-position: 100% 100%; }
+}
+.bg-core {
+  background:
+    radial-gradient(circle at 50% 50%, rgba(27,0,226,0.4), rgba(3,28,64,0.6) 50%, #031C40);
+  animation: glowPulse 6s ease-in-out infinite;
+}
+.bg-beam {
+  background:
+    radial-gradient(ellipse 100% 50% at 50% 0%, rgba(27,0,226,0.35), transparent 50%),
+    radial-gradient(ellipse 100% 50% at 50% 100%, rgba(3,28,64,0.5), transparent 50%),
+    #031C40;
+  animation: glowShift 8s ease-in-out infinite;
+}
+
+/* ── BUTTONS ── */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 0.875rem;
+  border: none;
+  cursor: pointer;
+  padding: 0 1.25rem;
+  height: 44px;
+  border-radius: 10px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+}
+.btn:hover  { transform: translateY(-2px); }
+.btn:active { transform: translateY(0) scale(0.97); }
+
+/* Sizes */
+.btn-lg   { height: 52px; padding: 0 1.75rem; font-size: 1rem; border-radius: 12px; }
+.btn-pill { border-radius: 999px; }
+.btn-icon { width: 44px; height: 44px; padding: 0; border-radius: 50%; justify-content: center; }
+
+/* 01 — Solid */
+.btn-primary { background: #1B00E2; color: #fff; }
+.btn-primary:hover { box-shadow: 0 8px 30px rgba(27,0,226,0.4); }
+
+.btn-azure { background: #0057FF; color: #fff; }
+.btn-azure:hover { box-shadow: 0 8px 30px rgba(0,87,255,0.4); }
+
+.btn-sky { background: #4590FF; color: #fff; }
+.btn-sky:hover { box-shadow: 0 8px 30px rgba(69,144,255,0.4); }
+
+.btn-dark { background: #031C40; color: #fff; border: 1px solid rgba(255,255,255,0.1); }
+.btn-dark:hover { box-shadow: 0 8px 30px rgba(0,0,0,0.5); }
+
+.btn-outline-primary { background: transparent; color: #1B00E2; border: 2px solid #1B00E2; }
+.btn-outline-primary:hover { background: rgba(27,0,226,0.08); }
+
+.btn-outline-azure { background: transparent; color: #0057FF; border: 2px solid #0057FF; }
+.btn-outline-azure:hover { background: rgba(0,87,255,0.08); }
+
+.btn-ghost { background: transparent; color: #4590FF; }
+.btn-ghost:hover { background: rgba(69,144,255,0.08); }
+
+/* 02 — Gradient */
+.btn-grad-ocean   { background: linear-gradient(135deg, #0057FF, #4590FF); color: #fff; }
+.btn-grad-ocean:hover { box-shadow: 0 8px 30px rgba(0,87,255,0.4); }
+
+.btn-grad-violet  { background: linear-gradient(135deg, #1B00E2, #0057FF); color: #fff; }
+.btn-grad-violet:hover { box-shadow: 0 8px 30px rgba(27,0,226,0.4); }
+
+.btn-grad-electric { background: linear-gradient(135deg, #1B00E2, #4590FF); color: #fff; }
+.btn-grad-electric:hover { box-shadow: 0 8px 30px rgba(27,0,226,0.3); }
+
+.btn-grad-aurora  { background: linear-gradient(135deg, #1B00E2, #0057FF, #4590FF); color: #fff; }
+.btn-grad-aurora:hover { box-shadow: 0 8px 30px rgba(69,144,255,0.3); }
+
+.btn-grad-deep    { background: linear-gradient(135deg, #031C40, #1B00E2); color: #fff; }
+.btn-grad-midnight { background: linear-gradient(135deg, #031C40, #0057FF); color: #fff; }
+
+/* 03 — Liquid Glass */
+.btn-glass {
+  background: rgba(255,255,255,0.2);
+  color: #031C40;
+  border: 1px solid rgba(255,255,255,0.4);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  box-shadow:
+    inset 0 2px 10px rgba(255,255,255,0.2),
+    inset 0 -1px 4px rgba(0,0,0,0.06),
+    0 4px 16px rgba(0,0,0,0.1);
+}
+.btn-glass:hover {
+  background: rgba(255,255,255,0.3);
+  border-color: rgba(255,255,255,0.5);
+  box-shadow:
+    inset 0 2px 12px rgba(255,255,255,0.25),
+    0 8px 32px rgba(0,0,0,0.15);
+}
+
+.btn-glass-blue {
+  background: rgba(0,87,255,0.15);
+  color: #fff;
+  border: 1px solid rgba(0,87,255,0.35);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  box-shadow: inset 0 2px 10px rgba(69,144,255,0.15), 0 4px 16px rgba(0,0,0,0.1);
+}
+.btn-glass-blue:hover {
+  background: rgba(0,87,255,0.22);
+  border-color: rgba(0,87,255,0.5);
+  box-shadow: inset 0 2px 12px rgba(69,144,255,0.2), 0 0 24px rgba(0,87,255,0.2);
+}
+
+.btn-glass-neon {
+  background: rgba(27,0,226,0.12);
+  color: #fff;
+  border: 1.5px solid #1B00E2;
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  box-shadow: 0 0 20px rgba(27,0,226,0.25), 0 0 40px rgba(27,0,226,0.1);
+}
+.btn-glass-neon:hover {
+  box-shadow: 0 0 28px rgba(27,0,226,0.4), 0 0 56px rgba(27,0,226,0.15);
+  background: rgba(27,0,226,0.18);
+}
+
+/* ── CARDS ── */
+
+/* Solid card */
+.card-solid {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 1.75rem;
+  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), box-shadow 0.4s;
+}
+.card-solid:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,0.3); }
+.card-solid.c-primary { border-color: rgba(27,0,226,0.3); background: rgba(27,0,226,0.06); }
+.card-solid.c-azure   { border-color: rgba(0,87,255,0.3); background: rgba(0,87,255,0.06); }
+.card-solid.c-sky     { border-color: rgba(69,144,255,0.3); background: rgba(69,144,255,0.06); }
+
+/* Glass card — Apple Liquid Glass */
+.card-glass {
+  background: rgba(255,255,255,0.22);
+  border: 1px solid rgba(255,255,255,0.4);
+  border-radius: 20px;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  box-shadow:
+    inset 0 4px 20px rgba(255,255,255,0.2),
+    inset 0 -2px 8px rgba(0,0,0,0.06),
+    0 8px 32px rgba(0,0,0,0.12);
+  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), box-shadow 0.4s, background 0.3s;
+}
+.card-glass:hover {
+  background: rgba(255,255,255,0.3);
+  border-color: rgba(255,255,255,0.5);
+  box-shadow:
+    inset 0 4px 24px rgba(255,255,255,0.25),
+    inset 0 -2px 10px rgba(0,0,0,0.08),
+    0 16px 48px rgba(0,0,0,0.18);
+  transform: translateY(-4px);
+}
