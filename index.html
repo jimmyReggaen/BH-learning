@@ -475,7 +475,6 @@
 
       heroCards.classList.add('events-expanded');
       document.querySelectorAll('.locked-section').forEach(el => el.classList.remove('locked-section'));
-      document.querySelector('.building-scroll').classList.remove('locked-section-building');
 
       // Počkaj: 650ms animácia titulkov + 850ms pauza (názov ostane v obraze)
       setTimeout(() => {
@@ -521,7 +520,6 @@
           heroCards.classList.remove('events-expanded');
           document.querySelector('.events-intro').classList.add('locked-section');
           document.querySelector('.venues').classList.add('locked-section');
-          document.querySelector('.building-scroll').classList.add('locked-section-building');
         }
 
         if (activeSection === 'house') {
