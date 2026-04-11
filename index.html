@@ -30,6 +30,9 @@
     .locked-section-house {
       display: none !important;
     }
+    .locked-section-building {
+      display: none !important;
+    }
   </style>
 </head>
 <body>
@@ -333,6 +336,15 @@
   </section>
 
   <!-- =============================================
+       BUILDING EXPLODE — Scroll Sequence
+       ============================================= -->
+  <div class="building-scroll locked-section-building">
+    <div class="building-sticky">
+      <canvas id="buildingCanvas"></canvas>
+    </div>
+  </div>
+
+  <!-- =============================================
        FOOTER — PR4Gk (Pencil)
        ============================================= -->
   <footer class="bh-footer locked-section-house" style="
@@ -463,12 +475,14 @@
 
       heroCards.classList.add('events-expanded');
       document.querySelectorAll('.locked-section').forEach(el => el.classList.remove('locked-section'));
+      document.querySelector('.building-scroll').classList.remove('locked-section-building');
 
+      // Počkaj: 650ms animácia titulkov + 850ms pauza (názov ostane v obraze)
       setTimeout(() => {
         const target = document.querySelector('.events-intro');
         const top = target.getBoundingClientRect().top + window.scrollY;
         window.scrollTo({ top, behavior: 'smooth' });
-      }, 680);
+      }, 1500);
     });
 
     // ── ZISTIŤ VIAC — expand House karta doprava ──
@@ -479,12 +493,14 @@
 
       heroCards.classList.add('house-expanded');
       document.querySelectorAll('.locked-section-house').forEach(el => el.classList.remove('locked-section-house'));
+      document.querySelector('.building-scroll').classList.remove('locked-section-building');
 
+      // Počkaj: 650ms animácia titulkov + 850ms pauza (názov ostane v obraze)
       setTimeout(() => {
         const target = document.querySelector('.bh-vision');
         const top = target.getBoundingClientRect().top + window.scrollY;
         window.scrollTo({ top, behavior: 'smooth' });
-      }, 680);
+      }, 1500);
     });
 
     // ── REVERZ: reset keď sa user vráti späť do hero ──
@@ -505,6 +521,7 @@
           heroCards.classList.remove('events-expanded');
           document.querySelector('.events-intro').classList.add('locked-section');
           document.querySelector('.venues').classList.add('locked-section');
+          document.querySelector('.building-scroll').classList.add('locked-section-building');
         }
 
         if (activeSection === 'house') {
@@ -512,6 +529,7 @@
           document.querySelectorAll('.bh-vision, .bh-pillars, .bh-audience, .bh-cta, .bh-footer').forEach(el => {
             el.classList.add('locked-section-house');
           });
+          document.querySelector('.building-scroll').classList.add('locked-section-building');
         }
 
         activeSection = null;
@@ -537,6 +555,70 @@
         card.style.setProperty('--glow-opacity', '0');
       });
     });
+
+    // ── Building Explode — Scroll Sequence ──
+    (function() {
+      const canvas = document.getElementById('buildingCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const buildingScroll = document.querySelector('.building-scroll');
+
+      const FRAME_START = 16;
+      const FRAME_END = 295;
+      const FRAME_COUNT = FRAME_END - FRAME_START + 1; // 280
+      const frames = [];
+      let loadedCount = 0;
+
+      // Preload všetkých framov
+      for (let i = FRAME_START; i <= FRAME_END; i++) {
+        const img = new Image();
+        const num = String(i).padStart(5, '0');
+        img.src = `images/building-web/slide2_${num}.png`;
+        img.onload = () => {
+          loadedCount++;
+          // Vykreslí prvý frame keď sa načíta
+          if (i === FRAME_START) drawFrame(0);
+        };
+        frames.push(img);
+      }
+
+      function drawFrame(index) {
+        const img = frames[index];
+        if (!img || !img.complete) return;
+
+        // Nastav canvas na veľkosť okna
+        canvas.width = canvas.offsetWidth * window.devicePixelRatio;
+        canvas.height = canvas.offsetHeight * window.devicePixelRatio;
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Vypočítaj contain rozmery
+        const scale = Math.min(
+          canvas.width / img.naturalWidth,
+          canvas.height / img.naturalHeight
+        );
+        const w = img.naturalWidth * scale;
+        const h = img.naturalHeight * scale;
+        const x = (canvas.width - w) / 2;
+        const y = (canvas.height - h) / 2;
+
+        ctx.drawImage(img, x, y, w, h);
+      }
+
+      function onBuildingScroll() {
+        const rect = buildingScroll.getBoundingClientRect();
+        const scrollHeight = buildingScroll.offsetHeight - window.innerHeight;
+        const scrolled = -rect.top;
+        const progress = Math.max(0, Math.min(1, scrolled / scrollHeight));
+
+        // Mapuj progress na frame index
+        const frameIndex = Math.round(progress * (FRAME_COUNT - 1));
+        drawFrame(frameIndex);
+      }
+
+      window.addEventListener('scroll', onBuildingScroll, { passive: true });
+      window.addEventListener('resize', onBuildingScroll);
+    })();
   </script>
 
 </body>
