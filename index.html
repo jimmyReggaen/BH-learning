@@ -503,7 +503,19 @@
     });
 
     // ── REVERZ: reset keď sa user vráti späť do hero ──
+    let scrollLocked = false;
+    const cardsMinScroll = () => heroScroll.offsetHeight - window.innerHeight;
+
     window.addEventListener('scroll', () => {
+      // Ak je scroll zamknutý na glass kartách, nedovoľ scrollovať vyššie
+      if (scrollLocked) {
+        const minPos = cardsMinScroll();
+        if (window.scrollY < minPos) {
+          window.scrollTo({ top: minPos });
+        }
+        return;
+      }
+
       if (!activeSection) return;
 
       const heroBottom = heroScroll.getBoundingClientRect().bottom;
@@ -532,11 +544,15 @@
 
         activeSection = null;
 
-        // Zastav scroll na glass kartách (raw = 1.0 = koniec hero-scroll)
-        const cardsPosition = heroScroll.offsetHeight - window.innerHeight;
-        window.scrollTo({ top: cardsPosition, behavior: 'smooth' });
+        // Zastav scroll na glass kartách a zamkni pozíciu
+        const cardsPosition = cardsMinScroll();
+        window.scrollTo({ top: cardsPosition });
+        scrollLocked = true;
+
+        // Odomkni po krátkom čase (user musí scrollovať dole pre ďalšiu akciu)
+        setTimeout(() => { scrollLocked = false; }, 800);
       }
-    }, { passive: true });
+    });
 
     // ── Cursor glow tracking na glass kartách + venue kartách ──
     document.querySelectorAll('.hero-card, .venue-card').forEach(card => {
