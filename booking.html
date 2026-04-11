@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Biometrics House — Rezervácia eventu</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
+
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+  <link rel="stylesheet" href="css/booking.css" />
+</head>
+<body class="booking">
+
+  <div class="booking-shell">
+
+    <!-- ============ TOP BAR ============ -->
+    <header class="booking-topbar">
+      <div class="booking-topbar__logo">
+        <img src="images/SimpleLogoBlue.png" alt="Biometrics House" />
+      </div>
+      <button class="booking-topbar__close" aria-label="Zatvoriť rezerváciu">
+        <i data-lucide="x"></i>
+      </button>
+    </header>
+
+    <!-- ============ BODY (stepper + main) ============ -->
+    <div class="booking-body">
+
+      <nav class="booking-stepper" aria-label="Kroky rezervácie">
+        <ol>
+          <li><button type="button" class="step is-active" data-step="1">
+            <span class="step__num">01</span><span class="step__label">Dátum</span>
+          </button></li>
+          <li><button type="button" class="step is-locked" data-step="2">
+            <span class="step__num">02</span><span class="step__label">Priestor</span>
+          </button></li>
+          <li><button type="button" class="step is-locked" data-step="3">
+            <span class="step__num">03</span><span class="step__label">Sedenie</span>
+          </button></li>
+          <li><button type="button" class="step is-locked" data-step="4">
+            <span class="step__num">04</span><span class="step__label">Technika</span>
+          </button></li>
+          <li><button type="button" class="step is-locked" data-step="5">
+            <span class="step__num">05</span><span class="step__label">Staff</span>
+          </button></li>
+          <li><button type="button" class="step is-locked" data-step="6">
+            <span class="step__num">06</span><span class="step__label">Súhrn</span>
+          </button></li>
+        </ol>
+      </nav>
+
+      <main class="booking-main">
+
+        <!-- ============ STEP 1: DÁTUM ============ -->
+        <section class="step-panel is-active" data-step-panel="1">
+          <span class="eyebrow">01 — Dátum</span>
+          <h1 class="display">Kedy sa to stane?</h1>
+          <p class="supporting">
+            Vyberte deň a časové okno pre váš event.
+            Dostupnosť miestností sa zobrazí v ďalšom kroku.
+          </p>
+          <hr class="rule" />
+
+          <div class="calendar">
+
+            <div class="calendar__monthrow">
+              <button class="calendar__navbtn" data-month-nav="-1" aria-label="Predchádzajúci mesiac">
+                <i data-lucide="chevron-left"></i>
+              </button>
+              <span class="calendar__monthlabel" id="monthLabel">APRÍL 2026</span>
+              <button class="calendar__navbtn" data-month-nav="1" aria-label="Nasledujúci mesiac">
+                <i data-lucide="chevron-right"></i>
+              </button>
+            </div>
+
+            <div class="calendar__grid-wrap">
+              <div class="calendar__weekheader">
+                <span>PO</span><span>UT</span><span>ST</span><span>ŠT</span><span>PI</span><span>SO</span><span>NE</span>
+              </div>
+              <div class="calendar__grid" id="monthGrid"></div>
+            </div>
+
+            <div class="calendar__legend">
+              <span class="legend__item"><span class="legend__dot legend__dot--free"></span>Voľné</span>
+              <span class="legend__item"><span class="legend__dot legend__dot--partial"></span>Čiastočne obsadené</span>
+              <span class="legend__item"><span class="legend__dot legend__dot--full"></span>Plne obsadené</span>
+              <span class="legend__item"><span class="legend__dot legend__dot--past"></span>Minulé</span>
+            </div>
+
+            <div class="calendar__timerow">
+              <div class="timeblock">
+                <label for="timeFrom" class="timeblock__label">OD</label>
+                <input type="time" class="timeblock__value" id="timeFrom" value="18:00" />
+              </div>
+              <div class="timeblock">
+                <label for="timeTo" class="timeblock__label">DO</label>
+                <input type="time" class="timeblock__value" id="timeTo" value="23:00" />
+              </div>
+            </div>
+
+            <p id="selectedDateHint" class="calendar__hint">
+              Zatiaľ nie je vybratý žiadny deň.
+            </p>
+
+          </div>
+        </section>
+
+        <!-- ============ STEP 2: PRIESTOR ============ -->
+        <section class="step-panel step-panel--wide" data-step-panel="2">
+          <div class="step2-head">
+            <span class="eyebrow">02 — Priestor</span>
+            <h1 class="display display--compact">Ktoré miestnosti potrebujete?</h1>
+          </div>
+          <hr class="rule" />
+
+          <div class="step2-split">
+
+          <div class="floorplan">
+            <div class="floorplan__header">
+              <span class="floorplan__eyebrow">Pôdorys — 2. poschodie</span>
+            </div>
+            <div class="floorplan__canvas">
+              <img src="images/floorplan/base.png"        alt="Pôdorys Biometrics House" class="fp-layer fp-layer--base" />
+              <img src="images/floorplan/nexus.png"       alt="" class="fp-layer fp-overlay" data-room-overlay="nexus" />
+              <img src="images/floorplan/observatory.png" alt="" class="fp-layer fp-overlay" data-room-overlay="observatory" />
+              <img src="images/floorplan/training.png"    alt="" class="fp-layer fp-overlay" data-room-overlay="training" />
+              <img src="images/floorplan/bistro.png"      alt="" class="fp-layer fp-overlay" data-room-overlay="bistro" />
+
+              <svg class="floorplan__hitmap" viewBox="0 0 5505 4310" preserveAspectRatio="xMidYMid meet" id="floorplanSvg" aria-label="Klikateľné zóny miestností">
+                <g class="fp-room" data-room="bistro">
+                  <rect x="800" y="400" width="1500" height="1700" rx="120" />
+                </g>
+                <g class="fp-room" data-room="training">
+                  <rect x="2500" y="350" width="1100" height="900" rx="60" />
+                </g>
+                <g class="fp-room" data-room="observatory">
+                  <rect x="3550" y="450" width="1100" height="1150" rx="550" />
+                </g>
+                <g class="fp-room" data-room="nexus">
+                  <rect x="1600" y="1400" width="2400" height="1650" rx="100" />
+                </g>
+              </svg>
+            </div>
+          </div>
+
+          <aside class="step2-rail">
+            <div class="rooms" id="roomsList"></div>
+            <div class="rail-summary">
+              <div class="rail-summary__row">
+                <span class="rail-summary__label">Vybrané</span>
+                <span class="rail-summary__value" id="railCount">0</span>
+              </div>
+              <div class="rail-summary__row">
+                <span class="rail-summary__label">Trvanie</span>
+                <span class="rail-summary__value" id="railHours">5h</span>
+              </div>
+              <div class="rail-summary__row rail-summary__row--total">
+                <span class="rail-summary__label">Medzisúčet</span>
+                <span class="rail-summary__value" id="railSubtotal">0 €</span>
+              </div>
+            </div>
+          </aside>
+
+          </div>
+        </section>
+
+        <!-- ============ STEP 3: SEDENIE ============ -->
+        <section class="step-panel" data-step-panel="3">
+          <span class="eyebrow">03 — Sedenie</span>
+          <h1 class="display">Ako to usporiadame?</h1>
+          <p class="supporting">
+            Pre každú vybranú miestnosť si vyberiete spôsob sedenia.
+            Každý setup má vlastnú maximálnu kapacitu.
+          </p>
+          <hr class="rule" />
+          <div class="placeholder-panel">
+            <p><strong>5 variantov sedenia</strong></p>
+            <p>Konferenčné okrúhle stoly · Eventové stoly · Divadlo · Classroom · Cocktail / stand-up</p>
+            <p class="mono">// Každý variant = schematická ikona + max kapacita + cena navyše</p>
+          </div>
+        </section>
+
+        <!-- ============ STEP 4: TECHNIKA ============ -->
+        <section class="step-panel" data-step-panel="4">
+          <span class="eyebrow">04 — Technika</span>
+          <h1 class="display">Čo budete potrebovať?</h1>
+          <p class="supporting">
+            Ozvučenie, video záznam, LED steny, mikrofóny, osvetlenie.
+            Pridávajte a odoberajte podľa potreby.
+          </p>
+          <hr class="rule" />
+          <div class="placeholder-panel">
+            <p><strong>Katalóg technického vybavenia</strong></p>
+            <p>Zvuk · Video & strih · LED steny · Mikrofóny · Osvetlenie · Aparatúra</p>
+            <p class="mono">// Karty s +/− quantity, cena za kus, total sa aktualizuje v spodnej lište</p>
+          </div>
+        </section>
+
+        <!-- ============ STEP 5: STAFF ============ -->
+        <section class="step-panel" data-step-panel="5">
+          <span class="eyebrow">05 — Staff</span>
+          <h1 class="display">Kto bude na evente pracovať?</h1>
+          <p class="supporting">
+            Čašníci, servírky, upratovačky, speakers, hostesky.
+            Nastavte počet ľudí a hodiny.
+          </p>
+          <hr class="rule" />
+          <div class="placeholder-panel">
+            <p><strong>Personál</strong></p>
+            <p>Čašníci · Servírky · Upratovačky · Hostesky · Speakers · Tlmočníci</p>
+            <p class="mono">// Pre každého: počet osôb × hodiny × hodinová sadzba</p>
+          </div>
+        </section>
+
+        <!-- ============ STEP 6: SÚHRN ============ -->
+        <section class="step-panel" data-step-panel="6">
+          <span class="eyebrow">06 — Súhrn</span>
+          <h1 class="display">Toto je váš event.</h1>
+          <p class="supporting">
+            Skontrolujte všetko, upravte čo potrebujete,
+            a pošlite dopyt nášmu tímu. Ozveme sa do 24 hodín.
+          </p>
+          <hr class="rule" />
+          <div class="placeholder-panel">
+            <p><strong>Finálny súhrn + kontaktný formulár</strong></p>
+            <p>
+              Editorial rekapitulácia (dátum, miestnosti, sedenie, technika, staff)
+              s editovateľnými riadkami + formulár (meno, firma, email, tel, poznámka).
+            </p>
+            <p class="mono">// Submit → email na BH kontakt + potvrdzovací email klientovi</p>
+          </div>
+        </section>
+
+      </main>
+    </div>
+
+    <!-- ============ BOTTOM BAR ============ -->
+    <footer class="booking-bottombar">
+      <div class="booking-total">
+        <span class="booking-total__label">CELKOM</span>
+        <span class="booking-total__value" id="totalValue">0 €</span>
+        <button type="button" class="booking-total__detail">Detail ▲</button>
+      </div>
+      <div class="booking-nav">
+        <button type="button" class="booking-nav__btn booking-nav__btn--back" id="backBtn" disabled>
+          ← Späť
+        </button>
+        <button type="button" class="booking-nav__btn booking-nav__btn--next" id="nextBtn">
+          Pokračovať →
+        </button>
+      </div>
+    </footer>
+
+  </div>
+
+  <script src="js/booking.js"></script>
+  <script>lucide.createIcons();</script>
+</body>
+</html>
