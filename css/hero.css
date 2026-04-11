@@ -56,7 +56,7 @@
   will-change: transform;
 }
 
-/* Tmavý overlay cez interiér */
+/* Tmavý overlay cez interiér — opacity riadená z JS spolu s interiérom */
 .hero-interior-overlay {
   position: absolute;
   inset: 0;
@@ -67,6 +67,7 @@
     rgba(3, 28, 64, 0.7) 100%
   );
   z-index: 3;
+  opacity: 0;
 }
 
 /* --- VRSTVA 3: Glass karty --- */

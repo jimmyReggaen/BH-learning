@@ -407,6 +407,7 @@
     const heroInterior = document.getElementById('heroInterior');
     const heroInteriorImg = document.getElementById('heroInteriorImg');
     const heroCards    = document.getElementById('heroCards');
+    const heroOverlay  = document.querySelector('.hero-interior-overlay');
     const scrollHint   = document.getElementById('scrollHint');
 
     function lerp(a, b, t) { return a + (b - a) * t; }
@@ -436,6 +437,7 @@
       const interiorScale   = lerp(1.15, 1, p2e);
 
       heroInterior.style.opacity = interiorOpacity;
+      heroOverlay.style.opacity = interiorOpacity;
       heroInteriorImg.style.transform = `scale(${interiorScale})`;
 
       // --- BLUR: začína až po ~3 otočeniach kolečka po tom čo sa interiér objaví ---
