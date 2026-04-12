@@ -173,13 +173,30 @@ let state = loadState();
 function goToStep(n) {
   if (n < 1 || n > 6) return;
   if (n > state.maxStepReached) return; // locked
+
+  // Exit animation on current panel
+  const currentPanel = document.querySelector('.step-panel.is-active');
+  if (currentPanel && n !== state.step) {
+    currentPanel.classList.add('is-exiting');
+    currentPanel.addEventListener('animationend', () => {
+      currentPanel.classList.remove('is-exiting');
+      state.step = n;
+      saveState();
+      renderStepper();
+      renderPanels();
+      renderBottomBar();
+      const main = document.querySelector('.booking-main');
+      if (main) main.scrollTop = 0;
+    }, { once: true });
+    return;
+  }
+
   state.step = n;
   saveState();
   renderStepper();
   renderPanels();
   renderBottomBar();
 
-  // Scroll main panel to top on step change
   const main = document.querySelector('.booking-main');
   if (main) main.scrollTop = 0;
 }
@@ -236,7 +253,19 @@ function renderBottomBar() {
 
   // Total (placeholder — actual pricing comes from selected items)
   const valueEl = document.getElementById('totalValue');
-  valueEl.textContent = `${state.total.toLocaleString('sk-SK')} €`;
+  const oldText = valueEl.textContent;
+  const newText = `${state.total.toLocaleString('sk-SK')} €`;
+  valueEl.textContent = newText;
+
+  // Pulse when value actually changes
+  if (oldText !== newText && oldText !== '0 €') {
+    valueEl.classList.remove('is-pulse');
+    void valueEl.offsetWidth; // force reflow for re-trigger
+    valueEl.classList.add('is-pulse');
+    valueEl.addEventListener('animationend', () => {
+      valueEl.classList.remove('is-pulse');
+    }, { once: true });
+  }
 }
 
 /* ---- RENDER: MONTH GRID ---- */
@@ -336,6 +365,7 @@ function renderRooms() {
     btn.type = 'button';
     btn.className = 'room' + (selected ? ' is-selected' : '');
     btn.setAttribute('aria-pressed', selected ? 'true' : 'false');
+    btn.setAttribute('data-room-row', r.id);
     btn.style.setProperty('--room-color', r.color);
     btn.innerHTML = `
       <span class="room__num">${r.num}</span>
@@ -347,6 +377,8 @@ function renderRooms() {
       <span class="room__toggle">+</span>
     `;
     btn.addEventListener('click', () => toggleRoom(r.id));
+    btn.addEventListener('mouseenter', () => previewRoom(r.id, true));
+    btn.addEventListener('mouseleave', () => previewRoom(r.id, false));
     list.appendChild(btn);
   });
 
@@ -393,6 +425,7 @@ function renderRailSummary() {
 }
 
 function toggleRoom(id) {
+  const wasSelected = state.rooms.includes(id);
   const idx = state.rooms.indexOf(id);
   if (idx === -1) state.rooms.push(id);
   else state.rooms.splice(idx, 1);
@@ -400,6 +433,26 @@ function toggleRoom(id) {
   saveState();
   renderRooms();
   renderBottomBar();
+
+  // Pop feedback on newly selected room
+  if (!wasSelected) {
+    const row = document.querySelector(`.room[data-room-row="${id}"]`);
+    if (row) {
+      row.classList.add('just-toggled');
+      row.addEventListener('animationend', () => {
+        row.classList.remove('just-toggled');
+      }, { once: true });
+    }
+  }
+}
+
+function previewRoom(id, on) {
+  const overlay = document.querySelector(`.fp-overlay[data-room-overlay="${id}"]`);
+  if (overlay) overlay.classList.toggle('is-preview', on);
+  const hit = document.querySelector(`.fp-room[data-room="${id}"]`);
+  if (hit) hit.classList.toggle('is-preview', on);
+  const row = document.querySelector(`.room[data-room-row="${id}"]`);
+  if (row) row.classList.toggle('is-preview', on);
 }
 
 /* ---- QUERY PARAM PRESELECT ---- */
@@ -419,6 +472,18 @@ function shiftMonth(delta) {
   d.setMonth(d.getMonth() + delta);
   state.viewDate = d.toISOString();
   saveState();
+
+  // Add directional slide class before render
+  const grid = document.getElementById('monthGrid');
+  if (grid) {
+    grid.classList.remove('slide-left', 'slide-right');
+    grid.classList.add(delta > 0 ? 'slide-left' : 'slide-right');
+    // Remove after animation completes
+    setTimeout(() => {
+      grid.classList.remove('slide-left', 'slide-right');
+    }, 500);
+  }
+
   renderMonthGrid();
 }
 
@@ -458,14 +523,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Floorplan SVG click → toggle room (keyboard-accessible)
   document.querySelectorAll('.fp-room').forEach((g) => {
+    const id = g.dataset.room;
     g.setAttribute('role', 'button');
     g.setAttribute('tabindex', '0');
-    g.setAttribute('aria-label', `Prepnúť miestnosť ${getRoom(g.dataset.room)?.name || g.dataset.room}`);
-    g.addEventListener('click', () => toggleRoom(g.dataset.room));
+    g.setAttribute('aria-label', `Prepnúť miestnosť ${getRoom(id)?.name || id}`);
+    g.addEventListener('click', () => toggleRoom(id));
+    g.addEventListener('mouseenter', () => previewRoom(id, true));
+    g.addEventListener('mouseleave', () => previewRoom(id, false));
     g.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        toggleRoom(g.dataset.room);
+        toggleRoom(id);
       }
     });
   });

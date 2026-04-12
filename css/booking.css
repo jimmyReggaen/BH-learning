@@ -44,7 +44,12 @@
   --s-8: 64px;
   --s-9: 96px;
 
-  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-press: cubic-bezier(0.23, 1, 0.32, 1);
+  --dur-press: 160ms;
+  --dur-hover: 125ms;
+  --dur-ui: 200ms;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -98,12 +103,16 @@ body.booking {
   border-radius: 8px;
   color: var(--ink-muted);
   cursor: pointer;
-  transition: background 0.2s var(--ease-out), color 0.2s;
+  transition: background var(--dur-hover) ease, color var(--dur-hover) ease, transform var(--dur-press) var(--ease-press);
 }
 
 .booking-topbar__close:hover {
   background: var(--paper-deep);
   color: var(--ink);
+}
+
+.booking-topbar__close:active {
+  transform: scale(0.92);
 }
 
 .booking-topbar__close i { width: 20px; height: 20px; }
@@ -162,7 +171,7 @@ body.booking {
   font-family: inherit;
   text-align: left;
   width: 100%;
-  transition: opacity 0.2s;
+  transition: opacity var(--dur-ui) ease;
 }
 
 .step__num {
@@ -171,7 +180,7 @@ body.booking {
   font-weight: 700;
   color: var(--ink-faint);
   font-variant-numeric: tabular-nums;
-  transition: color 0.25s var(--ease-out), transform 0.3s var(--ease-out);
+  transition: color var(--dur-ui) var(--ease-out), transform var(--dur-ui) var(--ease-out);
   line-height: 0.9;
   letter-spacing: -0.035em;
   min-width: 64px;
@@ -183,7 +192,7 @@ body.booking {
   font-size: 16px;
   font-weight: 600;
   color: var(--ink-muted);
-  transition: color 0.25s var(--ease-out), transform 0.25s var(--ease-out);
+  transition: color var(--dur-ui) var(--ease-out), transform var(--dur-ui) var(--ease-out);
   line-height: 1;
   letter-spacing: -0.005em;
 }
@@ -223,7 +232,7 @@ body.booking {
   flex-direction: column;
   gap: 32px;
   max-width: 1100px;
-  animation: panel-in 0.5s var(--ease-out);
+  animation: panel-in 300ms var(--ease-out);
 }
 
 .step-panel--wide {
@@ -254,6 +263,15 @@ body.booking {
 @keyframes panel-in {
   from { opacity: 0; transform: translateY(8px); }
   to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes panel-out {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0; transform: translateY(-6px); }
+}
+
+.step-panel.is-exiting {
+  animation: panel-out 150ms var(--ease-out) forwards;
 }
 
 /* ---- TYPOGRAPHY PRIMITIVES ---- */
@@ -324,12 +342,16 @@ body.booking {
   border-radius: 8px;
   color: var(--ink-muted);
   cursor: pointer;
-  transition: all 0.2s var(--ease-out);
+  transition: border-color var(--dur-hover) ease, color var(--dur-hover) ease, transform var(--dur-press) var(--ease-press);
 }
 
 .calendar__navbtn:hover {
   border-color: var(--ink-muted);
   color: var(--ink);
+}
+
+.calendar__navbtn:active {
+  transform: scale(0.9);
 }
 
 .calendar__navbtn i { width: 16px; height: 16px; }
@@ -374,15 +396,22 @@ body.booking {
   cursor: pointer;
   text-align: left;
   font-family: inherit;
-  transition: all 0.2s var(--ease-out);
+  transition: border-color var(--dur-hover) ease, transform var(--dur-press) var(--ease-press), box-shadow var(--dur-ui) var(--ease-out), background var(--dur-hover) ease;
   position: relative;
   min-height: 96px;
 }
 
-.daycell:hover:not([disabled]):not(.is-other-month) {
-  border-color: var(--brand-sky);
-  transform: translateY(-1px);
-  box-shadow: 0 6px 18px rgba(27, 0, 226, 0.08);
+@media (hover: hover) and (pointer: fine) {
+  .daycell:hover:not([disabled]):not(.is-other-month) {
+    border-color: var(--brand-sky);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(27, 0, 226, 0.08);
+  }
+}
+
+.daycell:active:not([disabled]):not(.is-other-month):not(.is-past):not(.is-full) {
+  transform: scale(0.97);
+  transition-duration: var(--dur-press);
 }
 
 .daycell__num {
@@ -595,17 +624,28 @@ body.booking {
   transition: background 0.25s var(--ease-out);
 }
 
-.room:hover { background: var(--paper-deep); }
+.room:hover,
+.room.is-preview {
+  background: color-mix(in oklch, var(--room-color, var(--ink)) 6%, transparent);
+}
+
+.room.is-preview .room__num { opacity: 1; }
 
 .room__num {
   font-size: 12px;
   font-weight: 700;
-  color: var(--ink-faint);
+  color: var(--room-color, var(--ink-faint));
+  opacity: 0.55;
   font-variant-numeric: tabular-nums;
   letter-spacing: 2px;
   line-height: 1.6;
   padding-top: 2px;
-  transition: color 0.25s var(--ease-out);
+  transition: opacity 0.25s var(--ease-out), color 0.25s var(--ease-out);
+}
+
+.room:hover .room__num,
+.room.is-selected .room__num {
+  opacity: 1;
 }
 
 .room__body {
@@ -663,7 +703,7 @@ body.booking {
   display: grid;
   place-items: center;
   color: var(--ink-muted);
-  transition: all 0.25s var(--ease-out);
+  transition: background var(--dur-hover) ease, border-color var(--dur-hover) ease, color var(--dur-hover) ease, transform var(--dur-press) var(--ease-press);
   font-size: 18px;
   font-weight: 700;
   line-height: 1;
@@ -672,6 +712,10 @@ body.booking {
 .room:hover .room__toggle {
   border-color: var(--ink-muted);
   color: var(--ink);
+}
+
+.room:active .room__toggle {
+  transform: scale(0.9);
 }
 
 .room.is-selected .room__num {
@@ -685,6 +729,16 @@ body.booking {
   border-color: var(--room-color, var(--brand));
   color: #fff;
   transform: rotate(45deg);
+}
+
+.room.is-selected.just-toggled .room__toggle {
+  animation: toggle-pop 300ms var(--ease-out);
+}
+
+@keyframes toggle-pop {
+  0%   { transform: rotate(45deg) scale(0.7); }
+  50%  { transform: rotate(45deg) scale(1.15); }
+  100% { transform: rotate(45deg) scale(1); }
 }
 
 /* ---- RAIL SUMMARY ---- */
@@ -797,9 +851,10 @@ body.booking {
 
 .fp-overlay {
   opacity: 0;
-  transition: opacity 0.55s var(--ease-out);
+  transition: opacity 300ms var(--ease-out);
 }
 
+.fp-overlay.is-preview { opacity: 0.45; }
 .fp-overlay.is-visible { opacity: 1; }
 
 .floorplan__hitmap {
@@ -884,11 +939,18 @@ body.booking {
   color: var(--ink);
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.03em;
-  transition: color 0.3s var(--ease-out);
+  transition: color var(--dur-ui) var(--ease-out);
 }
 
 .booking-total__value.is-pulse {
   color: var(--brand);
+  animation: value-pulse 400ms var(--ease-out);
+}
+
+@keyframes value-pulse {
+  0%   { transform: scale(1); }
+  30%  { transform: scale(1.08); }
+  100% { transform: scale(1); }
 }
 
 .booking-total__detail {
@@ -901,10 +963,11 @@ body.booking {
   cursor: pointer;
   padding: 6px 10px;
   border-radius: 6px;
-  transition: background 0.2s;
+  transition: background var(--dur-hover) ease, transform var(--dur-press) var(--ease-press);
 }
 
 .booking-total__detail:hover { background: rgba(27, 0, 226, 0.06); }
+.booking-total__detail:active { transform: scale(0.95); }
 
 .booking-nav {
   display: flex;
@@ -920,7 +983,7 @@ body.booking {
   border-radius: 10px;
   border: 0;
   cursor: pointer;
-  transition: all 0.25s var(--ease-out);
+  transition: background var(--dur-hover) ease, color var(--dur-hover) ease, transform var(--dur-press) var(--ease-press), box-shadow var(--dur-ui) var(--ease-out);
 }
 
 .booking-nav__btn--back {
@@ -933,6 +996,10 @@ body.booking {
   color: var(--ink);
 }
 
+.booking-nav__btn--back:active {
+  transform: scale(0.97);
+}
+
 .booking-nav__btn--next {
   background: var(--brand);
   color: #FFFFFF;
@@ -941,19 +1008,25 @@ body.booking {
   box-shadow: 0 1px 2px rgba(27, 0, 226, 0.2);
 }
 
-.booking-nav__btn--next:hover {
-  background: #2a10ff;
-  box-shadow: 0 12px 32px rgba(27, 0, 226, 0.25);
-  transform: translateY(-1px);
+@media (hover: hover) and (pointer: fine) {
+  .booking-nav__btn--next:hover {
+    background: #2a10ff;
+    box-shadow: 0 12px 32px rgba(27, 0, 226, 0.25);
+    transform: translateY(-1px);
+  }
 }
 
-.booking-nav__btn--next:active { transform: translateY(0); }
+.booking-nav__btn--next:active {
+  transform: scale(0.97);
+  box-shadow: 0 1px 2px rgba(27, 0, 226, 0.15);
+}
 
 .booking-nav__btn:disabled {
   opacity: 0.35;
   cursor: not-allowed;
   transform: none !important;
   box-shadow: none !important;
+  transition: opacity var(--dur-ui) var(--ease-out), background var(--dur-hover) ease, color var(--dur-hover) ease;
 }
 
 /* ---- FOCUS RESET ---- */
@@ -971,6 +1044,44 @@ body.booking {
 }
 
 .timeblock__value:focus { color: var(--brand); }
+
+/* ---- CALENDAR STAGGER (Kowalski) ---- */
+
+.calendar__grid .daycell {
+  opacity: 0;
+  transform: translateY(8px);
+  animation: day-in 200ms var(--ease-out) forwards;
+}
+
+/* Month slide direction */
+.calendar__grid.slide-left .daycell {
+  transform: translateX(-12px);
+  animation-name: day-in-left;
+}
+
+.calendar__grid.slide-right .daycell {
+  transform: translateX(12px);
+  animation-name: day-in-right;
+}
+
+@keyframes day-in-left {
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes day-in-right {
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes day-in {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.calendar__grid .daycell:nth-child(-n+7)   { animation-delay: 0ms; }
+.calendar__grid .daycell:nth-child(n+8):nth-child(-n+14)  { animation-delay: 50ms; }
+.calendar__grid .daycell:nth-child(n+15):nth-child(-n+21) { animation-delay: 100ms; }
+.calendar__grid .daycell:nth-child(n+22):nth-child(-n+28) { animation-delay: 150ms; }
+.calendar__grid .daycell:nth-child(n+29):nth-child(-n+35) { animation-delay: 200ms; }
+.calendar__grid .daycell:nth-child(n+36)  { animation-delay: 250ms; }
 
 /* ---- SELECTED DATE HINT ---- */
 
@@ -1146,11 +1257,25 @@ body.booking {
   .booking-nav__btn--next { padding: 12px 22px; }
 }
 
-/* ---- REDUCED MOTION ---- */
+/* ---- REDUCED MOTION (Kowalski: keep opacity, remove transforms) ---- */
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
-    animation-duration: 0.001ms !important;
-    transition-duration: 0.001ms !important;
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+  }
+  .daycell:hover:not([disabled]):not(.is-other-month),
+  .daycell:active,
+  .booking-nav__btn--next:hover,
+  .booking-nav__btn--next:active,
+  .booking-nav__btn--back:active,
+  .booking-topbar__close:active,
+  .calendar__navbtn:active,
+  .room:active .room__toggle {
+    transform: none !important;
+  }
+  .daycell.is-selected {
+    transform: none;
   }
 }
