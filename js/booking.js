@@ -27,14 +27,14 @@ TODAY.setHours(0, 0, 0, 0);
    Each entry: { date: 'YYYY-MM-DD', title, full: bool } */
 const BOOKED_EVENTS = [
   { date: '2026-04-13', title: 'Konferencia SK-Tech', full: false },
-  { date: '2026-04-15', title: 'Launch Pharma AG',   full: false },
+  { date: '2026-04-15', title: 'Launch Pharma AG',    full: false },
   { date: '2026-04-17', title: 'Svadba Nováková',    full: true  },
   { date: '2026-04-18', title: 'Svadba Nováková',    full: true  },
   { date: '2026-04-21', title: 'Workshop UX',        full: false },
   { date: '2026-04-24', title: 'Gala VÚB',           full: true  },
   { date: '2026-04-28', title: 'Meetup AI SK',       full: false },
   { date: '2026-05-02', title: 'Konferencia DEMO',   full: false },
-  { date: '2026-05-06', title: 'Private event',     full: true  },
+  { date: '2026-05-06', title: 'Private event',      full: true  },
   { date: '2026-05-12', title: 'TEDx Bratislava',    full: false },
 ];
 
@@ -224,6 +224,13 @@ function renderStepper() {
     el.classList.toggle('is-completed', n < state.maxStepReached);
     el.classList.toggle('is-locked', n > state.maxStepReached);
   });
+
+  // Progress line — fills proportionally to current step
+  const ol = document.querySelector('.booking-stepper ol');
+  if (ol) {
+    const pct = ((state.step - 1) / 5) * 100; // 6 steps, 5 gaps
+    ol.style.setProperty('--progress', `${pct}%`);
+  }
 }
 
 /* ---- RENDER: PANELS ---- */

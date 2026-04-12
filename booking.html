@@ -11,9 +11,12 @@
 
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 
+  <meta name="theme-color" content="#F8F8FC" />
   <link rel="stylesheet" href="css/booking.css" />
 </head>
 <body class="booking">
+
+  <a href="#main-content" class="skip-link">Preskočiť na obsah</a>
 
   <div class="booking-shell">
 
@@ -53,7 +56,7 @@
         </ol>
       </nav>
 
-      <main class="booking-main">
+      <main class="booking-main" id="main-content">
 
         <!-- ============ STEP 1: DÁTUM ============ -->
         <section class="step-panel is-active" data-step-panel="1">
@@ -94,11 +97,11 @@
             <div class="calendar__timerow">
               <div class="timeblock">
                 <label for="timeFrom" class="timeblock__label">OD</label>
-                <input type="time" class="timeblock__value" id="timeFrom" value="18:00" />
+                <input type="time" class="timeblock__value" id="timeFrom" value="18:00" autocomplete="off" />
               </div>
               <div class="timeblock">
                 <label for="timeTo" class="timeblock__label">DO</label>
-                <input type="time" class="timeblock__value" id="timeTo" value="23:00" />
+                <input type="time" class="timeblock__value" id="timeTo" value="23:00" autocomplete="off" />
               </div>
             </div>
 
@@ -124,11 +127,11 @@
               <span class="floorplan__eyebrow">Pôdorys — 2. poschodie</span>
             </div>
             <div class="floorplan__canvas">
-              <img src="images/floorplan/base.png"        alt="Pôdorys Biometrics House" class="fp-layer fp-layer--base" />
-              <img src="images/floorplan/nexus.png"       alt="" class="fp-layer fp-overlay" data-room-overlay="nexus" />
-              <img src="images/floorplan/observatory.png" alt="" class="fp-layer fp-overlay" data-room-overlay="observatory" />
-              <img src="images/floorplan/training.png"    alt="" class="fp-layer fp-overlay" data-room-overlay="training" />
-              <img src="images/floorplan/bistro.png"      alt="" class="fp-layer fp-overlay" data-room-overlay="bistro" />
+              <img src="images/floorplan/base.png"        alt="Pôdorys Biometrics House" class="fp-layer fp-layer--base" width="5505" height="4310" />
+              <img src="images/floorplan/nexus.png"       alt="" class="fp-layer fp-overlay" data-room-overlay="nexus" width="5505" height="4310" />
+              <img src="images/floorplan/observatory.png" alt="" class="fp-layer fp-overlay" data-room-overlay="observatory" width="5505" height="4310" />
+              <img src="images/floorplan/training.png"    alt="" class="fp-layer fp-overlay" data-room-overlay="training" width="5505" height="4310" />
+              <img src="images/floorplan/bistro.png"      alt="" class="fp-layer fp-overlay" data-room-overlay="bistro" width="5505" height="4310" />
 
               <svg class="floorplan__hitmap" viewBox="0 0 5505 4310" preserveAspectRatio="xMidYMid meet" id="floorplanSvg" aria-label="Klikateľné zóny miestností">
                 <g class="fp-room" data-room="bistro">
