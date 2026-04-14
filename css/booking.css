@@ -1043,6 +1043,34 @@ body.booking {
   100% { transform: rotate(45deg) scale(1); }
 }
 
+/* Room alert (e.g. Nádvorie time restriction) */
+.room-alert {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  color: var(--ink-muted);
+  background: var(--paper);
+  border-radius: 8px;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 200ms var(--ease-out), transform 200ms var(--ease-out);
+}
+
+.room-alert i {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  color: var(--ink-faint);
+}
+
+.room-alert.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* ---- STEP 2: GUEST EDIT (in rail) ---- */
 
 .step2-guest-edit {
@@ -1107,18 +1135,98 @@ body.booking {
 
 .floorplan__header {
   display: flex;
-  justify-content: space-between;
-  align-items: baseline;
+  align-items: center;
   padding-bottom: 16px;
   border-bottom: 1px solid var(--rule);
 }
 
-.floorplan__eyebrow {
-  font-size: var(--fs-micro);
+/* Floor tabs */
+.floor-tabs {
+  display: flex;
+  gap: 4px;
+}
+
+.floor-tab {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 8px 16px;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  background: transparent;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background var(--dur-hover) ease, border-color var(--dur-hover) ease, color var(--dur-hover) ease;
+}
+
+.floor-tab__num {
+  font-size: var(--fs-xs);
+  font-weight: 800;
+  color: var(--ink-faint);
+  font-variant-numeric: tabular-nums;
+  transition: color var(--dur-hover) ease;
+}
+
+.floor-tab__name {
+  font-size: var(--fs-xs);
   font-weight: 700;
-  letter-spacing: 3px;
-  color: var(--brand);
+  letter-spacing: 1.5px;
+  color: var(--ink-muted);
   text-transform: uppercase;
+  transition: color var(--dur-hover) ease;
+}
+
+.floor-tab:hover {
+  border-color: var(--ink-faint);
+}
+
+.floor-tab:hover .floor-tab__num,
+.floor-tab:hover .floor-tab__name {
+  color: var(--ink);
+}
+
+.floor-tab.is-active {
+  background: var(--brand);
+  border-color: var(--brand);
+}
+
+.floor-tab.is-active .floor-tab__num,
+.floor-tab.is-active .floor-tab__name {
+  color: #fff;
+}
+
+/* Floor panels */
+.floorplan__floor {
+  display: none;
+}
+
+.floorplan__floor.is-active {
+  display: block;
+}
+
+.floorplan__placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 320px;
+  color: var(--ink-faint);
+  font-size: var(--fs-14);
+  font-weight: 600;
+}
+
+.floorplan__placeholder i {
+  width: 32px;
+  height: 32px;
+  opacity: 0.4;
+}
+
+.floorplan__placeholder-hint {
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  color: var(--ink-faint);
+  opacity: 0.6;
 }
 
 .floorplan__counter {
@@ -1928,6 +2036,10 @@ body.booking {
   .floorplan { min-height: 280px; gap: 12px; }
   .floorplan__canvas { min-height: 260px; }
   .floorplan__header { padding-bottom: 10px; }
+  .floor-tabs { gap: 2px; }
+  .floor-tab { padding: 6px 10px; gap: 4px; }
+  .floor-tab__num { font-size: var(--fs-2xs); }
+  .floor-tab__name { font-size: var(--fs-2xs); letter-spacing: 1px; }
   .room { padding: 16px 2px; gap: 12px; grid-template-columns: 28px minmax(0, 1fr) 28px; }
   .room__name { font-size: var(--fs-15); }
   .room__price { font-size: var(--fs-14); }

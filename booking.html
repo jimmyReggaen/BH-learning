@@ -111,7 +111,7 @@
                 </div>
                 <p class="time-warning" id="timeWarning">
                   <i data-lucide="info"></i>
-                  Po 22:00 sa môžu uplatniť nočné príplatky.
+                  Po 22:00 sa uplatňujú nočné príplatky za nevyhnutné doplnkové služby.
                 </p>
               </div>
 
@@ -128,7 +128,6 @@
                 </div>
               </div>
 
-              <div class="room-reco" id="roomReco"></div>
             </aside>
 
           </div>
@@ -146,9 +145,24 @@
 
           <div class="floorplan">
             <div class="floorplan__header">
-              <span class="floorplan__eyebrow">Pôdorys — 2. poschodie</span>
+              <div class="floor-tabs" id="floorTabs">
+                <button type="button" class="floor-tab is-active" data-floor="0">
+                  <span class="floor-tab__num">0.floor</span><span class="floor-tab__name">HUB</span>
+                </button>
+                <button type="button" class="floor-tab" data-floor="1">
+                  <span class="floor-tab__num">1.floor</span><span class="floor-tab__name">FINGER</span>
+                </button>
+                <button type="button" class="floor-tab" data-floor="2">
+                  <span class="floor-tab__num">2.floor</span><span class="floor-tab__name">FACE</span>
+                </button>
+                <button type="button" class="floor-tab" data-floor="3">
+                  <span class="floor-tab__num">3.floor</span><span class="floor-tab__name">NATURE</span>
+                </button>
+              </div>
             </div>
-            <div class="floorplan__canvas">
+
+            <!-- Floor 0: HUB (current rooms) -->
+            <div class="floorplan__canvas floorplan__floor is-active" data-floor-panel="0">
               <img src="images/floorplan/base.png"        alt="Pôdorys Biometrics House" class="fp-layer fp-layer--base" width="5505" height="4310" />
               <img src="images/floorplan/nexus.png"       alt="Nexus Gallery zvýraznenie" class="fp-layer fp-overlay" data-room-overlay="nexus" width="5505" height="4310" />
               <img src="images/floorplan/observatory.png" alt="Observatory zvýraznenie" class="fp-layer fp-overlay" data-room-overlay="observatory" width="5505" height="4310" />
@@ -169,6 +183,33 @@
                   <rect x="1600" y="1400" width="2400" height="1650" rx="100" />
                 </g>
               </svg>
+            </div>
+
+            <!-- Floor 1: FINGER -->
+            <div class="floorplan__canvas floorplan__floor" data-floor-panel="1">
+              <div class="floorplan__placeholder">
+                <i data-lucide="building"></i>
+                <span>1. poschodie — FINGER</span>
+                <span class="floorplan__placeholder-hint">Pôdorys bude doplnený</span>
+              </div>
+            </div>
+
+            <!-- Floor 2: FACE -->
+            <div class="floorplan__canvas floorplan__floor" data-floor-panel="2">
+              <div class="floorplan__placeholder">
+                <i data-lucide="building"></i>
+                <span>2. poschodie — FACE</span>
+                <span class="floorplan__placeholder-hint">Pôdorys bude doplnený</span>
+              </div>
+            </div>
+
+            <!-- Floor 3: NATURE -->
+            <div class="floorplan__canvas floorplan__floor" data-floor-panel="3">
+              <div class="floorplan__placeholder">
+                <i data-lucide="building"></i>
+                <span>3. poschodie — NATURE</span>
+                <span class="floorplan__placeholder-hint">Pôdorys bude doplnený</span>
+              </div>
             </div>
           </div>
 

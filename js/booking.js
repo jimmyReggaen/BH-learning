@@ -78,6 +78,16 @@ const ROOMS = [
     pricePerHour: 110,
     color: '#C558FF',
   },
+  {
+    id: 'nadvorie',
+    num: '05',
+    name: 'Nádvorie',
+    capacity: 300,
+    area: 300,
+    pricePerHour: 0,
+    color: '#4CAF50',
+    alert: 'Nádvorie je dostupné len do 22:00.',
+  },
 ];
 
 function getRoom(id) {
@@ -126,6 +136,14 @@ const SEATING_TYPES = [
     icon: 'wine',
     capacityFactor: 1.2,
     priceExtra: 40,
+  },
+  {
+    id: 'custom',
+    name: 'Na mieru',
+    desc: 'Vlastné usporiadanie podľa počtu osôb',
+    icon: 'settings-2',
+    capacityFactor: 1.0,
+    priceExtra: 0,
   },
 ];
 
@@ -504,64 +522,7 @@ function renderStep1Rail() {
 }
 
 function renderRecommendation() {
-  const recoEl = document.getElementById('roomReco');
-  if (!recoEl) return;
-
-  const count = state.guestCount;
-  const reco = recommendRooms(count);
-
-  if (!reco) {
-    recoEl.classList.remove('is-visible');
-    state.rooms = [];
-    recomputeTotal();
-    saveState();
-    renderBottomBar();
-    return;
-  }
-
-  recoEl.classList.remove('is-visible');
-  // Force reflow for re-animation
-  void recoEl.offsetWidth;
-
-  if (reco.type === 'over') {
-    recoEl.innerHTML = `
-      <span class="room-reco__title">Kapacita</span>
-      <p class="room-reco__over">
-        Maximálna kapacita všetkých priestorov je <strong>${reco.maxCapacity} osôb</strong>.
-        Pre ${count} hostí nás kontaktujte — nájdeme riešenie.
-      </p>
-    `;
-    recoEl.classList.add('is-visible');
-    return;
-  }
-
-  const isSingle = reco.type === 'single';
-  const roomNames = reco.rooms.map((r) => `<strong>${r.name}</strong>`).join(' + ');
-  const text = isSingle
-    ? `Pre ${count} hostí odporúčame ${roomNames}.`
-    : `Pre ${count} hostí odporúčame kombináciu ${roomNames}.`;
-
-  const chips = reco.rooms.map((r) =>
-    `<button type="button" class="room-reco__chip" data-reco-room="${r.id}">
-      <span class="room-reco__chip-dot" style="background:${r.color}"></span>
-      ${r.name}
-      <span class="room-reco__chip-cap">${r.capacity} os.</span>
-    </button>`
-  ).join('');
-
-  recoEl.innerHTML = `
-    <span class="room-reco__title">Odporúčanie</span>
-    <p class="room-reco__text">${text}</p>
-    <div class="room-reco__chips">${chips}</div>
-  `;
-  recoEl.classList.add('is-visible');
-
-  // Auto-apply recommended rooms to state so price updates live
-  const recoIds = reco.rooms.map((r) => r.id);
-  state.rooms = [...recoIds];
-  recomputeTotal();
-  saveState();
-  renderBottomBar();
+  // Recommendation removed — rooms are selected in step 2
 }
 
 /* ---- RENDER: ROOMS + FLOORPLAN (step 2) ---- */
@@ -629,6 +590,13 @@ function renderRailSummary() {}
 
 function toggleRoom(id) {
   const wasSelected = state.rooms.includes(id);
+  const room = getRoom(id);
+
+  // Show alert for rooms with restrictions (e.g. Nádvorie)
+  if (!wasSelected && room && room.alert) {
+    showRoomAlert(id, room.alert);
+  }
+
   const idx = state.rooms.indexOf(id);
   if (idx === -1) state.rooms.push(id);
   else state.rooms.splice(idx, 1);
@@ -646,6 +614,27 @@ function toggleRoom(id) {
         row.classList.remove('just-toggled');
       }, { once: true });
     }
+  }
+}
+
+function showRoomAlert(roomId, message) {
+  // Remove any existing alert
+  const existing = document.querySelector('.room-alert');
+  if (existing) existing.remove();
+
+  const el = document.createElement('div');
+  el.className = 'room-alert';
+  el.innerHTML = `<i data-lucide="info"></i><span>${message}</span>`;
+
+  const row = document.querySelector(`.room[data-room-row="${roomId}"]`);
+  if (row) {
+    row.insertAdjacentElement('afterend', el);
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+    setTimeout(() => el.classList.add('is-visible'), 10);
+    setTimeout(() => {
+      el.classList.remove('is-visible');
+      setTimeout(() => el.remove(), 300);
+    }, 4000);
   }
 }
 
@@ -921,19 +910,29 @@ document.addEventListener('DOMContentLoaded', () => {
     if (step2GuestInput) step2GuestInput.classList.toggle('has-value', hasVal);
     recomputeTotal();
     renderBottomBar();
-    renderRecommendation();
   }
 
   if (guestInput) {
     guestInput.value = '';
     guestInput.addEventListener('input', (e) => syncGuestInputs(e.target));
-    renderRecommendation();
   }
 
   if (step2GuestInput) {
     step2GuestInput.value = '';
     step2GuestInput.addEventListener('input', (e) => syncGuestInputs(e.target));
   }
+
+  // Floor tabs — switch between floors
+  document.querySelectorAll('.floor-tab').forEach((tab) => {
+    tab.addEventListener('click', () => {
+      const floor = tab.dataset.floor;
+      document.querySelectorAll('.floor-tab').forEach((t) => t.classList.remove('is-active'));
+      tab.classList.add('is-active');
+      document.querySelectorAll('.floorplan__floor').forEach((p) => {
+        p.classList.toggle('is-active', p.dataset.floorPanel === floor);
+      });
+    });
+  });
 
   // Floorplan SVG click → toggle room (keyboard-accessible)
   document.querySelectorAll('.fp-room').forEach((g) => {
