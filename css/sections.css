@@ -259,6 +259,11 @@
   opacity: 0.85;
 }
 
+.venue-card__btn:focus-visible {
+  outline: 2px solid rgba(69, 144, 255, 0.9);
+  outline-offset: 3px;
+}
+
 /* ---- RESPONSIVE ---- */
 @media (max-width: 1200px) {
   .venues__grid { gap: 16px; }
@@ -302,4 +307,267 @@
   width: 100%;
   height: 100%;
   object-fit: contain;
+}
+
+/* ============================================
+   BH HOUSE SECTIONS — editorial redesign
+   ============================================ */
+
+/* ── Shared base ── */
+.bh-pillars,
+.bh-audience {
+  width: 100%;
+  background: #031c40;
+  padding: 80px 60px;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.bh-section-inner {
+  max-width: 1320px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+}
+
+.bh-section-header {
+  text-align: center;
+}
+
+.bh-section-header--split {
+  text-align: left;
+}
+
+.bh-eyebrow {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  color: rgba(69,144,255,0.65);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.bh-section-title {
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+  margin: 0;
+}
+
+/* ── BH PILLARS ── */
+.bh-pillars {
+  background:
+    radial-gradient(ellipse 80% 60% at 85% 10%, rgba(0,87,255,0.18) 0%, transparent 55%),
+    #031c40;
+}
+
+.bh-pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* Featured card — spans all 3 columns */
+.bh-pillar--featured {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 100px 1fr auto;
+  gap: 48px;
+  align-items: start;
+  background: rgba(27,0,226,0.18);
+  border-bottom: 2px solid rgba(255,255,255,0.05);
+}
+
+.bh-pillar {
+  padding: 40px;
+  background: rgba(27,0,226,0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.bh-pillar-num {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: rgba(69,144,255,0.4);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  padding-top: 2px;
+}
+
+.bh-pillar-name {
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.025em;
+  margin: 0;
+}
+
+.bh-pillar-name--lg {
+  font-size: 28px;
+  letter-spacing: -0.03em;
+  margin-bottom: 8px;
+}
+
+.bh-pillar-desc {
+  font-size: 14px;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.65;
+  margin: 0;
+  max-width: 52ch;
+}
+
+.bh-pillar-spec {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: rgba(69,144,255,0.5);
+  text-transform: uppercase;
+  white-space: nowrap;
+  align-self: flex-start;
+  padding-top: 4px;
+}
+
+/* Data point (large number) for smaller pillars */
+.bh-pillar-data {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 8px;
+}
+
+.bh-pillar-stat {
+  font-size: 44px;
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.bh-pillar-stat-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: rgba(255,255,255,0.3);
+  text-transform: uppercase;
+}
+
+/* ── BH AUDIENCE ── */
+.bh-audience {
+  background:
+    radial-gradient(ellipse 80% 60% at 15% 50%, rgba(27,0,226,0.15) 0%, transparent 60%),
+    #031c40;
+}
+
+.bh-audience-list {
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.bh-audience-row {
+  display: grid;
+  grid-template-columns: 40px 150px 1fr auto;
+  gap: 40px;
+  align-items: start;
+  padding: 36px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  transition: opacity 0.2s ease;
+}
+
+.bh-audience-row:hover { opacity: 0.8; }
+
+.bh-audience-num {
+  font-size: 11px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.06em;
+  color: rgba(69,144,255,0.4);
+  padding-top: 5px;
+}
+
+.bh-audience-tag {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: rgba(69,144,255,0.6);
+  text-transform: uppercase;
+  line-height: 1.7;
+  padding-top: 5px;
+}
+
+.bh-audience-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.bh-audience-name {
+  font-size: 22px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.025em;
+  margin: 0;
+}
+
+.bh-audience-desc {
+  font-size: 14px;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.65;
+  margin: 0;
+  max-width: 60ch;
+}
+
+.bh-audience-cta {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: rgba(255,255,255,0.35);
+  white-space: nowrap;
+  cursor: pointer;
+  padding-top: 5px;
+  transition: color 0.2s ease;
+}
+
+.bh-audience-cta:hover { color: #fff; }
+
+/* ── Responsive ── */
+@media (max-width: 1000px) {
+  .bh-pillars-grid { grid-template-columns: 1fr 1fr; }
+  .bh-pillar--featured {
+    grid-column: 1 / -1;
+    grid-template-columns: 80px 1fr;
+    gap: 32px;
+  }
+  .bh-pillar--featured .bh-pillar-spec { display: none; }
+}
+
+@media (max-width: 700px) {
+  .bh-pillars,
+  .bh-audience { padding: 64px 24px; }
+
+  .bh-pillars-grid { grid-template-columns: 1fr; gap: 1px; }
+  .bh-pillar--featured {
+    grid-column: 1;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .bh-audience-row {
+    grid-template-columns: 32px 1fr;
+    grid-template-rows: auto auto auto;
+    gap: 6px 12px;
+    padding: 24px 0;
+  }
+  .bh-audience-tag { grid-row: 1; grid-column: 2; }
+  .bh-audience-content { grid-column: 2; }
+  .bh-audience-cta { grid-column: 2; margin-top: 4px; }
 }

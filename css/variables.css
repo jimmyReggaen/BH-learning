@@ -12,9 +12,8 @@
   --accent-blue:    #0057ff;
   --sky-blue:       #4590ff;
   --dark-blue:      #031c40;
-  --accent:         #22D3EE;
-  --clear-yellow:   #FFFF00;
-  --yellow:         #FFFF00;
+  /* --accent: #22D3EE — RETIRED 2026-04-24: cyan removed per design review */
+  /* --clear-yellow / --yellow — unassigned, do not use until a specific role is defined */
   --ice-grey:       #f2f3f2;
 
   /* --- BACKGROUNDS --- */
@@ -34,10 +33,17 @@
   --weight-bold:    700;
   --weight-regular: 400;
 
-  /* --- SPACING --- */
-  --padding-section: 64px 60px;
-  --padding-section-mobile: 40px 24px;
+  /* --- SPACING (4pt scale) --- */
+  --space-xs:  4px;
+  --space-sm:  8px;
+  --space-md:  16px;
+  --space-lg:  24px;
+  --space-xl:  48px;
+  --space-2xl: 96px;
+  --padding-section: 100px 60px;
+  --padding-section-mobile: 64px 24px;
 
   /* --- TRANSITIONS --- */
-  --transition: 0.3s ease;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --transition: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }

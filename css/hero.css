@@ -90,35 +90,63 @@
   position: relative;
   flex: 1;
   height: 65vh;
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.10);
+  border: 1px solid rgba(255, 255, 255, 0.22);
   border-radius: 24px;
-  backdrop-filter: blur(48px) saturate(160%) brightness(0.85);
-  -webkit-backdrop-filter: blur(48px) saturate(160%) brightness(0.85);
+  backdrop-filter: blur(48px) saturate(180%) brightness(0.88);
+  -webkit-backdrop-filter: blur(48px) saturate(180%) brightness(0.88);
   box-shadow:
-    inset 0 2px 12px rgba(255, 255, 255, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
     inset 0 -1px 4px rgba(0, 0, 0, 0.15),
-    0 8px 40px rgba(0, 0, 0, 0.35);
-  padding: 48px 44px;
+    0 12px 56px rgba(0, 0, 0, 0.4),
+    0 2px 8px rgba(0, 0, 0, 0.2);
+  padding: 44px 40px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  gap: 20px;
+  gap: 14px;
   font-family: var(--font);
   transition:
     flex 0.65s cubic-bezier(0.16, 1, 0.3, 1),
     opacity 0.5s ease,
     transform 0.65s cubic-bezier(0.16, 1, 0.3, 1),
     background 0.3s ease,
-    border-color 0.3s ease;
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
   cursor: pointer;
   overflow: hidden;
 }
 
+/* colored top accent line per card */
+.hero-card--events::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 20px; right: 20px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(27,0,226,0.7) 30%, rgba(69,144,255,0.9) 60%, transparent);
+  border-radius: 0 0 4px 4px;
+  pointer-events: none;
+}
+
+.hero-card--house::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 20px; right: 20px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0,87,255,0.7) 30%, rgba(69,144,255,0.9) 60%, transparent);
+  border-radius: 0 0 4px 4px;
+  pointer-events: none;
+}
+
 .hero-card:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.13);
+  border-color: rgba(255, 255, 255, 0.32);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 0 -1px 4px rgba(0, 0, 0, 0.12),
+    0 20px 72px rgba(0, 0, 0, 0.45),
+    0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* ── EXPANDED STATE — po kliknutí na PRIESTORY ── */
@@ -210,19 +238,22 @@
 }
 
 .hero-card__label {
-  font-size: 16px;
-  font-weight: var(--weight-bold);
-  letter-spacing: 4px;
-  color: rgba(255, 255, 255, 0.45);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: rgba(255, 255, 255, 0.4);
   text-transform: uppercase;
-  transition: all 0.5s ease;
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s ease;
 }
+
+.hero-card--events .hero-card__label { color: rgba(255, 255, 255, 0.85); }
+.hero-card--house  .hero-card__label { color: rgba(255, 255, 255, 0.85); }
 
 .hero-card__title1 {
   font-size: clamp(52px, 6vw, 80px);
   font-weight: 900;
   color: #ffffff;
-  letter-spacing: -3px;
+  letter-spacing: -0.04em;
   line-height: 0.9;
   display: block;
   transition: font-size 0.65s cubic-bezier(0.16, 1, 0.3, 1);
@@ -231,49 +262,61 @@
 .hero-card__title2 {
   font-size: clamp(52px, 6vw, 80px);
   font-weight: 900;
-  color: #ffffff;
-  letter-spacing: -3px;
+  color: rgba(255, 255, 255, 0.92);
+  letter-spacing: -0.04em;
   line-height: 0.95;
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
   transition: font-size 0.65s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .hero-card__desc {
-  font-size: 22px;
-  font-weight: var(--weight-regular);
-  color: rgba(255, 255, 255, 0.5);
-  line-height: 1.6;
+  font-size: 15px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.48);
+  line-height: 1.72;
   margin: 0;
-  max-width: 420px;
-  transition: all 0.5s ease;
+  max-width: 500px;
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero-card__btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin-top: 8px;
+  align-self: flex-start;
 }
 
 .hero-card__btn {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  margin-top: 12px;
-  padding: 14px 32px;
-  border-radius: 12px;
+  margin-top: 8px;
+  padding: 13px 28px;
+  border-radius: 8px;
   border: none;
   font-family: var(--font);
-  font-size: 12px;
-  font-weight: var(--weight-bold);
-  letter-spacing: 3px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
   cursor: pointer;
   transition: opacity 0.2s ease, transform 0.2s ease;
   align-self: flex-start;
 }
 
+.hero-card__btns .hero-card__btn { margin-top: 0; align-self: auto; }
+
 .hero-card--events .hero-card__btn {
-  background: linear-gradient(135deg, #0057FF 0%, #4590FF 100%);
+  background: linear-gradient(135deg, #1B00E2 0%, #0057FF 100%);
   color: #fff;
+  box-shadow: 0 4px 24px rgba(27,0,226,0.35);
 }
 
 .hero-card--house .hero-card__btn {
   background: linear-gradient(135deg, #0057FF 0%, #4590FF 100%);
   color: #fff;
+  box-shadow: 0 4px 24px rgba(0,87,255,0.35);
 }
 
 .hero-card__btn:hover {
@@ -338,6 +381,29 @@
 
 .hero-card:hover::before {
   opacity: 1;
+}
+
+/* ── Focus states — keyboard navigation ── */
+.hero-card__btn:focus-visible {
+  outline: 2px solid rgba(69, 144, 255, 0.9);
+  outline-offset: 3px;
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .hero-card {
+    transition:
+      background 0.15s ease,
+      border-color 0.15s ease,
+      box-shadow 0.15s ease;
+  }
+  .hero-card__label,
+  .hero-card__title1,
+  .hero-card__title2,
+  .hero-card__desc,
+  .hero-card__btn { transition: none; }
+  .hero-card--events::after,
+  .hero-card--house::after { transition: none; }
 }
 
 /* Responsive */

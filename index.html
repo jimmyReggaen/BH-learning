@@ -8,10 +8,14 @@
   <!-- Montserrat -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
 
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+  <!-- Pannellum 360° viewer — loaded on-demand on first 360° tab open -->
+  <!-- (lazy-loaded in openRoomModal via loadPannellum()) -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
 
   <!-- Styles -->
   <link rel="stylesheet" href="css/variables.css" />
@@ -63,8 +67,8 @@
           <span class="hero-card__label">Prenájom priestorov</span>
           <span class="hero-card__title1">BIOMETRICS</span>
           <span class="hero-card__title2">EVENTS</span>
-          <p class="hero-card__desc">Firemné eventy, konferencie a networking v najbiometrickejšej budove Bratislavy.</p>
-          <button class="hero-card__btn">PRIESTORY →</button>
+          <p class="hero-card__desc">Firemné eventy, konferencie a networking<br>s kompletným technickým zabezpečením. Systém Plug and Play.</p>
+          <button class="hero-card__btn">EVENTOVÉ PRIESTORY →</button>
         </div>
 
         <!-- Biometrics House -->
@@ -72,8 +76,11 @@
           <span class="hero-card__label">Technológie & Workspace</span>
           <span class="hero-card__title1">BIOMETRICS</span>
           <span class="hero-card__title2">HOUSE</span>
-          <p class="hero-card__desc">Inovatívne riešenia, biometrický prístup a smart workspace pre moderné firmy.</p>
-          <button class="hero-card__btn">ZISTIŤ VIAC →</button>
+          <p class="hero-card__desc">Inovatívne riešenia, biometrický prístup<br>a smart workspace pre moderné firmy.</p>
+          <div class="hero-card__btns">
+            <button class="hero-card__btn">O BUDOVE →</button>
+            <button class="hero-card__btn">PRENÁJOM KANCELÁRIÍ →</button>
+          </div>
         </div>
 
       </div>
@@ -94,158 +101,232 @@
        ============================================= -->
   <div class="locked-section" id="events-block">
 
-    <header class="events-hero">
-      <div class="events-hero__content">
-        <span class="eyebrow">BIOMETRICS EVENTS</span>
-        <h1 class="events-hero__title">Jedinečné priestory<br>pre vaše podujatia</h1>
-        <p class="events-hero__desc">Moderné event priestory v najbiometrickejšej budove na Slovensku. Konferencie, workshopy, galavečery, networking — s biometrickým prístupom, smart AV technológiou a profesionálnym servisom.</p>
-        <div class="events-hero__benefits">
-          <div class="events-hero__benefit">
-            <i data-lucide="fingerprint"></i>
-            <span>Biometrický prístup</span>
-          </div>
-          <div class="events-hero__benefit">
-            <i data-lucide="layout-grid"></i>
-            <span>Flexibilné usporiadanie</span>
-          </div>
-          <div class="events-hero__benefit">
-            <i data-lucide="monitor"></i>
-            <span>Smart AV vybavenie</span>
-          </div>
-          <div class="events-hero__benefit">
-            <i data-lucide="map-pin"></i>
-            <span>Centrum Bratislavy</span>
-          </div>
-        </div>
-        <a href="#ev-kontakt" class="btn btn--primary btn--lg">Mám záujem</a>
-      </div>
-      <div class="events-hero__image">
-        <img src="images/interior.jpg" alt="Biometrics House interiér" />
-      </div>
-    </header>
+    <!-- Triad liquid background + cursor glow -->
+    <div class="ev-bg-blobs" aria-hidden="true">
+      <div class="ev-blob ev-blob-1"></div>
+      <div class="ev-blob ev-blob-2"></div>
+      <div class="ev-blob ev-blob-3"></div>
+      <div class="ev-cursor-glow" id="evCursorGlow"></div>
+    </div>
+
+    <!-- Grid reveal — color-dodge, circular cursor mask -->
+    <div class="ev-grid-reveal" id="evGridReveal" aria-hidden="true"></div>
 
     <!-- =========================================
-         PRIESTORY
+         EVENTS HERO — glass karta + INVTR-5 pozadie
          ========================================= -->
-    <section class="ev-section" id="ev-priestory">
-      <div class="ev-section__inner">
-        <span class="eyebrow">PRIESTORY</span>
-        <h2 class="ev-section__title">Vyberte si priestor</h2>
-        <p class="ev-section__desc">5 unikátnych miestností na 0. podlaží HUB. Každý priestor je plne vybavený a prispôsobiteľný vašim potrebám.</p>
-
-        <div class="rooms-grid">
-
-          <div class="room-card" id="room-nexus">
-            <div class="room-card__image" style="background-image:url(images/INVTR-23.jpg)">
-              <span class="room-card__badge" style="--room-color:#7B4FFF">Najväčší priestor</span>
-            </div>
-            <div class="room-card__body">
-              <h3 class="room-card__name">Nexus Gallery</h3>
-              <p class="room-card__desc">Hlavná hala s profesionálnym osvetlením, pódiom a AV systémom. Ideálna pre konferencie, galavečery a veľké podujatia.</p>
-              <div class="room-card__meta">
-                <span class="room-card__stat"><i data-lucide="users"></i> do 200 osôb</span>
-                <span class="room-card__stat"><i data-lucide="maximize"></i> 594 m²</span>
-              </div>
-              <div class="room-card__price">
-                <span class="room-card__rate">180 €</span>
-                <span class="room-card__unit">/ hodina</span>
-              </div>
-              <a href="#ev-kontakt" class="btn--outline" data-room="Nexus Gallery">Mám záujem</a>
-            </div>
+    <section class="events-hero-section">
+      <div class="events-hero-bg"></div>
+      <div class="events-hero-inner">
+        <div class="events-hero-card">
+          <span class="events-hero__eyebrow">BIOMETRICS EVENTS</span>
+          <h1 class="events-hero__title">Jedinečné priestory<br>pre vaše podujatia</h1>
+          <p class="events-hero__desc">Nový eventový priestor v hlavnom meste — moderné priestory v najbiometrickejšej budove na Slovensku. Konferencie, workshopy, galavečery, networking — so smart AV technológiou a profesionálnym servisom.</p>
+          <div class="events-hero__benefits">
+            <div class="events-hero__benefit"><i data-lucide="radio"></i><span>Live stream eventu</span></div>
+            <div class="events-hero__benefit"><i data-lucide="layout-grid"></i><span>Flexibilné usporiadanie</span></div>
+            <div class="events-hero__benefit"><i data-lucide="monitor"></i><span>Smart AV vybavenie</span></div>
+            <div class="events-hero__benefit"><i data-lucide="square-parking"></i><span>Vlastné parkovanie</span></div>
           </div>
-
-          <div class="room-card" id="room-observatory">
-            <div class="room-card__image" style="background-image:url(images/INVTR-31.jpg)">
-              <span class="room-card__badge" style="--room-color:#18D8D0">Panoramatický výhľad</span>
-            </div>
-            <div class="room-card__body">
-              <h3 class="room-card__name">Observatory</h3>
-              <p class="room-card__desc">Moderná konferenčná miestnosť s interaktívnymi displejmi, videokonferenčným systémom a panoramatickým výhľadom.</p>
-              <div class="room-card__meta">
-                <span class="room-card__stat"><i data-lucide="users"></i> do 60 osôb</span>
-                <span class="room-card__stat"><i data-lucide="maximize"></i> 120 m²</span>
-              </div>
-              <div class="room-card__price">
-                <span class="room-card__rate">140 €</span>
-                <span class="room-card__unit">/ hodina</span>
-              </div>
-              <a href="#ev-kontakt" class="btn--outline" data-room="Observatory">Mám záujem</a>
-            </div>
-          </div>
-
-          <div class="room-card" id="room-training">
-            <div class="room-card__image" style="background-color:#1B00E210">
-              <div class="room-card__placeholder"><i data-lucide="presentation"></i></div>
-              <span class="room-card__badge" style="--room-color:#FF8A3D">Workshopy & školenia</span>
-            </div>
-            <div class="room-card__body">
-              <h3 class="room-card__name">Training Room</h3>
-              <p class="room-card__desc">Flexibilný priestor pre workshopy, školenia a brainstorming sessions. Ľubovoľné usporiadanie stolov a stoličiek.</p>
-              <div class="room-card__meta">
-                <span class="room-card__stat"><i data-lucide="users"></i> do 40 osôb</span>
-                <span class="room-card__stat"><i data-lucide="maximize"></i> 65 m²</span>
-              </div>
-              <div class="room-card__price">
-                <span class="room-card__rate">95 €</span>
-                <span class="room-card__unit">/ hodina</span>
-              </div>
-              <a href="#ev-kontakt" class="btn--outline" data-room="Training Room">Mám záujem</a>
-            </div>
-          </div>
-
-          <div class="room-card" id="room-bistro">
-            <div class="room-card__image" style="background-color:#1B00E210">
-              <div class="room-card__placeholder"><i data-lucide="coffee"></i></div>
-              <span class="room-card__badge" style="--room-color:#C558FF">Catering & networking</span>
-            </div>
-            <div class="room-card__body">
-              <h3 class="room-card__name">Bistro Bite</h3>
-              <p class="room-card__desc">Multifunkčný priestor s cateringovým zázemím. Ideálny pre networking, recepcie a neformálne stretnutia.</p>
-              <div class="room-card__meta">
-                <span class="room-card__stat"><i data-lucide="users"></i> do 80 osôb</span>
-                <span class="room-card__stat"><i data-lucide="maximize"></i> 95 m²</span>
-              </div>
-              <div class="room-card__price">
-                <span class="room-card__rate">110 €</span>
-                <span class="room-card__unit">/ hodina</span>
-              </div>
-              <a href="#ev-kontakt" class="btn--outline" data-room="Bistro Bite">Mám záujem</a>
-            </div>
-          </div>
-
-          <div class="room-card room-card--wide" id="room-nadvorie">
-            <div class="room-card__image" style="background-color:#1B00E210">
-              <div class="room-card__placeholder"><i data-lucide="trees"></i></div>
-              <span class="room-card__badge" style="--room-color:#4CAF50">Vonkajší priestor</span>
-            </div>
-            <div class="room-card__body">
-              <h3 class="room-card__name">Nádvorie</h3>
-              <p class="room-card__desc">Otvorený priestor ideálny pre letné eventy, outdoor recepcie a networking pod holým nebom. Dostupné do 22:00.</p>
-              <div class="room-card__meta">
-                <span class="room-card__stat"><i data-lucide="users"></i> do 300 osôb</span>
-                <span class="room-card__stat"><i data-lucide="maximize"></i> 300 m²</span>
-              </div>
-              <div class="room-card__price">
-                <span class="room-card__rate">Cena po dohode</span>
-              </div>
-              <a href="#ev-kontakt" class="btn--outline" data-room="Nádvorie">Mám záujem</a>
-            </div>
-          </div>
-
+          <a href="#ev-priestory" class="btn btn-grad-violet btn-lg">Ponuka priestorov</a>
         </div>
       </div>
     </section>
 
     <!-- =========================================
-         PÔDORYS
+         PRIESTORY + PÔDORYS — combined
          ========================================= -->
-    <section class="ev-section ev-section--dark">
-      <div class="ev-section__inner">
-        <span class="eyebrow eyebrow--light">PÔDORYS</span>
-        <h2 class="ev-section__title">Pozrite si priestory na pôdoryse</h2>
-        <p class="ev-section__desc">0. podlažie — HUB. Všetky event priestory na jednom poschodí.</p>
-        <div class="ev-floorplan-wrap">
-          <img src="images/floorplan/hub4final.png" alt="Pôdorys HUB" class="ev-floorplan-img" />
+    <section class="vp-section" id="ev-priestory">
+      <div class="vp-header">
+        <span class="ev-label">PRIESTORY</span>
+        <h2 class="ev-title">Vyberte si priestor</h2>
+      </div>
+      <div class="vp-layout">
+
+        <!-- ľavý stĺpec: interaktívny pôdorys -->
+        <div class="vp-plan">
+          <div class="vp-floorplan">
+            <!-- inner wrapper: full canvas, posunutý tak aby bol viditeľný len objekt budovy -->
+            <div class="vp-floorplan__inner">
+            <img src="images/flatlobby.png" class="vp-floorplan__base" alt="Pôdorys HUB" />
+            <!-- overlay layers — soft-light blend, triggered by SVG hit zones below -->
+            <img src="images/bistrobitesoftlight.png"   class="vp-floorplan__overlay" data-room="Bistro Bite"   alt="" />
+            <img src="images/trainingroomsoftlight.png" class="vp-floorplan__overlay" data-room="Training Room" alt="" />
+            <img src="images/nexussoftlight.png"        class="vp-floorplan__overlay" data-room="Nexus Gallery" alt="" />
+            <img src="images/observatorysoftlight.png"  class="vp-floorplan__overlay" data-room="Observatory"   alt="" />
+            <img src="images/nadvorielight.png"         class="vp-floorplan__overlay" data-room="Nádvorie"      alt="" />
+            <!-- SVG hit zones — tracované z nových PNG 4032x2084 -->
+            <svg class="vp-floorplan__hitmap" viewBox="0 0 4032 2084" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <defs>
+                <filter id="vp-tt-shadow" x="-25%" y="-25%" width="150%" height="150%">
+                  <feDropShadow dx="0" dy="2" stdDeviation="10" flood-color="#000" flood-opacity="0.8"/>
+                </filter>
+              </defs>
+
+              <!-- Hit zones -->
+              <polygon class="vp-hit-zone" data-room="Bistro Bite"
+                points="1594,252 1502,312 1480,372 1481,432 1473,492 1484,552 1503,612 1532,672 1575,732 1640,792 1741,852 1897,912 2000,912 2034,852 2047,792 2071,732 2095,672 2118,612 2142,552 2165,492 2130,432 1977,372 1824,312 1662,252" />
+              <polygon class="vp-hit-zone" data-room="Nexus Gallery"
+                points="2334,696 2060,780 2134,864 1999,948 2060,1032 2064,1116 2063,1200 2050,1284 1876,1368 1876,1452 1876,1536 2197,1584 2782,1500 2820,1416 3103,1332 3111,1248 3105,1164 3089,1080 3060,996 3017,912 2957,828 2868,744" />
+              <polygon class="vp-hit-zone" data-room="Training Room"
+                points="2458,563 2453,577 2447,591 2442,605 2436,619 2431,633 2425,647 2419,661 2414,675 2408,689 2403,703 2397,717 2392,731 2386,745 2380,759 2375,773 2372,787 2407,801 2443,815 2478,829 2514,843 2550,857 2586,871 2623,885 2659,899 2665,902 2673,888 2680,874 2688,860 2696,846 2704,832 2712,818 2719,804 2727,790 2735,776 2743,762 2750,748 2758,734 2766,720 2774,706 2781,692 2753,678 2718,664 2683,650 2647,636 2611,622 2575,608 2540,594 2505,580 2469,566" />
+              <polygon class="vp-hit-zone" data-room="Observatory"
+                points="2793,900 2751,936 2732,972 2721,1008 2716,1044 2716,1080 2719,1116 2725,1152 2735,1188 2749,1224 2768,1260 2794,1296 2828,1332 2960,1356 2998,1320 3016,1284 3027,1248 3031,1212 3030,1176 3027,1140 3020,1104 3009,1068 2995,1032 2976,996 2951,960 2917,924" />
+              <polygon class="vp-hit-zone" data-room="Nádvorie"
+                points="1462,420 1424,516 1386,612 1348,708 1311,804 1273,900 1236,996 1222,1092 1223,1188 1222,1284 1223,1380 1324,1320 2045,1224 2045,1128 2060,1032 1954,936 1709,840 1582,744 1514,648 1477,552 1464,456" />
+
+              <!-- Tooltips: name (hover+active) + 360° icon (active only, clickable) -->
+              <!-- Icon design: globe (r=28) on top, "360°" text clearly below -->
+
+              <g class="vp-room-tooltip" data-room="Bistro Bite">
+                <text class="vp-room-tooltip__name" x="1803" y="571"
+                      text-anchor="middle" dominant-baseline="middle"
+                      font-family="Montserrat,sans-serif" font-size="30" font-weight="700" fill="white"
+                      filter="url(#vp-tt-shadow)">Bistro Bite</text>
+                <g class="vp-room-tooltip__icon" transform="translate(1803,636)" filter="url(#vp-tt-shadow)">
+                  <circle r="44" fill="transparent" stroke="none"/>
+                  <circle r="28" fill="none" stroke="white" stroke-width="4"/>
+                  <ellipse rx="28" ry="11" fill="none" stroke="white" stroke-width="2.5"/>
+                  <ellipse rx="11" ry="28" fill="none" stroke="white" stroke-width="2.5"/>
+                  <text x="0" y="52" text-anchor="middle" dominant-baseline="middle"
+                        font-family="Montserrat,sans-serif" font-size="26" font-weight="700" fill="white">360°</text>
+                </g>
+              </g>
+
+              <!-- Nexus Gallery: true area centroid — at fs=30 clears Observatory (gap 371 vs needed 216 SVG units) -->
+              <g class="vp-room-tooltip" data-room="Nexus Gallery">
+                <text class="vp-room-tooltip__name" x="2502" y="1146"
+                      text-anchor="middle" dominant-baseline="middle"
+                      font-family="Montserrat,sans-serif" font-size="30" font-weight="700" fill="white"
+                      filter="url(#vp-tt-shadow)">Nexus Gallery</text>
+                <g class="vp-room-tooltip__icon" transform="translate(2502,1211)" filter="url(#vp-tt-shadow)">
+                  <circle r="44" fill="transparent" stroke="none"/>
+                  <circle r="28" fill="none" stroke="white" stroke-width="4"/>
+                  <ellipse rx="28" ry="11" fill="none" stroke="white" stroke-width="2.5"/>
+                  <ellipse rx="11" ry="28" fill="none" stroke="white" stroke-width="2.5"/>
+                  <text x="0" y="52" text-anchor="middle" dominant-baseline="middle"
+                        font-family="Montserrat,sans-serif" font-size="26" font-weight="700" fill="white">360°</text>
+                </g>
+              </g>
+
+              <g class="vp-room-tooltip" data-room="Training Room">
+                <text class="vp-room-tooltip__name" x="2570" y="733"
+                      text-anchor="middle" dominant-baseline="middle"
+                      font-family="Montserrat,sans-serif" font-size="30" font-weight="700" fill="white"
+                      filter="url(#vp-tt-shadow)">Training Room</text>
+                <g class="vp-room-tooltip__icon" transform="translate(2570,798)" filter="url(#vp-tt-shadow)">
+                  <circle r="44" fill="transparent" stroke="none"/>
+                  <circle r="28" fill="none" stroke="white" stroke-width="4"/>
+                  <ellipse rx="28" ry="11" fill="none" stroke="white" stroke-width="2.5"/>
+                  <ellipse rx="11" ry="28" fill="none" stroke="white" stroke-width="2.5"/>
+                  <text x="0" y="52" text-anchor="middle" dominant-baseline="middle"
+                        font-family="Montserrat,sans-serif" font-size="26" font-weight="700" fill="white">360°</text>
+                </g>
+              </g>
+
+              <g class="vp-room-tooltip" data-room="Observatory">
+                <text class="vp-room-tooltip__name" x="2873" y="1129"
+                      text-anchor="middle" dominant-baseline="middle"
+                      font-family="Montserrat,sans-serif" font-size="30" font-weight="700" fill="white"
+                      filter="url(#vp-tt-shadow)">Observatory</text>
+                <g class="vp-room-tooltip__icon" transform="translate(2873,1194)" filter="url(#vp-tt-shadow)">
+                  <circle r="44" fill="transparent" stroke="none"/>
+                  <circle r="28" fill="none" stroke="white" stroke-width="4"/>
+                  <ellipse rx="28" ry="11" fill="none" stroke="white" stroke-width="2.5"/>
+                  <ellipse rx="11" ry="28" fill="none" stroke="white" stroke-width="2.5"/>
+                  <text x="0" y="52" text-anchor="middle" dominant-baseline="middle"
+                        font-family="Montserrat,sans-serif" font-size="26" font-weight="700" fill="white">360°</text>
+                </g>
+              </g>
+
+              <!-- Nádvorie: true area centroid (1578,1020) -->
+              <g class="vp-room-tooltip" data-room="Nádvorie">
+                <text class="vp-room-tooltip__name" x="1578" y="1020"
+                      text-anchor="middle" dominant-baseline="middle"
+                      font-family="Montserrat,sans-serif" font-size="30" font-weight="700" fill="white"
+                      filter="url(#vp-tt-shadow)">Nádvorie</text>
+                <g class="vp-room-tooltip__icon" transform="translate(1578,1085)" filter="url(#vp-tt-shadow)">
+                  <circle r="44" fill="transparent" stroke="none"/>
+                  <circle r="28" fill="none" stroke="white" stroke-width="4"/>
+                  <ellipse rx="28" ry="11" fill="none" stroke="white" stroke-width="2.5"/>
+                  <ellipse rx="11" ry="28" fill="none" stroke="white" stroke-width="2.5"/>
+                  <text x="0" y="52" text-anchor="middle" dominant-baseline="middle"
+                        font-family="Montserrat,sans-serif" font-size="26" font-weight="700" fill="white">360°</text>
+                </g>
+              </g>
+            </svg>
+            </div><!-- /.vp-floorplan__inner -->
+          </div>
+        </div>
+
+        <!-- pravý stĺpec: venue karty -->
+        <div class="vp-cards">
+
+          <div class="venue-card vp-card" data-room="Nexus Gallery">
+            <span class="vp-card__num">01</span>
+            <div class="vp-card__body">
+              <div class="vp-card__title-row">
+                <h3 class="venue-card__name">Nexus Gallery</h3>
+                <div class="venue-card__price-tag">180 € <span>/ hod</span></div>
+              </div>
+              <span class="venue-card__badge">200 ľudí · 594 m²</span>
+              <p class="venue-card__desc">Hlavná hala s pódiom, AV systémom a profesionálnym osvetlením.</p>
+              <button class="venue-card__btn" data-room="Nexus Gallery">REZERVOVAŤ →</button>
+            </div>
+          </div>
+
+          <div class="venue-card vp-card" data-room="Observatory">
+            <span class="vp-card__num">02</span>
+            <div class="vp-card__body">
+              <div class="vp-card__title-row">
+                <h3 class="venue-card__name">Observatory</h3>
+                <div class="venue-card__price-tag">140 € <span>/ hod</span></div>
+              </div>
+              <span class="venue-card__badge">60 ľudí · 120 m²</span>
+              <p class="venue-card__desc">Konferenčná miestnosť s interaktívnymi displejmi a videokonferenciou.</p>
+              <button class="venue-card__btn" data-room="Observatory">REZERVOVAŤ →</button>
+            </div>
+          </div>
+
+          <div class="venue-card vp-card" data-room="Training Room">
+            <span class="vp-card__num">03</span>
+            <div class="vp-card__body">
+              <div class="vp-card__title-row">
+                <h3 class="venue-card__name">Training Room</h3>
+                <div class="venue-card__price-tag">95 € <span>/ hod</span></div>
+              </div>
+              <span class="venue-card__badge">40 ľudí · 65 m²</span>
+              <p class="venue-card__desc">Flexibilný priestor pre workshopy, školenia a brainstorming.</p>
+              <button class="venue-card__btn" data-room="Training Room">REZERVOVAŤ →</button>
+            </div>
+          </div>
+
+          <div class="venue-card vp-card" data-room="Bistro Bite">
+            <span class="vp-card__num">04</span>
+            <div class="vp-card__body">
+              <div class="vp-card__title-row">
+                <h3 class="venue-card__name">Bistro Bite</h3>
+                <div class="venue-card__price-tag">110 € <span>/ hod</span></div>
+              </div>
+              <span class="venue-card__badge">80 ľudí · 95 m²</span>
+              <p class="venue-card__desc">Multifunkčný priestor s cateringovým zázemím pre networking a recepcie.</p>
+              <button class="venue-card__btn" data-room="Bistro Bite">REZERVOVAŤ →</button>
+            </div>
+          </div>
+
+          <div class="venue-card vp-card" data-room="Nádvorie">
+            <span class="vp-card__num">05</span>
+            <div class="vp-card__body">
+              <div class="vp-card__title-row">
+                <h3 class="venue-card__name">Nádvorie (exteriér)</h3>
+                <div class="venue-card__price-tag">Po dohode</div>
+              </div>
+              <span class="venue-card__badge">300 ľudí · 300 m²</span>
+              <p class="venue-card__desc">Otvorený priestor pre letné eventy a networking. Dostupné do 22:00.</p>
+              <button class="venue-card__btn" data-room="Nádvorie">REZERVOVAŤ →</button>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
@@ -253,48 +334,60 @@
     <!-- =========================================
          VYBAVENIE & SLUŽBY
          ========================================= -->
-    <section class="ev-section">
-      <div class="ev-section__inner">
-        <span class="eyebrow">VYBAVENIE & SLUŽBY</span>
-        <h2 class="ev-section__title">Všetko čo potrebujete</h2>
-        <p class="ev-section__desc">Kompletný servis pre bezstarostný event. Techniku, personál aj catering zabezpečíme.</p>
-
-        <div class="features-grid">
-          <div class="feature-card">
-            <div class="feature-card__icon"><i data-lucide="monitor"></i></div>
-            <h3>LED stena & projekcia</h3>
-            <p>Profesionálna LED stena, projektory a plátna pre prezentácie a vizuály.</p>
-            <span class="feature-card__price">od 200 € / event</span>
+    <section class="ev-services-section">
+      <div class="ev-inner">
+        <div class="ev-services-header">
+          <span class="ev-label">VYBAVENIE & SLUŽBY</span>
+          <h2 class="ev-title ev-title--sub">Všetko čo potrebujete</h2>
+        </div>
+        <div class="ev-service-list">
+          <div class="ev-service-row">
+            <span class="ev-service-num">01</span>
+            <div class="ev-service-body">
+              <h3 class="ev-service-name">LED stena & projekcia</h3>
+              <p class="ev-service-desc">Profesionálna LED stena, projektory a plátna pre prezentácie a vizuály.</p>
+            </div>
+            <span class="ev-service-price">od 200 € / event</span>
           </div>
-          <div class="feature-card">
-            <div class="feature-card__icon"><i data-lucide="mic"></i></div>
-            <h3>Ozvučenie & mikrofóny</h3>
-            <p>Bezdrôtové mikrofóny, PA systém, monitoring pre speakerov.</p>
-            <span class="feature-card__price">od 60 € / event</span>
+          <div class="ev-service-row">
+            <span class="ev-service-num">02</span>
+            <div class="ev-service-body">
+              <h3 class="ev-service-name">Ozvučenie & mikrofóny</h3>
+              <p class="ev-service-desc">Bezdrôtové mikrofóny, PA systém, monitoring pre speakerov.</p>
+            </div>
+            <span class="ev-service-price">od 60 € / event</span>
           </div>
-          <div class="feature-card">
-            <div class="feature-card__icon"><i data-lucide="video"></i></div>
-            <h3>Online prenos & záznam</h3>
-            <p>Livestream, multi-kamerový záznam, réžia pre hybridné eventy.</p>
-            <span class="feature-card__price">od 150 € / event</span>
+          <div class="ev-service-row">
+            <span class="ev-service-num">03</span>
+            <div class="ev-service-body">
+              <h3 class="ev-service-name">Online prenos & záznam</h3>
+              <p class="ev-service-desc">Livestream, multi-kamerový záznam, réžia pre hybridné eventy.</p>
+            </div>
+            <span class="ev-service-price">od 150 € / event</span>
           </div>
-          <div class="feature-card">
-            <div class="feature-card__icon"><i data-lucide="lamp-desk"></i></div>
-            <h3>Osvetlenie & atmosféra</h3>
-            <p>Profesionálne eventové osvetlenie, ambientné svetlo, stage design.</p>
-            <span class="feature-card__price">od 110 € / event</span>
+          <div class="ev-service-row">
+            <span class="ev-service-num">04</span>
+            <div class="ev-service-body">
+              <h3 class="ev-service-name">Osvetlenie & atmosféra</h3>
+              <p class="ev-service-desc">Profesionálne eventové osvetlenie, ambientné svetlo, stage design.</p>
+            </div>
+            <span class="ev-service-price">od 110 € / event</span>
           </div>
-          <div class="feature-card">
-            <div class="feature-card__icon"><i data-lucide="utensils"></i></div>
-            <h3>Catering</h3>
-            <p>Profesionálny catering priamo v budove. Coffee break, obed, recepcia, gala dinner.</p>
-            <span class="feature-card__price">cena podľa menu</span>
+          <div class="ev-service-row">
+            <span class="ev-service-num">05</span>
+            <div class="ev-service-body">
+              <h3 class="ev-service-name">Catering</h3>
+              <p class="ev-service-desc">Profesionálny catering priamo v budove. Coffee break, obed, recepcia, gala dinner.</p>
+            </div>
+            <span class="ev-service-price">cena podľa menu</span>
           </div>
-          <div class="feature-card">
-            <div class="feature-card__icon"><i data-lucide="user-check"></i></div>
-            <h3>Personál</h3>
-            <p>Čašníci, hostesky, usporiadatelia, technický personál. Služba na kľúč.</p>
-            <span class="feature-card__price">od 25 € / hod / osoba</span>
+          <div class="ev-service-row">
+            <span class="ev-service-num">06</span>
+            <div class="ev-service-body">
+              <h3 class="ev-service-name">Personál</h3>
+              <p class="ev-service-desc">Čašníci, hostesky, usporiadatelia, technický personál. Služba na kľúč.</p>
+            </div>
+            <span class="ev-service-price">od 25 € / hod / os.</span>
           </div>
         </div>
       </div>
@@ -303,161 +396,219 @@
     <!-- =========================================
          CENNÍK
          ========================================= -->
-    <section class="ev-section ev-section--paper">
-      <div class="ev-section__inner">
-        <span class="eyebrow">CENNÍK</span>
-        <h2 class="ev-section__title">Transparentné ceny</h2>
-        <p class="ev-section__desc">Prenájom priestoru sa účtuje hodinovo. Technika a služby sa dohadujú individuálne.</p>
-
-        <div class="pricing-table">
-          <div class="pricing-row pricing-row--header">
-            <span>Priestor</span>
-            <span>Kapacita</span>
-            <span>Výmera</span>
-            <span>Cena / hod</span>
-            <span></span>
+    <section class="ev-dark-section">
+      <span class="ev-label">CENNÍK</span>
+      <h2 class="ev-title">Transparentné ceny</h2>
+      <p class="ev-desc">Prenájom priestoru sa účtuje hodinovo. Technika a služby sa dohadujú individuálne.</p>
+      <div class="ev-inner">
+        <div class="ev-pricing-wrap">
+          <div class="ev-pricing-row ev-pricing-row--header">
+            <span>Priestor</span><span>Kapacita</span><span>Výmera</span><span>Cena / hod</span><span></span>
           </div>
-          <div class="pricing-row">
-            <span class="pricing-row__name"><span class="pricing-dot" style="background:#7B4FFF"></span>Nexus Gallery</span>
-            <span>do 200 osôb</span>
-            <span>594 m²</span>
-            <span class="pricing-row__price">180 €</span>
-            <a href="#ev-kontakt" class="btn--sm" data-room="Nexus Gallery">Mám záujem</a>
+          <div class="ev-pricing-row">
+            <span class="ev-pricing-name"><span class="ev-pricing-dot" style="background:#0057FF"></span>Nexus Gallery</span>
+            <span>do 200 osôb</span><span>594 m²</span>
+            <span class="ev-pricing-price">180 €</span>
+            <button class="ev-pricing-btn" data-room="Nexus Gallery">Mám záujem</button>
           </div>
-          <div class="pricing-row">
-            <span class="pricing-row__name"><span class="pricing-dot" style="background:#18D8D0"></span>Observatory</span>
-            <span>do 60 osôb</span>
-            <span>120 m²</span>
-            <span class="pricing-row__price">140 €</span>
-            <a href="#ev-kontakt" class="btn--sm" data-room="Observatory">Mám záujem</a>
+          <div class="ev-pricing-row">
+            <span class="ev-pricing-name"><span class="ev-pricing-dot" style="background:#06B6D4"></span>Observatory</span>
+            <span>do 60 osôb</span><span>120 m²</span>
+            <span class="ev-pricing-price">140 €</span>
+            <button class="ev-pricing-btn" data-room="Observatory">Mám záujem</button>
           </div>
-          <div class="pricing-row">
-            <span class="pricing-row__name"><span class="pricing-dot" style="background:#FF8A3D"></span>Training Room</span>
-            <span>do 40 osôb</span>
-            <span>65 m²</span>
-            <span class="pricing-row__price">95 €</span>
-            <a href="#ev-kontakt" class="btn--sm" data-room="Training Room">Mám záujem</a>
+          <div class="ev-pricing-row">
+            <span class="ev-pricing-name"><span class="ev-pricing-dot" style="background:#84CC16"></span>Training Room</span>
+            <span>do 40 osôb</span><span>65 m²</span>
+            <span class="ev-pricing-price">95 €</span>
+            <button class="ev-pricing-btn" data-room="Training Room">Mám záujem</button>
           </div>
-          <div class="pricing-row">
-            <span class="pricing-row__name"><span class="pricing-dot" style="background:#C558FF"></span>Bistro Bite</span>
-            <span>do 80 osôb</span>
-            <span>95 m²</span>
-            <span class="pricing-row__price">110 €</span>
-            <a href="#ev-kontakt" class="btn--sm" data-room="Bistro Bite">Mám záujem</a>
+          <div class="ev-pricing-row">
+            <span class="ev-pricing-name"><span class="ev-pricing-dot" style="background:#E84E9D"></span>Bistro Bite</span>
+            <span>do 80 osôb</span><span>95 m²</span>
+            <span class="ev-pricing-price">110 €</span>
+            <button class="ev-pricing-btn" data-room="Bistro Bite">Mám záujem</button>
           </div>
-          <div class="pricing-row">
-            <span class="pricing-row__name"><span class="pricing-dot" style="background:#4CAF50"></span>Nádvorie</span>
-            <span>do 300 osôb</span>
-            <span>300 m²</span>
-            <span class="pricing-row__price">Po dohode</span>
-            <a href="#ev-kontakt" class="btn--sm" data-room="Nádvorie">Mám záujem</a>
+          <div class="ev-pricing-row">
+            <span class="ev-pricing-name"><span class="ev-pricing-dot" style="background:#E8C84A"></span>Nádvorie</span>
+            <span>do 300 osôb</span><span>300 m²</span>
+            <span class="ev-pricing-price">Po dohode</span>
+            <button class="ev-pricing-btn" data-room="Nádvorie">Mám záujem</button>
           </div>
         </div>
-        <p class="pricing-note">Nočný príplatok +30% po 22:00. Ceny sú bez DPH. Minimálna rezervácia 2 hodiny.</p>
+        <p class="ev-pricing-note">Nočný príplatok +30% po 22:00. Ceny sú bez DPH. Minimálna rezervácia 2 hodiny.</p>
       </div>
     </section>
 
     <!-- =========================================
          KONTAKT
          ========================================= -->
-    <section class="ev-section" id="ev-kontakt">
-      <div class="ev-section__inner">
-        <div class="contact-split">
+    <section class="ev-dark-section ev-dark-section--alt" id="ev-kontakt">
+      <div class="ev-contact-split ev-inner">
 
-          <div class="contact-form-wrap">
-            <span class="eyebrow">KONTAKT</span>
-            <h2 class="ev-section__title" style="text-align:left">Mám záujem o priestor</h2>
-            <p class="ev-section__desc" style="text-align:left;max-width:none">Vyplňte formulár a ozveme sa vám do 24 hodín s ponukou na mieru.</p>
+        <div>
+          <span class="ev-label" style="text-align:left">KONTAKT</span>
+          <h2 class="ev-contact-title">Mám záujem o priestor</h2>
+          <p class="ev-contact-desc">Vyplňte formulár a ozveme sa vám do 24 hodín s ponukou na mieru.</p>
 
-            <form class="contact-form" id="evContactForm">
-              <div class="form-row form-row--half">
-                <div class="form-field">
-                  <label for="ev-fname">Meno a priezvisko *</label>
-                  <input type="text" id="ev-fname" name="fname" required autocomplete="name" />
-                </div>
-                <div class="form-field">
-                  <label for="ev-company">Firma / organizácia</label>
-                  <input type="text" id="ev-company" name="company" autocomplete="organization" />
-                </div>
+          <form class="ev-contact-form" id="evContactForm">
+            <div class="ev-form-row ev-form-row--half">
+              <div class="ev-form-field">
+                <label for="ev-fname">Meno a priezvisko *</label>
+                <input type="text" id="ev-fname" name="fname" required autocomplete="name" />
               </div>
-              <div class="form-row form-row--half">
-                <div class="form-field">
-                  <label for="ev-email">E-mail *</label>
-                  <input type="email" id="ev-email" name="email" required autocomplete="email" />
-                </div>
-                <div class="form-field">
-                  <label for="ev-phone">Telefón</label>
-                  <input type="tel" id="ev-phone" name="phone" autocomplete="tel" />
-                </div>
-              </div>
-              <div class="form-row">
-                <div class="form-field">
-                  <label for="ev-room">Priestor</label>
-                  <select id="ev-room" name="room">
-                    <option value="">Vyberte priestor...</option>
-                    <option value="Nexus Gallery">Nexus Gallery (do 200 osôb)</option>
-                    <option value="Observatory">Observatory (do 60 osôb)</option>
-                    <option value="Training Room">Training Room (do 40 osôb)</option>
-                    <option value="Bistro Bite">Bistro Bite (do 80 osôb)</option>
-                    <option value="Nádvorie">Nádvorie (do 300 osôb)</option>
-                    <option value="Neviem">Ešte neviem — poraďte mi</option>
-                  </select>
-                </div>
-              </div>
-              <div class="form-row form-row--half">
-                <div class="form-field">
-                  <label for="ev-date">Preferovaný dátum</label>
-                  <input type="date" id="ev-date" name="eventDate" />
-                </div>
-                <div class="form-field">
-                  <label for="ev-guests">Počet hostí</label>
-                  <input type="number" id="ev-guests" name="guests" min="1" max="500" placeholder="napr. 80" />
-                </div>
-              </div>
-              <div class="form-row">
-                <div class="form-field">
-                  <label for="ev-message">Popis eventu / špeciálne požiadavky</label>
-                  <textarea id="ev-message" name="message" rows="4" placeholder="Typ podujatia, požiadavky na techniku, catering..."></textarea>
-                </div>
-              </div>
-              <button type="submit" class="btn btn--primary btn--lg btn--full">Odoslať dopyt</button>
-              <p class="form-note">Vaše údaje spracovávame v súlade s GDPR. Ozveme sa do 24 hodín.</p>
-            </form>
-          </div>
-
-          <aside class="contact-info">
-            <div class="contact-person">
-              <div class="contact-person__avatar"><i data-lucide="user"></i></div>
-              <div>
-                <h4>Event koordinátor</h4>
-                <p class="contact-person__name">Biometrics House Events</p>
+              <div class="ev-form-field">
+                <label for="ev-company">Firma / organizácia</label>
+                <input type="text" id="ev-company" name="company" autocomplete="organization" />
               </div>
             </div>
-            <div class="contact-details">
-              <a href="mailto:events@biometricshouse.com" class="contact-link">
-                <i data-lucide="mail"></i> events@biometricshouse.com
-              </a>
-              <a href="tel:+4212XXXXXX" class="contact-link">
-                <i data-lucide="phone"></i> +421 2 XXX XXX
-              </a>
-              <span class="contact-link">
-                <i data-lucide="map-pin"></i> Arprod 12, Bratislava
-              </span>
-              <span class="contact-link">
-                <i data-lucide="clock"></i> Po — Pi, 8:00 — 18:00
-              </span>
-            </div>
-            <div class="contact-map">
-              <div class="contact-map__placeholder">
-                <i data-lucide="map"></i>
-                <span>Mapa — Arprod 12, Bratislava</span>
+            <div class="ev-form-row ev-form-row--half">
+              <div class="ev-form-field">
+                <label for="ev-email">E-mail *</label>
+                <input type="email" id="ev-email" name="email" required autocomplete="email" />
+              </div>
+              <div class="ev-form-field">
+                <label for="ev-phone">Telefón</label>
+                <input type="tel" id="ev-phone" name="phone" autocomplete="tel" />
               </div>
             </div>
-          </aside>
-
+            <div class="ev-form-row">
+              <div class="ev-form-field">
+                <label for="ev-room">Priestor</label>
+                <select id="ev-room" name="room">
+                  <option value="">Vyberte priestor...</option>
+                  <option value="Nexus Gallery">Nexus Gallery (do 200 osôb)</option>
+                  <option value="Observatory">Observatory (do 60 osôb)</option>
+                  <option value="Training Room">Training Room (do 40 osôb)</option>
+                  <option value="Bistro Bite">Bistro Bite (do 80 osôb)</option>
+                  <option value="Nádvorie">Nádvorie (do 300 osôb)</option>
+                  <option value="Neviem">Ešte neviem — poraďte mi</option>
+                </select>
+              </div>
+            </div>
+            <div class="ev-form-row ev-form-row--half">
+              <div class="ev-form-field">
+                <label for="ev-date">Preferovaný dátum</label>
+                <input type="date" id="ev-date" name="eventDate" />
+              </div>
+              <div class="ev-form-field">
+                <label for="ev-guests">Počet hostí</label>
+                <input type="number" id="ev-guests" name="guests" min="1" max="500" placeholder="napr. 80" />
+              </div>
+            </div>
+            <div class="ev-form-row">
+              <div class="ev-form-field">
+                <label for="ev-message">Popis eventu / špeciálne požiadavky</label>
+                <textarea id="ev-message" name="message" rows="4" placeholder="Typ podujatia, požiadavky na techniku, catering..."></textarea>
+              </div>
+            </div>
+            <button type="submit" class="ev-submit-btn">Odoslať dopyt</button>
+            <p class="ev-form-note">Vaše údaje spracovávame v súlade s GDPR. Ozveme sa do 24 hodín.</p>
+          </form>
         </div>
+
+        <aside class="ev-contact-aside">
+          <div class="ev-contact-person">
+            <div class="ev-contact-avatar"><i data-lucide="user"></i></div>
+            <div>
+              <h3>Event koordinátor</h3>
+              <p>Biometrics House Events</p>
+            </div>
+          </div>
+          <div class="ev-contact-links">
+            <a href="mailto:events@biometricshouse.com" class="ev-contact-link">
+              <i data-lucide="mail"></i> events@biometricshouse.com
+            </a>
+            <a href="tel:+4212XXXXXX" class="ev-contact-link">
+              <i data-lucide="phone"></i> +421 2 XXX XXX
+            </a>
+            <span class="ev-contact-link">
+              <i data-lucide="map-pin"></i> Arprod 12, Bratislava
+            </span>
+            <span class="ev-contact-link">
+              <i data-lucide="clock"></i> Po — Pi, 8:00 — 18:00
+            </span>
+          </div>
+          <div class="ev-contact-map">
+            <div class="ev-contact-map-inner">
+              <i data-lucide="map"></i>
+              <span>Mapa — Arprod 12, Bratislava</span>
+            </div>
+          </div>
+        </aside>
+
       </div>
     </section>
+
+  <!-- =============================================
+       ROOM DETAIL MODAL
+       ============================================= -->
+  <div class="room-modal" id="roomModal" role="dialog" aria-modal="true" aria-labelledby="roomModalTitle" hidden>
+    <div class="room-modal__backdrop" id="roomModalBackdrop"></div>
+    <div class="room-modal__panel">
+
+      <!-- Header -->
+      <div class="room-modal__header">
+        <div class="room-modal__title-row">
+          <span class="room-modal__dot" id="roomModalDot"></span>
+          <h2 class="room-modal__title" id="roomModalTitle"></h2>
+          <span class="room-modal__meta" id="roomModalMeta"></span>
+        </div>
+        <button class="room-modal__close" id="roomModalClose" aria-label="Zavrieť">✕</button>
+      </div>
+
+      <!-- Tabs -->
+      <div class="room-modal__tabs" role="tablist">
+        <button class="room-modal__tab is-active" data-tab="tour" role="tab">⟳ 360° TOUR</button>
+        <button class="room-modal__tab" data-tab="photos" role="tab">GALÉRIA</button>
+        <button class="room-modal__tab" data-tab="info" role="tab">INFO &amp; CENA</button>
+      </div>
+
+      <!-- Body -->
+      <div class="room-modal__body">
+
+        <!-- 360° pane -->
+        <div class="room-modal__pane is-active" id="roomPaneTour">
+          <div class="room-modal__viewer" id="roomPannellumWrap">
+            <div class="room-modal__placeholder" id="roomTourPlaceholder">
+              <div class="room-modal__placeholder-icon">⟳</div>
+              <p class="room-modal__placeholder-title">360° TOUR</p>
+              <p class="room-modal__placeholder-desc">Virtuálna prehliadka tejto miestnosti bude čoskoro dostupná.<br>Kontaktujte nás pre živú prehliadku.</p>
+              <button class="room-modal__placeholder-cta" id="roomTourFallbackBtn">Prejsť na galériu →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Galéria pane -->
+        <div class="room-modal__pane" id="roomPanePhotos">
+          <div class="room-modal__gallery" id="roomGallery">
+            <div class="room-modal__placeholder room-modal__placeholder--gallery">
+              <div class="room-modal__placeholder-icon">◻</div>
+              <p class="room-modal__placeholder-title">GALÉRIA</p>
+              <p class="room-modal__placeholder-desc">Fotografické materiály priestoru sa pripravujú.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Info pane -->
+        <div class="room-modal__pane" id="roomPaneInfo">
+          <div class="room-modal__info">
+            <p class="room-modal__desc" id="roomModalDesc"></p>
+            <div class="room-modal__specs" id="roomModalSpecs"></div>
+            <div class="room-modal__features" id="roomModalFeatures"></div>
+            <div class="room-modal__actions">
+              <div class="room-modal__price-wrap">
+                <span class="room-modal__price" id="roomModalPrice"></span>
+                <span class="room-modal__price-unit">/ hod</span>
+              </div>
+              <button class="room-modal__reserve-btn" id="roomModalReserveBtn">REZERVOVAŤ →</button>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /.room-modal__body -->
+    </div><!-- /.room-modal__panel -->
+  </div><!-- /#roomModal -->
 
   </div><!-- /#events-block -->
 
@@ -485,94 +636,103 @@
   <!-- =============================================
        BH PILLARS — ycY8s (Pencil)
        ============================================= -->
-  <section class="bh-pillars locked-section-house" style="
-    width:100%;
-    background:#031c40;
-    padding:120px 60px;
-    box-sizing:border-box;
-    font-family:'Montserrat',sans-serif;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:48px;
-  ">
-    <span style="font-size:11px;font-weight:700;letter-spacing:4px;color:#4590ff;text-transform:uppercase;">03 — WHAT WE OFFER</span>
-    <h2 style="font-size:48px;font-weight:900;color:#fff;text-align:center;margin:0;">Built on Four Pillars</h2>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:1320px;width:100%;">
+  <section class="bh-pillars locked-section-house">
+    <div class="bh-section-inner">
+      <header class="bh-section-header">
+        <span class="bh-eyebrow">03 — WHAT WE OFFER</span>
+        <h2 class="bh-section-title">Built on Four Pillars</h2>
+      </header>
+      <div class="bh-pillars-grid">
 
-      <div style="background:rgba(27,0,226,0.15);border:1px solid rgba(69,144,255,0.15);border-radius:12px;padding:48px;display:flex;flex-direction:column;gap:16px;">
-        <span style="font-size:14px;font-weight:700;letter-spacing:4px;color:#4590ff;">01/04</span>
-        <i data-lucide="fingerprint" style="width:36px;height:36px;color:#0057ff;"></i>
-        <h3 style="font-size:24px;font-weight:700;color:#fff;margin:0;">Biometric Access</h3>
-        <p style="font-size:15px;color:rgba(255,255,255,0.6);line-height:1.7;margin:0;">Vstup do budovy cez odtlačok prsta, rozpoznávanie tváre a iris scan. Žiadne karty, žiadne kľúče — len vy.</p>
+        <!-- Featured anchor — Biometric Access -->
+        <div class="bh-pillar bh-pillar--featured">
+          <span class="bh-pillar-num">01 / 04</span>
+          <div>
+            <h3 class="bh-pillar-name bh-pillar-name--lg">Biometric Access</h3>
+            <p class="bh-pillar-desc">Vstup do budovy cez odtlačok prsta, rozpoznávanie tváre a iris scan. Žiadne karty, žiadne kľúče — len vy.</p>
+          </div>
+          <span class="bh-pillar-spec">3 biometric methods</span>
+        </div>
+
+        <!-- Three data-forward cards below -->
+        <div class="bh-pillar">
+          <span class="bh-pillar-num">02 / 04</span>
+          <div class="bh-pillar-data">
+            <span class="bh-pillar-stat">847</span>
+            <span class="bh-pillar-stat-label">smart senzorov</span>
+          </div>
+          <h3 class="bh-pillar-name">AI Infrastructure</h3>
+          <p class="bh-pillar-desc">Monitoruje každý aspekt budovy v reálnom čase. Prediktívna údržba znižuje náklady o 34%.</p>
+        </div>
+
+        <div class="bh-pillar">
+          <span class="bh-pillar-num">03 / 04</span>
+          <div class="bh-pillar-data">
+            <span class="bh-pillar-stat">40%</span>
+            <span class="bh-pillar-stat-label">energie produkujeme</span>
+          </div>
+          <h3 class="bh-pillar-name">Sustainability</h3>
+          <p class="bh-pillar-desc">Solárne panely, rekuperácia, smart grid. Certifikácia BREEAM Excellent.</p>
+        </div>
+
+        <div class="bh-pillar">
+          <span class="bh-pillar-num">04 / 04</span>
+          <div class="bh-pillar-data">
+            <span class="bh-pillar-stat">12 000</span>
+            <span class="bh-pillar-stat-label">m² flexibilného priestoru</span>
+          </div>
+          <h3 class="bh-pillar-name">Premium Workspace</h3>
+          <p class="bh-pillar-desc">Konferenčné miestnosti, event hala, rooftop terasa s výhľadom na Bratislavu.</p>
+        </div>
+
       </div>
-
-      <div style="background:rgba(27,0,226,0.15);border:1px solid rgba(69,144,255,0.15);border-radius:12px;padding:48px;display:flex;flex-direction:column;gap:16px;">
-        <span style="font-size:14px;font-weight:700;letter-spacing:4px;color:#4590ff;">02/04</span>
-        <i data-lucide="brain" style="width:36px;height:36px;color:#0057ff;"></i>
-        <h3 style="font-size:24px;font-weight:700;color:#fff;margin:0;">AI Infrastructure</h3>
-        <p style="font-size:15px;color:rgba(255,255,255,0.6);line-height:1.7;margin:0;">847 smart senzorov monitoruje každý aspekt budovy v reálnom čase. Prediktívna údržba znižuje náklady o 34%.</p>
-      </div>
-
-      <div style="background:rgba(27,0,226,0.15);border:1px solid rgba(69,144,255,0.15);border-radius:12px;padding:48px;display:flex;flex-direction:column;gap:16px;">
-        <span style="font-size:14px;font-weight:700;letter-spacing:4px;color:#4590ff;">03/04</span>
-        <i data-lucide="leaf" style="width:36px;height:36px;color:#0057ff;"></i>
-        <h3 style="font-size:24px;font-weight:700;color:#fff;margin:0;">Sustainability</h3>
-        <p style="font-size:15px;color:rgba(255,255,255,0.6);line-height:1.7;margin:0;">Solárne panely, rekuperácia, smart grid. Budova produkuje 40% energie ktorú spotrebuje. Certifikácia BREEAM Excellent.</p>
-      </div>
-
-      <div style="background:rgba(27,0,226,0.15);border:1px solid rgba(69,144,255,0.15);border-radius:12px;padding:48px;display:flex;flex-direction:column;gap:16px;">
-        <span style="font-size:14px;font-weight:700;letter-spacing:4px;color:#4590ff;">04/04</span>
-        <i data-lucide="building-2" style="width:36px;height:36px;color:#0057ff;"></i>
-        <h3 style="font-size:24px;font-weight:700;color:#fff;margin:0;">Premium Workspace</h3>
-        <p style="font-size:15px;color:rgba(255,255,255,0.6);line-height:1.7;margin:0;">12,000 m² flexibilného pracovného priestoru. Konferenčné miestnosti, event hala, rooftop terasa s výhľadom na Bratislavu.</p>
-      </div>
-
     </div>
   </section>
 
   <!-- =============================================
        BH AUDIENCE — FxhXf (Pencil)
        ============================================= -->
-  <section class="bh-audience locked-section-house" style="
-    width:100%;
-    background:#031c40;
-    padding:120px 60px;
-    box-sizing:border-box;
-    font-family:'Montserrat',sans-serif;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:48px;
-  ">
-    <span style="font-size:11px;font-weight:700;letter-spacing:4px;color:#4590ff;text-transform:uppercase;">07 — FOR YOU</span>
-    <h2 style="font-size:48px;font-weight:900;color:#fff;text-align:center;margin:0;">Built For Visionaries</h2>
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;max-width:1200px;width:100%;">
+  <section class="bh-audience locked-section-house">
+    <div class="bh-section-inner">
+      <header class="bh-section-header bh-section-header--split">
+        <div>
+          <span class="bh-eyebrow">07 — FOR YOU</span>
+          <h2 class="bh-section-title">Built For<br>Visionaries</h2>
+        </div>
+      </header>
+      <div class="bh-audience-list">
 
-      <div style="background:rgba(27,0,226,0.15);border:1px solid rgba(69,144,255,0.15);border-radius:12px;padding:48px;display:flex;flex-direction:column;gap:12px;">
-        <i data-lucide="briefcase" style="width:32px;height:32px;color:#0057ff;"></i>
-        <span style="font-size:12px;font-weight:700;letter-spacing:3px;color:#4590ff;">FOR TENANTS</span>
-        <h3 style="font-size:28px;font-weight:700;color:#fff;margin:0;">Your Smartest Office</h3>
-        <p style="font-size:15px;color:rgba(255,255,255,0.6);line-height:1.7;margin:0;">Pracovný priestor kde technológia pracuje pre vás. Biometrický prístup, smart zasadačky, personalizované prostredie.</p>
-        <span style="font-size:12px;font-weight:700;letter-spacing:2px;color:#fff;margin-top:8px;cursor:pointer;">LEARN MORE →</span>
+        <div class="bh-audience-row">
+          <span class="bh-audience-num">01</span>
+          <span class="bh-audience-tag">FOR TENANTS</span>
+          <div class="bh-audience-content">
+            <h3 class="bh-audience-name">Your Smartest Office</h3>
+            <p class="bh-audience-desc">Pracovný priestor kde technológia pracuje pre vás. Biometrický prístup, smart zasadačky, personalizované prostredie.</p>
+          </div>
+          <span class="bh-audience-cta">LEARN MORE →</span>
+        </div>
+
+        <div class="bh-audience-row">
+          <span class="bh-audience-num">02</span>
+          <span class="bh-audience-tag">FOR EVENT<br>ORGANIZERS</span>
+          <div class="bh-audience-content">
+            <h3 class="bh-audience-name">Unforgettable Venues</h3>
+            <p class="bh-audience-desc">3 event priestory s kapacitou do 200 ľudí. Profesionálne AV vybavenie, catering, networking zóny.</p>
+          </div>
+          <span class="bh-audience-cta">LEARN MORE →</span>
+        </div>
+
+        <div class="bh-audience-row">
+          <span class="bh-audience-num">03</span>
+          <span class="bh-audience-tag">FOR INVESTORS</span>
+          <div class="bh-audience-content">
+            <h3 class="bh-audience-name">Future-Proof Asset</h3>
+            <p class="bh-audience-desc">Prvá biometrická budova v CEE regióne. Certifikácia BREEAM, nízke prevádzkové náklady, vysoká obsadenosť.</p>
+          </div>
+          <span class="bh-audience-cta">LEARN MORE →</span>
+        </div>
+
       </div>
-
-      <div style="background:rgba(27,0,226,0.15);border:1px solid rgba(69,144,255,0.15);border-radius:12px;padding:48px;display:flex;flex-direction:column;gap:12px;">
-        <i data-lucide="calendar" style="width:32px;height:32px;color:#0057ff;"></i>
-        <span style="font-size:12px;font-weight:700;letter-spacing:3px;color:#4590ff;">FOR EVENT ORGANIZERS</span>
-        <h3 style="font-size:28px;font-weight:700;color:#fff;margin:0;">Unforgettable Venues</h3>
-        <p style="font-size:15px;color:rgba(255,255,255,0.6);line-height:1.7;margin:0;">3 event priestory s kapacitou do 200 ľudí. Profesionálne AV vybavenie, catering, networking zóny.</p>
-        <span style="font-size:12px;font-weight:700;letter-spacing:2px;color:#fff;margin-top:8px;cursor:pointer;">LEARN MORE →</span>
-      </div>
-
-      <div style="background:rgba(27,0,226,0.15);border:1px solid rgba(69,144,255,0.15);border-radius:12px;padding:48px;display:flex;flex-direction:column;gap:12px;">
-        <i data-lucide="trending-up" style="width:32px;height:32px;color:#0057ff;"></i>
-        <span style="font-size:12px;font-weight:700;letter-spacing:3px;color:#4590ff;">FOR INVESTORS</span>
-        <h3 style="font-size:28px;font-weight:700;color:#fff;margin:0;">Future-Proof Asset</h3>
-        <p style="font-size:15px;color:rgba(255,255,255,0.6);line-height:1.7;margin:0;">Prvá biometrická budova v CEE regióne. Certifikácia BREEAM, nízke prevádzkové náklady, vysoká obsadenosť.</p>
-        <span style="font-size:12px;font-weight:700;letter-spacing:2px;color:#fff;margin-top:8px;cursor:pointer;">LEARN MORE →</span>
-      </div>
-
     </div>
   </section>
 
@@ -740,12 +900,11 @@
       heroCards.classList.add('events-expanded');
       document.getElementById('events-block').classList.remove('locked-section');
 
-      // Počkaj: 650ms animácia titulkov + 850ms pauza (názov ostane v obraze)
       setTimeout(() => {
-        const target = document.querySelector('.events-intro');
+        const target = document.querySelector('.events-hero-section');
         const top = target.getBoundingClientRect().top + window.scrollY;
         window.scrollTo({ top, behavior: 'smooth' });
-      }, 1500);
+      }, 750);
     });
 
     // ── ZISTIŤ VIAC — expand House karta doprava ──
@@ -758,12 +917,11 @@
       document.querySelectorAll('.locked-section-house').forEach(el => el.classList.remove('locked-section-house'));
       document.querySelector('.building-scroll').classList.remove('locked-section-building');
 
-      // Počkaj: 650ms animácia titulkov + 850ms pauza (názov ostane v obraze)
       setTimeout(() => {
         const target = document.querySelector('.bh-vision');
         const top = target.getBoundingClientRect().top + window.scrollY;
         window.scrollTo({ top, behavior: 'smooth' });
-      }, 1500);
+      }, 750);
     });
 
     // ── REVERZ: reset keď sa user vráti späť do hero ──
@@ -817,9 +975,108 @@
       }
     });
 
-    // ── Events v2: room pre-fill + form submit ──
-    document.querySelectorAll('[data-room]').forEach(btn => {
-      btn.addEventListener('click', () => {
+    // ── Interactive floorplan: klik na zónu → overlay + farebná karta ──
+    const roomColors = {
+      'Bistro Bite':   '#E84E9D',
+      'Training Room': '#84CC16',
+      'Nexus Gallery': '#0057FF',
+      'Observatory':   '#06B6D4',
+      'Nádvorie':      '#E8C84A',
+    };
+
+    let currentMapRoom = null;
+
+    function updateTourTrigger(room, isActive) {
+      const trigger = document.getElementById('vpTourTrigger');
+      const dot     = document.getElementById('vpTourDot');
+      const name    = document.getElementById('vpTourName');
+      if (!trigger) return;
+      if (isActive) {
+        currentMapRoom = room;
+        if (dot)  dot.style.background = roomColors[room] ?? '#0057FF';
+        if (name) name.textContent = room;
+        trigger.classList.add('is-visible');
+        trigger.removeAttribute('aria-hidden');
+      } else {
+        // If deactivating the currently shown room, fall back to another active one
+        if (currentMapRoom === room) {
+          const otherActive = document.querySelector('.vp-floorplan__overlay.is-active');
+          if (otherActive) {
+            const r = otherActive.dataset.room;
+            currentMapRoom = r;
+            if (dot)  dot.style.background = roomColors[r] ?? '#0057FF';
+            if (name) name.textContent = r;
+          } else {
+            currentMapRoom = null;
+            trigger.classList.remove('is-visible');
+            trigger.setAttribute('aria-hidden', 'true');
+          }
+        }
+      }
+    }
+
+    function hideMapHint() {
+      const hint = document.getElementById('vpMapHint');
+      if (hint) hint.classList.add('is-hidden');
+    }
+
+    function toggleRoom(room) {
+      const overlay = document.querySelector(`.vp-floorplan__overlay[data-room="${room}"]`);
+      const card    = document.querySelector(`.vp-cards .vp-card[data-room="${room}"]`);
+      const tooltip = document.querySelector(`.vp-room-tooltip[data-room="${room}"]`);
+      if (!overlay) return;
+      const wasActive = overlay.classList.contains('is-active');
+      overlay.classList.toggle('is-active', !wasActive);
+      if (tooltip) tooltip.classList.toggle('is-active', !wasActive);
+      if (card) {
+        card.classList.toggle('is-selected', !wasActive);
+        card.style.setProperty('--room-color', wasActive ? '' : roomColors[room] ?? '#0057FF');
+      }
+    }
+
+    // SVG hit zones: hover → softlight glow + tooltip; click → toggle selection
+    document.querySelectorAll('.vp-hit-zone').forEach(zone => {
+      const room    = zone.dataset.room;
+      const overlay = document.querySelector(`.vp-floorplan__overlay[data-room="${room}"]`);
+      const tooltip = document.querySelector(`.vp-room-tooltip[data-room="${room}"]`);
+      zone.addEventListener('mouseenter', () => {
+        if (overlay) overlay.classList.add('is-hover');
+        if (tooltip) tooltip.classList.add('is-hover');
+      });
+      zone.addEventListener('mouseleave', () => {
+        if (overlay) overlay.classList.remove('is-hover');
+        if (tooltip) tooltip.classList.remove('is-hover');
+      });
+      zone.addEventListener('click', () => toggleRoom(room));
+    });
+
+    // 360° icon click → open modal on tour tab
+    document.querySelectorAll('.vp-room-tooltip__icon').forEach(iconGroup => {
+      iconGroup.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const tooltip = iconGroup.closest('.vp-room-tooltip');
+        const room = tooltip ? tooltip.dataset.room : null;
+        if (!room) return;
+        openRoomModal(room);
+        setTimeout(() => {
+          const tourTab = document.querySelector('.room-modal__tab[data-tab="tour"]');
+          if (tourTab) tourTab.click();
+        }, 40);
+      });
+    });
+
+    // Venue karty → toggle selection (same as map click)
+    document.querySelectorAll('.vp-cards .vp-card').forEach(card => {
+      card.addEventListener('click', (e) => {
+        if (e.target.closest('.venue-card__btn')) return;
+        toggleRoom(card.dataset.room);
+      });
+    });
+
+    // ── Events v2: room pre-fill + form scroll (len REZERVOVAŤ a cenník tlačidlá) ──
+    document.querySelectorAll('.venue-card__btn, .ev-pricing-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
         const select = document.getElementById('ev-room');
         if (select) {
           for (const opt of select.options) {
@@ -830,13 +1087,218 @@
       });
     });
 
+    // ── Room Detail Modal ─────────────────────────────────────────────────
+
+    const roomTourData = {
+      'Nexus Gallery': {
+        color: '#0057FF',
+        meta: '200 ľudí · 594 m²',
+        desc: 'Hlavná event hala s pódiom, profesionálnym LED osvetlením a AV systémom. Ideálna pre konferencie, galavečery a networking eventy vo veľkom štýle.',
+        capacity: 200, area: 594, price: '180 €',
+        features: ['Pódium s backstage zázemím', 'LED stena 8×3 m', 'Profesionálne PA ozvučenie', 'Biometrický prístup', 'Catering zázemie', 'Flexibilné usporiadanie'],
+        tour360: 'images/360/nexus-gallery.jpg', photos: [],
+      },
+      'Observatory': {
+        color: '#06B6D4',
+        meta: '60 ľudí · 120 m²',
+        desc: 'Konferenčná miestnosť s interaktívnymi displejmi, videokonferenčným systémom a panoramatickým výhľadom na Bratislavu.',
+        capacity: 60, area: 120, price: '140 €',
+        features: ['Interaktívny displej 86"', 'Videokonferencia Zoom/Teams', 'Zvukotesná izolácia', 'Automatické rolety', 'Whiteboard stena'],
+        tour360: null, photos: [],
+      },
+      'Training Room': {
+        color: '#84CC16',
+        meta: '40 ľudí · 65 m²',
+        desc: 'Flexibilný priestor pre workshopy, školenia a brainstorming s modulárnym nábytkom a interaktívnymi panelmi.',
+        capacity: 40, area: 65, price: '95 €',
+        features: ['Modulárny nábytok', 'Interaktívne panely ×2', 'Flipcharty a whiteboardy', 'Wi-Fi 6 high-speed', 'Klimatizácia'],
+        tour360: null, photos: [],
+      },
+      'Bistro Bite': {
+        color: '#E84E9D',
+        meta: '80 ľudí · 95 m²',
+        desc: 'Multifunkčný priestor s kompletným cateringovým zázemím. Ideálny pre networking recepcie, produktové launche a po-eventové stretnutia.',
+        capacity: 80, area: 95, price: '110 €',
+        features: ['Kompletné catering zázemie', 'Bar a barový pult', 'Terasa (sezónne)', 'Flexibilné usporiadanie', 'Zábavný systém'],
+        tour360: null, photos: [],
+      },
+      'Nádvorie': {
+        color: '#E8C84A',
+        meta: '300 ľudí · 300 m²',
+        desc: 'Otvorený vonkajší priestor pre letné eventy a networking s možnosťou stanu alebo markízy. Dostupné do 22:00.',
+        capacity: 300, area: 300, price: 'Po dohode',
+        features: ['Otvorený priestor', 'Stan / markíza (prenájom)', 'Záhradné osvetlenie', 'Prípojka elektriny', 'Dostupné do 22:00'],
+        tour360: null, photos: [],
+      },
+    };
+
+    let activeModalRoom = null;
+    let pannellumViewer = null;
+
+    // Pannellum loaded on demand — saves ~140 KB for users who never open a 360° tour
+    let pannellumLoadPromise = null;
+    function loadPannellum() {
+      if (window.pannellum) return Promise.resolve();
+      if (pannellumLoadPromise) return pannellumLoadPromise;
+      pannellumLoadPromise = new Promise((resolve, reject) => {
+        const css = document.createElement('link');
+        css.rel = 'stylesheet';
+        css.href = 'https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css';
+        document.head.appendChild(css);
+        const js = document.createElement('script');
+        js.src = 'https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js';
+        js.onload = resolve;
+        js.onerror = reject;
+        document.head.appendChild(js);
+      });
+      return pannellumLoadPromise;
+    }
+
+    function openRoomModal(room) {
+      const data = roomTourData[room];
+      if (!data) return;
+      activeModalRoom = room;
+
+      document.getElementById('roomModalDot').style.background = data.color;
+      document.getElementById('roomModalTitle').textContent = room;
+      document.getElementById('roomModalMeta').textContent = data.meta;
+      document.getElementById('roomModalDesc').textContent = data.desc;
+
+      document.getElementById('roomModalSpecs').innerHTML =
+        `<div class="room-modal__spec"><span class="room-modal__spec-label">Kapacita</span><span class="room-modal__spec-val">${data.capacity} osôb</span></div>` +
+        `<div class="room-modal__spec"><span class="room-modal__spec-label">Výmera</span><span class="room-modal__spec-val">${data.area} m²</span></div>` +
+        `<div class="room-modal__spec"><span class="room-modal__spec-label">Cena</span><span class="room-modal__spec-val">${data.price} / hod</span></div>`;
+
+      document.getElementById('roomModalFeatures').innerHTML =
+        data.features.map(f => `<span class="room-modal__feature-tag">${f}</span>`).join('');
+
+      document.getElementById('roomModalPrice').textContent = data.price;
+      const priceUnit = document.querySelector('.room-modal__price-unit');
+      if (priceUnit) priceUnit.style.display = data.price === 'Po dohode' ? 'none' : '';
+
+      const galleryEl = document.getElementById('roomGallery');
+      if (data.photos && data.photos.length > 0) {
+        galleryEl.innerHTML = data.photos.map(src => `<img src="${src}" alt="${room}" />`).join('');
+      } else {
+        galleryEl.innerHTML =
+          '<div class="room-modal__placeholder room-modal__placeholder--gallery">' +
+          '<div class="room-modal__placeholder-icon">◻</div>' +
+          '<p class="room-modal__placeholder-title">GALÉRIA</p>' +
+          '<p class="room-modal__placeholder-desc">Fotografické materiály priestoru sa pripravujú.</p>' +
+          '</div>';
+      }
+
+      const tourPlaceholder = document.getElementById('roomTourPlaceholder');
+      const pannellumWrap   = document.getElementById('roomPannellumWrap');
+      const oldViewer = document.getElementById('pannellumViewer');
+      if (oldViewer) oldViewer.remove();
+      if (pannellumViewer) { try { pannellumViewer.destroy(); } catch(e) {} pannellumViewer = null; }
+
+      if (data.tour360) {
+        tourPlaceholder.hidden = true;
+        const viewerDiv = document.createElement('div');
+        viewerDiv.id = 'pannellumViewer';
+        viewerDiv.style.cssText = 'width:100%;height:100%;';
+        pannellumWrap.appendChild(viewerDiv);
+        const tour = data.tour360;
+        const roomAtCall = room;
+        loadPannellum().then(() => {
+          // user mohol medzitým prepnúť na inú miestnosť — neaktivuj zastaralý viewer
+          if (activeModalRoom !== roomAtCall) return;
+          if (!document.getElementById('pannellumViewer')) return;
+          pannellumViewer = pannellum.viewer('pannellumViewer', {
+            type: 'equirectangular',
+            panorama: tour,
+            autoLoad: true,
+            showControls: false,
+          });
+        }).catch(() => { tourPlaceholder.hidden = false; });
+      } else {
+        tourPlaceholder.hidden = false;
+      }
+
+      document.querySelectorAll('.room-modal__tab').forEach(t => t.classList.toggle('is-active', t.dataset.tab === 'tour'));
+      document.querySelectorAll('.room-modal__pane').forEach(p => p.classList.toggle('is-active', p.id === 'roomPaneTour'));
+
+      const modal = document.getElementById('roomModal');
+      modal.removeAttribute('hidden');
+      document.body.style.overflow = 'hidden';
+      requestAnimationFrame(() => modal.classList.add('is-open'));
+    }
+
+    function closeRoomModal() {
+      const modal = document.getElementById('roomModal');
+      modal.classList.remove('is-open');
+      document.body.style.overflow = '';
+      setTimeout(() => {
+        modal.setAttribute('hidden', '');
+        if (pannellumViewer) { try { pannellumViewer.destroy(); } catch(e) {} pannellumViewer = null; }
+        const oldViewer = document.getElementById('pannellumViewer');
+        if (oldViewer) oldViewer.remove();
+        activeModalRoom = null;
+      }, 300);
+    }
+
+    document.querySelectorAll('.room-modal__tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        const paneMap = { tour: 'roomPaneTour', photos: 'roomPanePhotos', info: 'roomPaneInfo' };
+        document.querySelectorAll('.room-modal__tab').forEach(t => t.classList.toggle('is-active', t === tab));
+        document.querySelectorAll('.room-modal__pane').forEach(p => p.classList.toggle('is-active', p.id === paneMap[tab.dataset.tab]));
+      });
+    });
+
+    document.getElementById('roomModalClose').addEventListener('click', closeRoomModal);
+    document.getElementById('roomModalBackdrop').addEventListener('click', closeRoomModal);
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') { closeRoomModal(); return; }
+      if (!activeModalRoom) return;
+      const rooms = Object.keys(roomTourData);
+      const idx = rooms.indexOf(activeModalRoom);
+      if (e.key === 'ArrowRight' && idx < rooms.length - 1) {
+        toggleRoom(rooms[idx + 1]);
+        openRoomModal(rooms[idx + 1]);
+      } else if (e.key === 'ArrowLeft' && idx > 0) {
+        toggleRoom(rooms[idx - 1]);
+        openRoomModal(rooms[idx - 1]);
+      }
+    });
+
+    document.getElementById('roomTourFallbackBtn').addEventListener('click', () => {
+      const photosTab = document.querySelector('.room-modal__tab[data-tab="photos"]');
+      if (photosTab) photosTab.click();
+    });
+
+    document.getElementById('roomModalReserveBtn').addEventListener('click', () => {
+      const room = activeModalRoom;
+      closeRoomModal();
+      if (room) {
+        const select = document.getElementById('ev-room');
+        if (select) {
+          for (const opt of select.options) {
+            if (opt.value === room) { select.value = room; break; }
+          }
+        }
+      }
+      setTimeout(() => {
+        document.getElementById('ev-kontakt').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 350);
+    });
+
+    document.querySelectorAll('.vp-detail-btn, .vp-360-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openRoomModal(btn.dataset.room);
+      });
+    });
+
     const evForm = document.getElementById('evContactForm');
     if (evForm) {
       evForm.addEventListener('submit', e => {
         e.preventDefault();
         const submitBtn = evForm.querySelector('button[type="submit"]');
-        submitBtn.textContent = 'Odoslané ✓';
-        submitBtn.style.background = '#4CAF50';
+        submitBtn.textContent = 'Odoslané —';
+        submitBtn.style.background = 'linear-gradient(135deg, #0057FF, #4590FF)';
+        submitBtn.style.opacity = '0.75';
         submitBtn.disabled = true;
         setTimeout(() => {
           submitBtn.textContent = 'Odoslať dopyt';
@@ -845,6 +1307,29 @@
         }, 3000);
       });
     }
+
+    // ── Triad background — cursor glow + grid reveal tracking ──
+    (function() {
+      const glowEl = document.getElementById('evCursorGlow');
+      const gridEl = document.getElementById('evGridReveal');
+      const block  = document.getElementById('events-block');
+      if (!block) return;
+
+      block.addEventListener('mouseenter', () => {
+        if (glowEl) glowEl.style.opacity = '1';
+      });
+      block.addEventListener('mouseleave', () => {
+        if (glowEl) glowEl.style.opacity = '0';
+        if (gridEl) { gridEl.style.setProperty('--gx', '-9999px'); gridEl.style.setProperty('--gy', '-9999px'); }
+      });
+      block.addEventListener('mousemove', (e) => {
+        const rect = block.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top + block.scrollTop;
+        if (glowEl) { glowEl.style.left = x + 'px'; glowEl.style.top = y + 'px'; }
+        if (gridEl) { gridEl.style.setProperty('--gx', x + 'px'); gridEl.style.setProperty('--gy', y + 'px'); }
+      }, { passive: true });
+    })();
 
     // ── Cursor glow tracking na glass kartách ──
     document.querySelectorAll('.hero-card').forEach(card => {
@@ -872,20 +1357,37 @@
       const FRAME_START = 16;
       const FRAME_END = 295;
       const FRAME_COUNT = FRAME_END - FRAME_START + 1; // 280
-      const frames = [];
+      const frames = new Array(FRAME_COUNT);
       let loadedCount = 0;
+      let preloadStarted = false;
 
-      // Preload všetkých framov
-      for (let i = FRAME_START; i <= FRAME_END; i++) {
-        const img = new Image();
-        const num = String(i).padStart(5, '0');
-        img.src = `images/building-web/slide2_${num}.png`;
-        img.onload = () => {
-          loadedCount++;
-          // Vykreslí prvý frame keď sa načíta
-          if (i === FRAME_START) drawFrame(0);
-        };
-        frames.push(img);
+      // Lazy preload — spustí sa až keď user scrolluje blízko k sekcii.
+      // Ušetrí ~210 MB pre userov ktorí ku sekcii nedôjdu.
+      function startPreload() {
+        if (preloadStarted) return;
+        preloadStarted = true;
+        for (let i = 0; i < FRAME_COUNT; i++) {
+          const img = new Image();
+          const num = String(i + FRAME_START).padStart(5, '0');
+          img.src = `images/building-web/slide2_${num}.png`;
+          img.onload = () => {
+            loadedCount++;
+            if (i === 0) drawFrame(0);
+          };
+          frames[i] = img;
+        }
+      }
+
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver((entries) => {
+          if (entries.some(e => e.isIntersecting)) {
+            startPreload();
+            io.disconnect();
+          }
+        }, { rootMargin: '600px 0px' }); // začni preload ~1 obrazovku pred sekciou
+        io.observe(buildingScroll);
+      } else {
+        startPreload(); // fallback
       }
 
       function drawFrame(index) {

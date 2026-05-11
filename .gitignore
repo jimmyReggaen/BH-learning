@@ -1,0 +1,21 @@
+# macOS
+.DS_Store
+
+# Backup folders / unused raw assets
+images-orig/
+images/building-seq/
+images/360/nexus-gallery-orig.jpg
+
+# Internal session notes (not for public)
+kontextBHwebsite/
+
+# Tooling / IDE
+.agents/
+.claude/
+.kiro/
+.vscode/
+node_modules/
+
+# Misc
+SKILL.md
+skills-lock.json
