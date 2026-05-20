@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Biometrics House — Najbiometrickejšia budova na svete</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
+
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/brand.css" />
+  <link rel="stylesheet" href="css/house.css" />
+</head>
+<body>
+
+  <!-- ═══ Scroll Progress ═══ -->
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <!-- ═══ Fixed Page Background — 4 animated blobs ═══ -->
+  <div class="page-bg" aria-hidden="true">
+    <div class="bg-blob" style="width:50vw;height:50vw;background:#1B00E2;top:-10%;left:-10%;animation:auroraFloat 20s ease-in-out infinite alternate"></div>
+    <div class="bg-blob" style="width:40vw;height:40vw;background:#0057FF;bottom:-5%;right:-5%;animation:auroraFloat 25s ease-in-out infinite alternate-reverse"></div>
+    <div class="bg-blob" style="width:35vw;height:35vw;background:#4590FF;top:40%;left:60%;animation:auroraFloat 18s ease-in-out infinite alternate;animation-delay:-8s"></div>
+    <div class="bg-blob" style="width:30vw;height:30vw;background:#031C40;top:60%;left:20%;animation:auroraFloat 22s ease-in-out infinite alternate-reverse;animation-delay:-5s"></div>
+  </div>
+
+  <!-- ═══ NAV ═══ -->
+  <nav class="house-nav">
+    <a href="index.html" class="house-nav__brand">
+      BIOMETRICS HOUSE
+      <small>by Innovatrics</small>
+    </a>
+    <ul class="house-nav__links">
+      <li><a href="#about">O budove</a></li>
+      <li><a href="#facilities">Priestory</a></li>
+      <li><a href="#faq">Otázky</a></li>
+      <li><a href="#contact">Kontakt</a></li>
+      <li><a href="index.html">Eventy</a></li>
+    </ul>
+    <a href="#contact" class="btn btn-grad-violet">Preskúmajte technológiu →</a>
+  </nav>
+
+  <!-- ═══ HERO ═══ -->
+  <header class="house-hero" id="about">
+    <div class="hero-aurora" aria-hidden="true">
+      <div class="blob b1"></div>
+      <div class="blob b2"></div>
+      <div class="blob b3"></div>
+      <div class="blob b4"></div>
+    </div>
+    <div class="hero-content scroll-lag">
+      <div class="house-hero__eyebrow">O budove</div>
+      <h1 class="house-hero__title">Vitajte v najbiometrickejšej<br/>budove na svete</h1>
+      <p class="house-hero__body">
+        Sídlo spoločnosti Innovatrics nanovo definuje, ako budovy rozpoznávajú, reagujú a zabezpečujú. Návštevníci vstupujú bez fyzických preukazov. Budova ich identifikuje a v reálnom čase sa im prispôsobuje. Dvere sa otvárajú, systémy reagujú a kontrola prístupu sa stáva nenápadnou.
+      </p>
+      <p class="house-hero__body" style="margin-top:1rem;">
+        Nie je to prototyp. Je plne funkčná. Je to priestor, kde architektúra a biometrická inteligencia koexistujú ticho, neviditeľne a bez kompromisov.
+      </p>
+      <div class="house-hero__cta-row">
+        <a href="#biometric" class="btn btn-grad-violet btn-lg">Preskúmajte technológiu →</a>
+        <a href="#workspace" class="btn btn-glass-blue btn-lg">Prenajať priestor</a>
+      </div>
+    </div>
+
+    <div class="house-stats">
+      <div class="house-stat">
+        <span class="house-stat__num">0</span>
+        <span class="house-stat__label">Fyzických preukazov</span>
+      </div>
+      <div class="house-stat">
+        <span class="house-stat__num">4</span>
+        <span class="house-stat__label">Biometrických kontrol</span>
+      </div>
+      <div class="house-stat">
+        <span class="house-stat__num">100%</span>
+        <span class="house-stat__label">Recyklácia dažďovej vody</span>
+      </div>
+      <div class="house-stat">
+        <span class="house-stat__num">0</span>
+        <span class="house-stat__label">Pripojenie na plyn</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══ GALÉRIA — pinned horizontal scroll ═══ -->
+  <section class="gallery-pin" id="gallery">
+    <div class="gallery-pin__sticky">
+      <div class="gallery-pin__track" id="galleryTrack">
+        <div class="gallery-pin__item" data-index="0">
+          <img src="images/house/01-exterior.jpg" alt="" />
+        </div>
+        <div class="gallery-pin__item" data-index="1">
+          <img src="images/house/03-atrium-pano.jpg" alt="" />
+        </div>
+        <div class="gallery-pin__item" data-index="2">
+          <img src="images/house/04-lounge.jpg" alt="" />
+        </div>
+        <div class="gallery-pin__item" data-index="3">
+          <img src="images/house/05-kitchen.jpg" alt="" />
+        </div>
+        <div class="gallery-pin__item" data-index="4">
+          <img src="images/house/06-bistro.jpg" alt="" />
+        </div>
+        <div class="gallery-pin__item" data-index="5">
+          <img src="images/house/07-office.jpg" alt="" />
+        </div>
+        <div class="gallery-pin__item" data-index="6">
+          <img src="images/house/08-lockers.jpg" alt="" />
+        </div>
+      </div>
+      <div class="gallery-pin__progress" id="galleryDots">
+        <span class="gallery-pin__dot is-active"></span>
+        <span class="gallery-pin__dot"></span>
+        <span class="gallery-pin__dot"></span>
+        <span class="gallery-pin__dot"></span>
+        <span class="gallery-pin__dot"></span>
+        <span class="gallery-pin__dot"></span>
+        <span class="gallery-pin__dot"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ LIGHTBOX ═══ -->
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <button class="lightbox__close" id="lbClose" aria-label="Zavrieť"><i data-lucide="x"></i></button>
+    <button class="lightbox__nav lightbox__nav--prev" id="lbPrev" aria-label="Predchádzajúce"><i data-lucide="chevron-left"></i></button>
+    <button class="lightbox__nav lightbox__nav--next" id="lbNext" aria-label="Ďalšie"><i data-lucide="chevron-right"></i></button>
+    <img id="lbImg" alt="" />
+  </div>
+
+  <!-- ═══ IDENTITY — kinetic headline + centered text ═══ -->
+  <section class="kinetic identity-block" id="bioCoreSection">
+    <div class="scroll-glow" id="bioCoreGlow"></div>
+    <div class="split-heading scroll-lag reveal" id="splitBio" data-text="IDENTITA AKO KĽÚČ" style="position:relative;z-index:2"></div>
+    <div class="identity-text reveal">
+      <span class="section-label">Architektúra</span>
+      <h2 class="identity-text__sub">Kde identita formuje zážitok</h2>
+      <p>Sídlo Innovatrics je živou ukážkou biometrickej architektúry. Od základov je navrhnuté tak, aby ukázalo, čo je možné, keď sa technológia a architektúra vyvíjajú spoločne. Nepoužíva žiaden plyn — je poháňané geotermálnou energiou a solárnymi panelmi. Samotná forma budovy odráža naše biometrické krédo: pohľad z vtáčej perspektívy odhaľuje obraz odtlačku prsta — odkaz na naše korene v algoritmoch rozpoznávania odtlačkov.</p>
+      <p>Organický, špirálovitý dizajn nie je len pre efekt. Symbolizuje nezávisle uvažujúcu štruktúru, ktorá v každom kroku spochybňuje normy. Architektúra spája prírodné prvky s vyspelými technologickými systémami, vytvárajúc dizajn, ktorý kombinuje prírodu s intuitívnou technológiou. Sklo od podlahy po strop, otvorené átrium korunované svetlíkom a prírodné materiály — všetko prispieva k priestoru, ktorý pôsobí otvorene a privítavo.</p>
+    </div>
+  </section>
+
+  <!-- ═══ PILLARS — sticky vertical card stack (01/02/03) ═══ -->
+  <section class="pillars-stack" id="facilities">
+
+    <!-- 01 — Biometria -->
+    <article class="pillar-card" style="--idx:0">
+      <div class="pillar-content">
+        <div class="pillar-text">
+          <span class="section-label">01 — Biometria</span>
+          <h2 class="pillar-title">Vaša identita je vaším kľúčom</h2>
+          <p class="pillar-lead">Od dverí po výťahy — všetko sa otvára, akonáhle vás budova rozpozná. Žiadny bezpečnostný pult. Žiadne zabudnuté karty. Iba plynulý prístup založený na identite všade, kam idete.</p>
+          <p class="pillar-body">Bezpečnosť pracuje ticho v pozadí a poskytuje zamestnancom aj návštevníkom rovnaký nenápadný zážitok. Budova sa učí za chodu — testuje nové nástroje, zdokonaľuje svoje systémy a prispôsobuje sa v reálnom čase.</p>
+          <div class="pillar-stats">
+            <div class="pillar-stat"><span class="num">0</span><span class="lbl">Fyzických preukazov</span></div>
+            <div class="pillar-stat"><span class="num">24/7</span><span class="lbl">Živé laboratórium</span></div>
+            <div class="pillar-stat"><span class="num">&lt;1s</span><span class="lbl">Čas rozpoznania</span></div>
+            <div class="pillar-stat"><span class="num">4</span><span class="lbl">Biometrické kontroly</span></div>
+          </div>
+          <a href="#" class="btn btn-glass-neon">Preskúmajte technológiu →</a>
+        </div>
+        <div class="pillar-media">
+          <div class="ph"><span class="ph__label">Biometrická čítačka · detail</span></div>
+        </div>
+      </div>
+    </article>
+
+    <!-- 02 — Udržateľnosť -->
+    <article class="pillar-card" style="--idx:1">
+      <div class="pillar-content is-reverse">
+        <div class="pillar-text">
+          <span class="section-label">02 — Udržateľnosť</span>
+          <h2 class="pillar-title">Budova dýcha vo vlastnom rytme</h2>
+          <p class="pillar-lead">Žiadne plynové pripojenie. Klimatizácia pochádza zo 44 geotermálnych vrtov v uzavretom okruhu pod budovou. Dažďová voda sa zachytáva a opätovne využíva. Solárne panely pokrývajú parkovisko.</p>
+          <p class="pillar-body">Vlastná studňa a 80-metrový drenážny priekop zabezpečujú, že voda je spravovaná priamo na pozemku. Koberce sú uhlíkovo-negatívne — uhlík ukladajú namiesto toho, aby ho uvoľňovali.</p>
+          <div class="pillar-stats">
+            <div class="pillar-stat"><span class="num">0</span><span class="lbl">Pripojenie na plyn</span></div>
+            <div class="pillar-stat"><span class="num">44</span><span class="lbl">Geotermálnych vrtov</span></div>
+            <div class="pillar-stat"><span class="num">80m</span><span class="lbl">Drenážny priekop</span></div>
+            <div class="pillar-stat"><span class="num">70%</span><span class="lbl">Recyklovaný hliník</span></div>
+          </div>
+        </div>
+        <div class="pillar-media">
+          <div class="ph"><span class="ph__label">Solárne panely · parkovisko</span></div>
+        </div>
+      </div>
+    </article>
+
+    <!-- 03 — Spolupráca -->
+    <article class="pillar-card" style="--idx:2">
+      <div class="pillar-content">
+        <div class="pillar-text">
+          <span class="section-label">03 — Spolupráca</span>
+          <h2 class="pillar-title">Priestory pre pohyb a spojenie</h2>
+          <p class="pillar-lead">Tímové zóny, zasadačky a workshopy sú rozmiestnené na štyroch poschodiach, aby podporovali tímovú prácu aj individuálnu sústredenosť.</p>
+          <p class="pillar-body">Terasy, bistro a spoločné priestory tvoria prirodzené body pre stretávanie. Miestnosti pre wellness, posilňovňa a joga priestory poskytujú miesta na zastavenie sa pred návratom k spoločnej práci. Každá oblasť prispieva k cyklu práce, interakcie a zotavenia.</p>
+          <div class="pillar-stats">
+            <div class="pillar-stat"><span class="num">4</span><span class="lbl">Podlažia</span></div>
+            <div class="pillar-stat"><span class="num">∞</span><span class="lbl">Zen zóny</span></div>
+            <div class="pillar-stat"><span class="num">1</span><span class="lbl">Bistro s baristom</span></div>
+            <div class="pillar-stat"><span class="num">+</span><span class="lbl">Terasy a yoga</span></div>
+          </div>
+        </div>
+        <div class="pillar-media">
+          <div class="ph"><span class="ph__label">Bistro · spoločné priestory</span></div>
+        </div>
+      </div>
+    </article>
+
+  </section>
+
+  <!-- ═══ KINETIC: ŽIVÝ PRIESTOR ═══ -->
+  <div class="kinetic" id="wsLifeSection">
+    <div class="scroll-glow" id="wsLifeGlow"></div>
+    <div class="split-heading scroll-lag reveal" id="splitWS" data-text="ŽIVÝ PRIESTOR" style="position:relative;z-index:2"></div>
+  </div>
+
+  <!-- ═══ WORKSPACE AWAITS ═══ -->
+  <section class="section" id="workspace">
+    <div class="reveal-stagger reveal">
+      <div class="section-label">Na prenájom</div>
+      <div class="section-title scroll-lag">Váš ďalší pracovný priestor vás čaká</div>
+      <div class="section-desc">Najbiometrickejšia budova ponúka flexibilné kancelárie, zasadačky a eventové priestory pripravené na okamžité využitie. Prenájom miestnosti alebo kancelárie zároveň otvára prístup k spoločným priestorom najvyššej úrovne — bistru, lobby so spoločnými schodmi, parku, kolaboratívnym zónam, zen zónam a terasám. Tieto priestory uľahčujú prácu, stretnutia aj hostenie v jednom prepojenom prostredí.</div>
+    </div>
+    <div class="workspace-chips stagger reveal">
+      <span class="workspace-chip si"><i data-lucide="briefcase"></i> Privátne kancelárie</span>
+      <span class="workspace-chip si"><i data-lucide="users"></i> Open-space kancelárie</span>
+      <span class="workspace-chip si"><i data-lucide="message-square"></i> Zasadačky</span>
+      <span class="workspace-chip si"><i data-lucide="wrench"></i> Workshop zóny</span>
+      <span class="workspace-chip si"><i data-lucide="theater"></i> Auditórium</span>
+      <span class="workspace-chip si"><i data-lucide="trending-up"></i> Spoločné schody</span>
+      <span class="workspace-chip si"><i data-lucide="sun"></i> Terasa</span>
+      <span class="workspace-chip si"><i data-lucide="coffee"></i> Bistro s baristom</span>
+      <span class="workspace-chip si"><i data-lucide="leaf"></i> Zen zóny</span>
+    </div>
+    <a href="#contact" class="btn btn-grad-violet btn-lg">Spýtať sa na dostupné priestory →</a>
+  </section>
+
+  <!-- ═══ FAQ ═══ -->
+  <section class="section" id="faq">
+    <div class="reveal-stagger reveal" style="text-align:center;">
+      <div class="section-label">Otázky</div>
+      <div class="section-title scroll-lag">Máte otázky?</div>
+      <div class="section-desc" style="margin-left:auto;margin-right:auto;">Bežné otázky o návšteve, prenájme, súkromí a živote v najbiometrickejšej budove.</div>
+    </div>
+    <div class="faq-list">
+      <details class="faq-item reveal">
+        <summary>Môžem prísť na návštevu?</summary>
+        <div class="faq-item__body">Áno. Prehliadky sa konajú v piatky a vyžadujú onboarding. Naplánujte si návštevu <a href="https://forms.gle/vMrPV9FumJNSRh6u9">tu</a>.</div>
+      </details>
+      <details class="faq-item reveal">
+        <summary>Môžem si prenajať priestor?</summary>
+        <div class="faq-item__body">Určite. Preskúmajte možnosti dlhodobého prenájmu kancelárií a <a href="#contact">dajte nám vedieť</a>, čo potrebujete.</div>
+      </details>
+      <details class="faq-item reveal">
+        <summary>Je moje súkromie chránené v plne biometrickej budove?</summary>
+        <div class="faq-item__body">Úplne. Ideme nad rámec požiadaviek GDPR — decoupling biometrických údajov, minimálne ukladanie dát a bezpečné spracovanie kamerou priamo v zariadení zabezpečujú ochranu vašich osobných informácií.</div>
+      </details>
+      <details class="faq-item reveal">
+        <summary>Mám kontrolu nad tým, ako sú moje biometrické údaje použité?</summary>
+        <div class="faq-item__body">
+          Áno, je to úplne na vás. Pri registrácii (vzdialene alebo na recepčnom kiosku) si môžete vybrať:
+          <ul>
+            <li><strong>Udeliť súhlas</strong> — vaše biometrické údaje umožnia plynulý bezdotykový prístup vo všetkých autorizovaných zónach.</li>
+            <li><strong>Neudeliť súhlas</strong> — vaše biometrické údaje sú anonymizované, použité len pre nevyhnutné bezpečnostné kontroly a nebudete osobne identifikovateľný.</li>
+          </ul>
+        </div>
+      </details>
+      <details class="faq-item reveal">
+        <summary>Budem v budove v bezpečí?</summary>
+        <div class="faq-item__body">Absolútne. Budova disponuje monitoringom zón v reálnom čase, detekciou narušenia a automatickými bezpečnostnými upozorneniami. K tomu máme nášho robotického strážneho psa pre ďalšiu vrstvu ochrany.</div>
+      </details>
+      <details class="faq-item reveal">
+        <summary>Bude môj pracovný priestor pohodlný a zdravý?</summary>
+        <div class="faq-item__body">Áno. Inteligentné systémy nepretržite monitorujú kvalitu vzduchu, vlhkosť, osvetlenie a ďalšie parametre, aby zabezpečili, že váš priestor je energeticky efektívny a optimalizovaný pre vaše zdravie a komfort.</div>
+      </details>
+      <details class="faq-item reveal">
+        <summary>Môžem si počas pracovného dňa niekde oddýchnuť alebo načerpať energiu?</summary>
+        <div class="faq-item__body">Určite. Budova má zen zóny, joga miestnosť, wellbeing priestory, terasy a dokonca aj bistro s vlastným baristom — ideálne na načerpanie energie a oddych.</div>
+      </details>
+      <details class="faq-item reveal">
+        <summary>Je k dispozícii parkovanie?</summary>
+        <div class="faq-item__body">Áno, a je plne biometrické. Vojdete dovnútra, brána vás rozpozná a môžete ísť.</div>
+      </details>
+      <details class="faq-item reveal">
+        <summary>Kde sa budova nachádza?</summary>
+        <div class="faq-item__body">Nové sídlo Innovatrics je 15 minút od centra Bratislavy, priamo vedľa železničnej stanice Vinohrady s priamym spojením na mestskú hromadnú dopravu.</div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ═══ CONTACT ═══ -->
+  <section class="section" id="contact">
+    <div class="reveal-stagger reveal">
+      <div class="section-label">Kontakt</div>
+      <div class="section-title scroll-lag">Ostaňme v spojení</div>
+      <div class="section-desc">Ak máte záujem o prenájom pracovného priestoru, vyplňte formulár a ozveme sa vám priamo. Odpovieme do 24 hodín.</div>
+    </div>
+    <div class="contact-grid">
+      <form class="contact-form reveal" onsubmit="event.preventDefault(); alert('Odoslanie formulára zatiaľ nie je napojené (skeleton).');">
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+          <div class="contact-form__field">
+            <label for="name">Meno</label>
+            <input type="text" id="name" required />
+          </div>
+          <div class="contact-form__field">
+            <label for="surname">Priezvisko</label>
+            <input type="text" id="surname" required />
+          </div>
+        </div>
+        <div class="contact-form__field">
+          <label for="email">E-mail</label>
+          <input type="email" id="email" required />
+        </div>
+        <div class="contact-form__field">
+          <label for="message">Správa</label>
+          <textarea id="message" rows="5"></textarea>
+        </div>
+        <button type="submit" class="btn btn-grad-violet btn-lg" style="align-self:flex-start;margin-top:8px;">Odoslať správu →</button>
+      </form>
+
+      <div class="contact-info reveal">
+        <div class="contact-info__row">
+          <i data-lucide="map-pin"></i>
+          <div>
+            <strong>Adresa</strong>
+            <span>Jurská 19<br/>831 02 Bratislava<br/>Slovenská republika</span>
+          </div>
+        </div>
+        <div class="contact-info__row">
+          <i data-lucide="mail"></i>
+          <div>
+            <strong>E-mail</strong>
+            <a href="mailto:info@mostbiometricbuilding.com">info@mostbiometricbuilding.com</a>
+          </div>
+        </div>
+        <div class="contact-info__row">
+          <i data-lucide="calendar"></i>
+          <div>
+            <strong>Prehliadky</strong>
+            <span>Piatky · po dohode</span>
+          </div>
+        </div>
+        <div class="contact-info__row">
+          <i data-lucide="train"></i>
+          <div>
+            <strong>Doprava</strong>
+            <span>15 min od centra Bratislavy · vedľa stanice Vinohrady</span>
+          </div>
+        </div>
+
+        <div class="newsletter-card">
+          <strong>NEWSLETTER</strong>
+          <p>Prihláste sa na odber noviniek, aktualizácií, ponúk prenájmu, pripravovaných eventov a pohľadov do zákulisia.</p>
+          <form onsubmit="event.preventDefault();">
+            <input type="email" placeholder="Váš e-mail" required />
+            <button type="submit" class="btn btn-primary">Prihlásiť</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FINALE — Navrhnuté pre budúcnosť ═══ -->
+  <div class="kinetic" style="min-height:70vh;position:relative">
+    <div class="liquid-container" style="z-index:-1">
+      <div class="liquid-blob" style="width:50%;height:60%;background:var(--bh-primary);top:-10%;left:10%;filter:blur(80px);opacity:.22;animation:liquidMorph 18s ease-in-out infinite"></div>
+      <div class="liquid-blob" style="width:40%;height:50%;background:var(--bh-azure);bottom:0;right:10%;filter:blur(80px);opacity:.18;animation:liquidMorph 14s ease-in-out infinite reverse"></div>
+      <div class="liquid-blob" style="width:30%;height:30%;background:var(--bh-sky);top:40%;left:40%;filter:blur(60px);opacity:.12;animation:liquidMorph 10s ease-in-out infinite;animation-delay:-5s"></div>
+    </div>
+    <div style="font-size:.65rem;font-weight:700;letter-spacing:.3em;color:var(--bh-sky);margin-bottom:2rem;position:relative;z-index:2">BIOMETRICS HOUSE</div>
+    <div style="font-size:clamp(3rem,7vw,6rem);font-weight:700;line-height:1;position:relative;z-index:2;text-align:center" class="reveal">
+      <div>Navrhnuté pre</div>
+      <div style="background:linear-gradient(90deg,var(--bh-primary),var(--bh-sky));-webkit-background-clip:text;-webkit-text-fill-color:transparent;color:transparent">budúcnosť.</div>
+      <div>Postavené na modrej.</div>
+    </div>
+    <p style="font-size:.85rem;color:rgba(255,255,255,.35);margin-top:3rem;position:relative;z-index:2" class="reveal">#1B00E2 &bull; #031C40 &bull; #0057FF &bull; #4590FF</p>
+  </div>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="house-footer">
+    <div class="house-footer__inner">
+      <div class="house-footer__brand">
+        <strong>BIOMETRICS HOUSE</strong>
+        <p>Najbiometrickejšia budova na svete. Postavená spoločnosťou Innovatrics v Bratislave.</p>
+      </div>
+      <div class="house-footer__col">
+        <strong>NAVIGÁCIA</strong>
+        <a href="#about">O budove</a>
+        <a href="#facilities">Priestory</a>
+        <a href="#faq">Otázky</a>
+        <a href="index.html">Eventy</a>
+      </div>
+      <div class="house-footer__col">
+        <strong>SLUŽBY</strong>
+        <a href="#workspace">Prenájom priestoru</a>
+        <a href="#contact">Prehliadky</a>
+        <a href="index.html">Prenájom eventov</a>
+      </div>
+      <div class="house-footer__col">
+        <strong>KONTAKT</strong>
+        <a href="mailto:info@mostbiometricbuilding.com">info@mostbiometricbuilding.com</a>
+        <a href="#">Jurská 19, Bratislava</a>
+      </div>
+    </div>
+    <div class="house-footer__bottom">
+      <span>© 2026 Biometrics House. Powered by Innovatrics. Všetky práva vyhradené.</span>
+      <div style="display:flex; gap:14px;">
+        <i data-lucide="linkedin" style="width:18px;height:18px;color:rgba(255,255,255,0.35);"></i>
+        <i data-lucide="instagram" style="width:18px;height:18px;color:rgba(255,255,255,0.35);"></i>
+        <i data-lucide="twitter" style="width:18px;height:18px;color:rgba(255,255,255,0.35);"></i>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ═══ Lucide icons ═══
+    lucide.createIcons();
+
+    // ═══ Scroll progress ═══
+    const scrollProgress = document.getElementById('scrollProgress');
+    function updateProgress(){
+      const h = document.documentElement.scrollHeight - window.innerHeight;
+      scrollProgress.style.width = (window.scrollY / h * 100) + '%';
+    }
+
+    // ═══ Intersection Observer for reveals ═══
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(en => { if (en.isIntersecting) en.target.classList.add('visible'); });
+    }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+    document.querySelectorAll('.reveal, .stagger').forEach(el => obs.observe(el));
+
+    // ═══ Split character text ═══
+    document.querySelectorAll('.split-heading[data-text]').forEach(el => {
+      const text = el.dataset.text;
+      el.innerHTML = text.split(' ').map(w =>
+        '<span class="word">' + w.split('').map((c,i) =>
+          `<span class="char" style="transition-delay:${i*.04}s;background:linear-gradient(135deg,var(--bh-sky),#fff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;color:transparent">${c}</span>`
+        ).join('') + '</span>'
+      ).join('');
+      obs.observe(el);
+    });
+
+    // ═══ Generic pin scroll helper ═══
+    function makePinUpdater(pinEl, trackEl, dots, count, withDelay) {
+      return function() {
+        if (!pinEl || !trackEl) return;
+        const rect = pinEl.getBoundingClientRect();
+        const totalScroll = pinEl.offsetHeight - window.innerHeight;
+        if (totalScroll <= 0) return;
+        const scrolled = Math.max(0, Math.min(totalScroll, -rect.top));
+        const delayPx = withDelay ? window.innerHeight : 0;
+        const effectiveScroll = Math.max(0, scrolled - delayPx);
+        const effectiveTotal  = Math.max(1, totalScroll - delayPx);
+        const progress = Math.min(1, effectiveScroll / effectiveTotal);
+        const maxTx = (count - 1) * 100;
+        const tx = progress * maxTx;
+        trackEl.style.transform = `translate3d(-${tx}vw, 0, 0)`;
+        const active = Math.round(progress * (count - 1));
+        dots.forEach((d, i) => d.classList.toggle('is-active', i === active));
+      };
+    }
+
+    // Galéria
+    const galleryPin = document.querySelector('.gallery-pin');
+    const galleryTrack = document.getElementById('galleryTrack');
+    const galleryItems = Array.from(document.querySelectorAll('.gallery-pin__item'));
+    const galleryDots = Array.from(document.querySelectorAll('.gallery-pin__dot'));
+    const itemCount = galleryItems.length;
+    const updatePinGallery = makePinUpdater(galleryPin, galleryTrack, galleryDots, itemCount, true);
+
+    // Pillars stack — pure CSS sticky, no JS update needed
+
+    // ═══ Lightbox ═══
+    const lb = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lbImg');
+    let lbIndex = 0;
+
+    function openLightbox(i){
+      lbIndex = i;
+      const img = galleryItems[i].querySelector('img');
+      lbImg.src = img.src;
+      lbImg.alt = img.alt;
+      lb.classList.add('is-open');
+      lb.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox(){
+      lb.classList.remove('is-open');
+      lb.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+    function lbNav(dir){
+      lbIndex = (lbIndex + dir + itemCount) % itemCount;
+      openLightbox(lbIndex);
+    }
+    galleryItems.forEach((el, i) => {
+      const img = el.querySelector('img');
+      if (img) img.addEventListener('click', () => openLightbox(i));
+    });
+    document.getElementById('lbClose').addEventListener('click', closeLightbox);
+    document.getElementById('lbPrev').addEventListener('click', e => { e.stopPropagation(); lbNav(-1); });
+    document.getElementById('lbNext').addEventListener('click', e => { e.stopPropagation(); lbNav(1); });
+    lb.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
+    document.addEventListener('keydown', e => {
+      if (!lb.classList.contains('is-open')) return;
+      if (e.key === 'Escape') closeLightbox();
+      else if (e.key === 'ArrowLeft') lbNav(-1);
+      else if (e.key === 'ArrowRight') lbNav(1);
+    });
+
+    // ═══ Scroll lag ═══
+    const lagEls = document.querySelectorAll('.scroll-lag');
+    let smoothScroll = 0;
+    function updateLag(){
+      smoothScroll += (window.scrollY - smoothScroll) * 0.08;
+      const delta = (window.scrollY - smoothScroll) * 0.03;
+      lagEls.forEach(el => { el.style.transform = `translateY(${delta}px)`; });
+    }
+
+    // ═══ Kinetic scroll glow ═══
+    function updateKineticGlow(sectionId, glowId, splitId){
+      const section = document.getElementById(sectionId);
+      const glow = document.getElementById(glowId);
+      if (!section || !glow) return;
+      const rect = section.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const center = rect.top + rect.height / 2;
+      const dist = Math.abs(center - vh / 2);
+      const proximity = Math.max(0, 1 - dist / (vh * 0.7));
+      const size = 300 + proximity * 600;
+      glow.style.width = size + 'px';
+      glow.style.height = size + 'px';
+      glow.style.opacity = proximity * 0.85;
+      glow.style.filter = `blur(${30 + proximity * 40}px)`;
+      const split = document.getElementById(splitId);
+      if (split){
+        split.style.transform = `scale(${1 + proximity * 0.08})`;
+        const s = proximity * 40;
+        split.style.textShadow = `0 0 ${s}px rgba(69,144,255,${proximity * 0.5}), 0 0 ${s*2}px rgba(0,87,255,${proximity * 0.2})`;
+      }
+    }
+    function updateAllGlows(){
+      updateKineticGlow('bioCoreSection',  'bioCoreGlow',  'splitBio');
+      updateKineticGlow('wsLifeSection',   'wsLifeGlow',   'splitWS');
+    }
+
+    // ═══ RAF loop ═══
+    function tick(){
+      updateProgress();
+      updateLag();
+      updateAllGlows();
+      updatePinGallery();
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  </script>
+</body>
+</html>
