@@ -485,6 +485,42 @@ button { font-family: inherit; }
   .pillar-body { display: none; }
 }
 
+/* Počas smooth scroll animácie (po klik O BUDOVE) vypneme sticky/scroll-hijack mechaniky.
+   Inak by browser dropoval frame budget na prepočet sticky pozícií + pin-gallery + transformácií. */
+.house-block.scroll-anim-active .gallery-pin {
+  position: static !important;
+  height: 100vh !important;
+}
+.house-block.scroll-anim-active .pillar-card {
+  position: static !important;
+  transition: none !important;
+}
+.house-block.scroll-anim-active .pillar-tail-spacer {
+  height: 0 !important;
+}
+
+/* bh-global-bg má position:fixed cez celý viewport. Pri unlocku ihneď prekryje hero a
+   používateľ nevidí ako hero plynulo opúšťa scroll-om (tak ako pri Events transition).
+   Skryjeme ho počas scroll animácie a fade-in-eme po dokončení. */
+.bh-global-bg {
+  transition: opacity 0.5s ease;
+}
+.house-block.scroll-anim-active .bh-global-bg {
+  opacity: 0;
+}
+
+/* Delay identity headline + text — keep hidden počas scrollu, reveal 3s po klik
+   (= ~tesne po scroll end). Zabraňujeme IO triggrovaniu predčasne. */
+.house-block.identity-delay-active .identity-block .reveal,
+.house-block.identity-delay-active .identity-block .split-heading {
+  opacity: 0 !important;
+  transform: translateY(50px) !important;
+}
+.house-block.identity-delay-active .identity-block .split-heading .char {
+  opacity: 0 !important;
+  transform: translateY(80px) rotateX(90deg) !important;
+}
+
 /* ═══ GLOBAL BACKGROUND — Midnight Pulse Aurora Mesh + cursor spotlight ═══ */
 /* Aplikované na celý .house-block (od sekcie "Identita ako kľúč" nadol).
    Fixed layer pod celým obsahom, transparent sekcie nad ním ukážu gradient. */

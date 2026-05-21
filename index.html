@@ -954,8 +954,36 @@
       scrollHint.style.opacity = lerp(1, 0, clamp(raw / 0.15, 0, 1));
     }
 
-    window.addEventListener('scroll', onScroll, { passive: true });
+    // Flag: pri smooth scroll animation pauzuj hero zoom listener — agresívne transformy
+    // (logo scale, interior fade, blur, cards translate) by inak rušili smooth scroll
+    let smoothScrollInProgress = false;
+    window.addEventListener('scroll', () => {
+      if (smoothScrollInProgress) return;
+      onScroll();
+    }, { passive: true });
     onScroll(); // init
+
+    // Manual RAF scroll — 100% deterministická animácia nezávislá od browser smooth.
+    function manualScrollTo(targetY, duration = 1000) {
+      const startY = window.scrollY;
+      const distance = targetY - startY;
+      if (Math.abs(distance) < 4) return;
+      const startTime = performance.now();
+      const html = document.documentElement;
+      const prevBehavior = html.style.scrollBehavior;
+      html.style.scrollBehavior = 'auto';
+      function step(now) {
+        const t = Math.min((now - startTime) / duration, 1);
+        const eased = t < 0.5 ? 2*t*t : -1 + (4 - 2*t) * t;
+        window.scrollTo(0, startY + distance * eased);
+        if (t < 1) {
+          requestAnimationFrame(step);
+        } else {
+          html.style.scrollBehavior = prevBehavior;
+        }
+      }
+      requestAnimationFrame(step);
+    }
 
     // ── Spoločný stav pre obe karty ──
     const btnPriestory = document.querySelector('.hero-card--events .hero-card__btn');
@@ -974,8 +1002,11 @@
 
       setTimeout(() => {
         const target = document.querySelector('.events-hero-section');
+        if (!target) return;
         const top = target.getBoundingClientRect().top + window.scrollY;
-        window.scrollTo({ top, behavior: 'smooth' });
+        smoothScrollInProgress = true;
+        manualScrollTo(top, 1000);
+        setTimeout(() => { smoothScrollInProgress = false; }, 1100);
       }, 750);
     });
 
@@ -985,18 +1016,48 @@
       activeSection = 'house';
       wasOutsideHero = false;
 
+      // Krok 1: SAMOTNÝ EXPAND — žiadne ďalšie DOM mutácie, aby CSS transition mala plný frame budget
       heroCards.classList.add('house-expanded');
-      document.querySelectorAll('.locked-section-house').forEach(el => el.classList.remove('locked-section-house'));
-      document.querySelector('.building-scroll').classList.remove('locked-section-building');
 
-      // re-init lucide icons after unlocking content
-      if (window.lucide) window.lucide.createIcons();
-
+      // Krok 2: po dokončení expand animácie (700ms) → unlock house-block + spustí scroll
       setTimeout(() => {
-        const target = document.querySelector('.house-block .identity-block');
-        const top = target.getBoundingClientRect().top + window.scrollY;
-        window.scrollTo({ top, behavior: 'smooth' });
-      }, 750);
+        const houseBlock = document.querySelector('.house-block');
+        houseBlock.classList.remove('locked-section-house');
+        houseBlock.classList.add('scroll-anim-active');     // vypne sticky/hijack
+        houseBlock.classList.add('identity-delay-active');  // skry identity headline + text
+
+        // Krok 3: po 500ms (DOM stabilizovaný po unlock veľkého obsahu) → manual RAF scroll
+        setTimeout(() => {
+          const target = document.querySelector('.house-block .identity-block');
+          if (!target) return;
+          const top = target.getBoundingClientRect().top + window.scrollY;
+          smoothScrollInProgress = true;
+          manualScrollTo(top, 2500);   /* pomalšie 2500ms — identita príde plynule */
+
+          // Gradient fade-in POČAS scrollu (v polovici) — vyzerá akoby scroll priniesol aurora gradient
+          setTimeout(() => {
+            houseBlock.classList.remove('scroll-anim-active');
+          }, 1200);
+
+          setTimeout(() => { smoothScrollInProgress = false; }, 2600);
+
+          // 1s po začiatku rolovania → reveal identity headline + text (slash efekt)
+          setTimeout(() => {
+            houseBlock.classList.remove('identity-delay-active');
+            houseBlock.querySelectorAll('.identity-block .reveal, .identity-block .split-heading').forEach(el => {
+              el.classList.remove('visible');
+              void el.offsetHeight;
+              requestAnimationFrame(() => el.classList.add('visible'));
+            });
+          }, 1000);
+        }, 500);
+      }, 700);   /* expand animácia 0.65s — pridáme 50ms buffer */
+
+      // Krok 4: footer + building-scroll až úplne nakonci
+      setTimeout(() => {
+        document.querySelectorAll('.locked-section-house').forEach(el => el.classList.remove('locked-section-house'));
+        document.querySelector('.building-scroll').classList.remove('locked-section-building');
+      }, 2500);
     });
 
     // ── REVERZ: reset keď sa user vráti späť do hero ──
