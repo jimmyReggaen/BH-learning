@@ -214,7 +214,7 @@ button { font-family: inherit; }
 .gallery-pin {
   position: relative;
   height: 800vh;             /* 100vh start delay + 7 fotiek × 100vh shift */
-  background: #000;
+  background: transparent;   /* global aurora-mesh gradient prebleskuje cez sekciu */
 }
 .gallery-pin__sticky {
   position: sticky;
@@ -234,6 +234,10 @@ button { font-family: inherit; }
   height: 100vh;
   position: relative;
   overflow: hidden;
+  background: #000;          /* default — JPGs sit on black */
+}
+.gallery-pin__item.is-transparent {
+  background: transparent;   /* jediná zmena vs JPG slots — gradient prebleskne cez PNG alpha */
 }
 .gallery-pin__item img {
   width: 100%;
@@ -242,6 +246,9 @@ button { font-family: inherit; }
   display: block;
   cursor: zoom-in;
 }
+/* .is-transparent img dedí default cover správanie z .gallery-pin__item img —
+   identické s JPG slots, žiadny override. Alpha v hornej časti PNG ukáže
+   globálny aurora-mesh gradient cez transparent background slotu. */
 .gallery-pin__progress {
   position: absolute;
   bottom: 32px;
@@ -345,22 +352,33 @@ button { font-family: inherit; }
   position: relative;
   padding: 6rem 2rem;
 }
+.pillar-tail-spacer {
+  display: block;
+  height: 250vh;        /* extra scroll-room po poslednej karte — explicit HTML spacer (najspoľahlivejšie) */
+  width: 100%;
+  pointer-events: none;
+}
 .pillar-card {
   position: sticky;
-  top: calc(80px + var(--idx, 0) * 14px);   /* postupné odsadenie pre stack pohľad */
+  top: 80px;                        /* všetky karty pri rovnakom vrchu — nová prekryje predošlú */
   margin: 0 auto 16vh;
   max-width: 1400px;
   min-height: 80vh;
   display: flex;
   align-items: center;
   padding: 4rem 3rem;
-  background: transparent;
-  border: none;
-  border-top: 1px solid rgba(69,144,255,.18);
+  background: transparent;          /* žiadny card fill */
+  border: none;                     /* žiadny modrý okraj */
   border-radius: 0;
   box-shadow: none;
-  transition: transform .4s cubic-bezier(.16,1,.3,1), opacity .4s;
-  will-change: transform;
+  transition: opacity .6s ease, transform .6s ease;
+  will-change: opacity, transform;
+}
+/* Karta sa fade-uje preč keď nasledujúca vstúpila do viewportu (swap effect) */
+.pillar-card.is-superseded {
+  opacity: 0;
+  transform: translateY(-40px);
+  pointer-events: none;
 }
 .pillar-card:last-child { margin-bottom: 0; }
 
@@ -466,6 +484,61 @@ button { font-family: inherit; }
   .pillar-lead { font-size: .95rem; }
   .pillar-body { display: none; }
 }
+
+/* ═══ GLOBAL BACKGROUND — Midnight Pulse Aurora Mesh + cursor spotlight ═══ */
+/* Aplikované na celý .house-block (od sekcie "Identita ako kľúč" nadol).
+   Fixed layer pod celým obsahom, transparent sekcie nad ním ukážu gradient. */
+.bh-global-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background: var(--bh-dark);     /* base navy — Midnight Pulse */
+}
+.bh-global-bg__mesh {
+  position: absolute;
+  inset: 0;
+  filter: blur(90px);
+  opacity: 0.9;
+  will-change: transform;
+}
+.bh-global-bg__mesh .dot {
+  position: absolute;
+  border-radius: 50%;
+}
+.bh-global-bg__mesh .dot:nth-child(1) {
+  width: 55%; height: 55%; background: var(--bh-azure);
+  top: 10%; left: 60%;
+  animation: meshB 11s ease-in-out infinite alternate;
+}
+.bh-global-bg__mesh .dot:nth-child(2) {
+  width: 45%; height: 45%; background: var(--bh-primary);
+  bottom: 10%; left: 10%;
+  animation: meshA 13s ease-in-out infinite alternate;
+}
+.bh-global-bg__mesh .dot:nth-child(3) {
+  width: 35%; height: 35%; background: rgba(3,28,64,0.9);
+  top: 50%; left: 30%;
+  animation: meshC 9s ease-in-out infinite alternate;
+}
+/* Cursor-follow spotlight — radial-gradient at CSS vars set by JS */
+.bh-global-bg__spotlight {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle 620px at var(--mx, 50%) var(--my, 50%),
+    rgba(69, 144, 255, 0.22) 0%,
+    rgba(0, 87, 255, 0.10) 28%,
+    transparent 65%
+  );
+  transition: background 60ms linear;
+}
+
+/* House-block layering: gradient pod, sections nad */
+.house-block { position: relative; }
+.house-block > section,
+.house-block > .lightbox { position: relative; z-index: 1; }
 
 /* ═══ KINETIC sections ═══ */
 .kinetic {

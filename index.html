@@ -618,6 +618,16 @@
        ============================================= -->
   <div class="house-block locked-section-house">
 
+    <!-- GLOBAL BACKGROUND — Midnight Pulse + cursor spotlight -->
+    <div class="bh-global-bg" aria-hidden="true">
+      <div class="bh-global-bg__mesh">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+      <div class="bh-global-bg__spotlight"></div>
+    </div>
+
     <!-- IDENTITY — kinetic headline + centered text -->
     <section class="kinetic identity-block" id="bioCoreSection">
       <div class="scroll-glow" id="bioCoreGlow"></div>
@@ -634,7 +644,7 @@
     <section class="gallery-pin" id="gallery">
       <div class="gallery-pin__sticky">
         <div class="gallery-pin__track" id="galleryTrack">
-          <div class="gallery-pin__item" data-index="0"><img src="images/house/01-exterior.jpg" alt="" /></div>
+          <div class="gallery-pin__item is-transparent" data-index="0"><img src="images/house/01-exterior.png" alt="" /></div>
           <div class="gallery-pin__item" data-index="1"><img src="images/house/03-atrium-pano.jpg" alt="" /></div>
           <div class="gallery-pin__item" data-index="2"><img src="images/house/04-lounge.jpg" alt="" /></div>
           <div class="gallery-pin__item" data-index="3"><img src="images/house/05-kitchen.jpg" alt="" /></div>
@@ -718,6 +728,9 @@
           <div class="pillar-media"><div class="ph"><span class="ph__label">Bistro · spoločné priestory</span></div></div>
         </div>
       </article>
+
+      <!-- Tail spacer — zaisťuje aby posledná karta držala sticky pri top:80px cez ~2.5 viewport (~20 wheels) -->
+      <div class="pillar-tail-spacer" aria-hidden="true"></div>
     </section>
 
     <!-- KINETIC: ŽIVÝ PRIESTOR -->
@@ -1494,6 +1507,45 @@
     // HOUSE BLOCK — reveal observer, split text, pinned gallery, lightbox
     // ═══════════════════════════════════════
     (function houseBlockInit() {
+      // Pillar swap — fade out predošlú kartu keď nasledujúca vstúpi do viewportu
+      (function pillarSwap() {
+        const cards = Array.from(document.querySelectorAll('.house-block .pillar-card'));
+        if (!cards.length) return;
+        let rafPending = false;
+        function update() {
+          const vh = window.innerHeight;
+          const triggerY = vh * 0.4;   // ďalšia karta musí byť v hornej 40% viewportu → fade nastane neskôr
+          cards.forEach((card, i) => {
+            const next = cards[i + 1];
+            if (!next) { card.classList.remove('is-superseded'); return; }
+            const nextTop = next.getBoundingClientRect().top;
+            card.classList.toggle('is-superseded', nextTop < triggerY);
+          });
+          rafPending = false;
+        }
+        window.addEventListener('scroll', () => {
+          if (!rafPending) { rafPending = true; requestAnimationFrame(update); }
+        }, { passive: true });
+        window.addEventListener('resize', update, { passive: true });
+        update();
+      })();
+
+      // Cursor-follow spotlight — set --mx, --my on documentElement (Fingera-style)
+      (function cursorSpotlight() {
+        const root = document.documentElement;
+        let pendingX = 50, pendingY = 50, rafId = null;
+        function apply() {
+          root.style.setProperty('--mx', pendingX + '%');
+          root.style.setProperty('--my', pendingY + '%');
+          rafId = null;
+        }
+        window.addEventListener('mousemove', (e) => {
+          pendingX = (e.clientX / window.innerWidth) * 100;
+          pendingY = (e.clientY / window.innerHeight) * 100;
+          if (!rafId) rafId = requestAnimationFrame(apply);
+        }, { passive: true });
+      })();
+
       // Reveal observer (idempotent — funguje aj ak je sekcia spočiatku display:none)
       const obs = new IntersectionObserver(entries => {
         entries.forEach(en => { if (en.isIntersecting) en.target.classList.add('visible'); });
